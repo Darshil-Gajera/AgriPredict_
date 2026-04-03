@@ -1,0 +1,193 @@
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-bs-theme="auto">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% trans "AgriPredict — Find Your Agriculture Future" %}{% endblock %}</title>
+  <link rel="icon" href="{% static 'images/logo.png' %}" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav class="navbar navbar-expand-lg sticky-top shadow-sm bg-body-tertiary" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:home' %}">
+      <img src="{% static 'images/logo.png' %}" alt="AgriPredict" height="36" />
+      <span class="fw-bold text-success">AgriPredict</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">{% trans "Home" %}</a></li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{% trans "Merit Calculator" %}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'predict:category' 1 %}">{% trans "Core Agriculture Programs" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'predict:category' 2 %}">{% trans "Technical Agriculture Programs" %}</a></li>
+            <li><a class="dropdown-item" href="{% url 'predict:category' 3 %}">{% trans "Home & Community Science" %}</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a class="nav-link" href="{% url 'colleges:list' %}">{% trans "College List" %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'core:admission_guide' %}">{% trans "Admission Guide" %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'notifications:list' %}">{% trans "Notifications" %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'scholarships:list' %}">{% trans "Scholarships" %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'core:faq' %}">{% trans "FAQ" %}</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2">
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" data-bs-toggle="dropdown">
+            <i class="bi bi-translate"></i>
+            <span>{% if LANGUAGE_CODE == 'gu' %}ગુજરાતી{% else %}English{% endif %}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li>
+              <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path|cut:'/gu' }}" />
+                <button name="language" value="en" class="dropdown-item {% if LANGUAGE_CODE == 'en' %}active{% endif %}">
+                   English
+                </button>
+                <button name="language" value="gu" class="dropdown-item {% if LANGUAGE_CODE == 'gu' %}active{% endif %}">
+                   ગુજરાતી
+                </button>
+              </form>
+            </li>
+          </ul>
+        </div>
+
+        <button class="btn btn-sm btn-outline-secondary" id="themeToggle">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+
+        {% if user.is_authenticated %}
+          <div class="dropdown">
+            <button class="btn btn-sm btn-success dropdown-toggle" data-bs-toggle="dropdown">
+               {{ user.first_name|default:user.email }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2"></i>{% trans "Profile" %}</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:saved_results' %}"><i class="bi bi-bookmark me-2"></i>{% trans "Saved Results" %}</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}"><i class="bi bi-box-arrow-right me-2"></i>{% trans "Logout" %}</a></li>
+            </ul>
+          </div>
+        {% else %}
+          <a href="{% url 'account_login' %}" class="btn btn-sm btn-outline-success">{% trans "Login" %}</a>
+          <a href="{% url 'account_signup' %}" class="btn btn-sm btn-success">{% trans "Sign Up" %}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+<div class="container mt-3">
+  {% for msg in messages %}
+  <div class="alert alert-{{ msg.tags }} alert-dismissible fade show" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<main class="flex-grow-1">{% block content %}{% endblock %}</main>
+
+<footer class="footer mt-auto py-5 bg-body-tertiary border-top">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <img src="{% static 'images/logo.png' %}" height="32" alt="AgriPredict" />
+          <span class="h5 mb-0 fw-bold text-success">AgriPredict</span>
+        </div>
+        <p class="text-muted small">{% trans "Empowering Gujarat's agriculture students with data-driven admission insights." %}</p>
+        <p class="text-muted small mb-0"><i class="bi bi-envelope-fill me-2"></i> darshilgajera1501@gmail.com</p>
+      </div>
+      <div class="col-md-2">
+        <h6 class="fw-bold mb-3">{% trans "Quick Links" %}</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="{% url 'core:faq' %}" class="text-muted text-decoration-none hover-link">{% trans "FAQ" %}</a></li>
+          <li class="mb-2"><a href="{% url 'scholarships:list' %}" class="text-muted text-decoration-none hover-link">{% trans "Scholarships" %}</a></li>
+          <li><a href="{% url 'core:contact' %}" class="text-muted text-decoration-none hover-link">{% trans "Contact" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3">{% trans "Merit Calculator" %}</h6>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><a href="{% url 'predict:category' 1 %}" class="text-muted text-decoration-none hover-link">{% trans "Core Agriculture" %}</a></li>
+          <li class="mb-2"><a href="{% url 'predict:category' 2 %}" class="text-muted text-decoration-none hover-link">{% trans "Technical Programs" %}</a></li>
+          <li><a href="{% url 'predict:category' 3 %}" class="text-muted text-decoration-none hover-link">{% trans "Home & Community" %}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6 class="fw-bold mb-3">{% trans "Universities" %}</h6>
+        <ul class="list-unstyled small text-muted">
+          <li class="mb-2">JAU — Junagadh</li>
+          <li class="mb-2">AAU — Anand</li>
+          <li class="mb-2">NAU — Navsari</li>
+          <li>SDAU — Sardarkrushinagar</li>
+        </ul>
+      </div>
+    </div>
+    <hr class="my-4" />
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <p class="text-muted small mb-0">© {% now "Y" %} AgriPredict. {% trans "All rights reserved." %}</p>
+        <p class="text-muted small mb-0">{% trans "Developed by Gajera Darshil N." %}</p>
+    </div>
+  </div>
+</footer>
+
+<div id="chatWidget" class="position-fixed bottom-0 end-0 m-4 z-3">
+  <button id="chatToggle" class="btn btn-success rounded-circle shadow-lg p-3" title="{% trans 'Ask AgriBot' %}">
+    <i class="bi bi-robot fs-3"></i>
+  </button>
+  <div id="chatBox" class="card shadow-xl d-none position-absolute bottom-100 end-0 mb-3" style="width: 350px; border-radius: 15px;">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center py-3">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-robot fs-4"></i>
+        <span class="fw-bold">AgriBot</span>
+      </div>
+      <button class="btn-close btn-close-white" id="chatClose"></button>
+    </div>
+    <div id="chatMessages" class="card-body overflow-auto bg-light" style="height:350px">
+      <div class="chat-msg bot mb-3">
+        <div class="bubble p-3 rounded-4 bg-white shadow-sm small">
+            {% trans "Hi! I'm AgriBot. Ask me about admissions, merit, colleges, or scholarships." %}
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-white p-3 border-0">
+      <div class="input-group">
+        <input type="text" id="chatInput" class="form-control border-success-subtle"
+               placeholder="{% trans 'Type your question…' %}" />
+        <button class="btn btn-success" id="chatSend">
+          <i class="bi bi-send-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    const USER_LANG = "{{ LANGUAGE_CODE }}";
+</script>
+<script src="{% static 'js/chat.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

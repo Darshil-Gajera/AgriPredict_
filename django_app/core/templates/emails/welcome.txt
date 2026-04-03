@@ -1,0 +1,8 @@
+Hi {{ user.first_name|default:"there" }},
+
+Welcome to AgriPredict! Your account is now active.
+
+Use our Merit Calculator to calculate your score and find eligible colleges:
+https://agripredict.in/predict/category1/
+
+– The AgriPredict Team

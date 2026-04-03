@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Admission Guide" %} | AgriPredict{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-2">{% trans "Admission Guide 2025–26" %}</h2>
+  <p class="text-muted mb-5">{% trans "Complete step-by-step process for Gujarat agriculture university admissions." %}</p>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      {% for step in steps %}
+      <div class="d-flex gap-3 mb-4">
+        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">{{ step.num }}</div>
+        <div>
+          <h5 class="fw-bold mb-1">{{ step.title }}</h5>
+          <p class="text-muted mb-0">{{ step.desc }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="d-flex gap-3 mb-4">
+        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">1</div>
+        <div><h5 class="fw-bold mb-1">{% trans "Fill Online Form" %}</h5><p class="text-muted mb-0">{% trans "Register on the official Gujarat agriculture admission portal and fill the application form." %}</p></div>
+      </div>
+      <div class="d-flex gap-3 mb-4">
+        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">2</div>
+        <div><h5 class="fw-bold mb-1">{% trans "Upload Documents" %}</h5><p class="text-muted mb-0">{% trans "Upload mark sheets, category certificate, domicile certificate, passport photo, and signature." %}</p></div>
+      </div>
+      <div class="d-flex gap-3 mb-4">
+        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">3</div>
+        <div><h5 class="fw-bold mb-1">{% trans "Merit List Publication" %}</h5><p class="text-muted mb-0">{% trans "Merit lists are published based on your Class 12 theory marks and GUJCET score." %}</p></div>
+      </div>
+      <div class="d-flex gap-3 mb-4">
+        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">4</div>
+        <div><h5 class="fw-bold mb-1">{% trans "College Allotment & Rounds" %}</h5><p class="text-muted mb-0">{% trans "Colleges are allotted over 3 rounds. Accept your allotment and report to the college." %}</p></div>
+      </div>
+      <div class="d-flex gap-3 mb-4">
+        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">5</div>
+        <div><h5 class="fw-bold mb-1">{% trans "Fee Payment" %}</h5><p class="text-muted mb-0">{% trans "Pay the required tuition and hostel fees online to confirm your admission." %}</p></div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if dates %}
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-success text-white fw-semibold">{% trans "Key Dates" %}</div>
+        <ul class="list-group list-group-flush">
+          {% for d in dates %}
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="small">
+              <div class="fw-semibold">{{ d.title }}</div>
+              <div class="text-muted">{{ d.get_event_type_display }}</div>
+            </div>
+            <span class="badge bg-success-subtle text-success text-nowrap">{{ d.start_date|date:"d M" }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

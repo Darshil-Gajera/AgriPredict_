@@ -1,0 +1,47 @@
+college_code,college_name,course,year,round,student_category,last_merit,first_merit
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,1,OPEN,245.50,292.10
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,1,SEBC,238.20,268.40
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,1,SC,210.80,240.60
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,1,ST,195.40,225.30
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,1,EWS,230.10,255.80
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,2,OPEN,238.70,265.20
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,2,SEBC,228.90,250.30
+001,College of Agriculture JAU Junagadh,B.Sc. Agriculture,2024,2,SC,205.30,235.10
+001,College of Agriculture JAU Junagadh,B.Sc. Horticulture,2024,1,OPEN,240.80,288.50
+001,College of Agriculture JAU Junagadh,B.Sc. Horticulture,2024,1,SEBC,232.10,260.30
+013,College of Horticulture JAU Junagadh,B.Sc. Horticulture,2024,1,OPEN,238.60,285.90
+013,College of Horticulture JAU Junagadh,B.Sc. Horticulture,2024,1,SEBC,228.40,255.70
+013,College of Horticulture JAU Junagadh,B.Sc. Horticulture,2024,1,SC,205.20,232.80
+013,College of Horticulture JAU Junagadh,B.Sc. Horticulture,2024,1,ST,188.70,218.40
+020,College of Agricultural Engineering JAU Junagadh,B.Tech. Agricultural Engineering,2024,1,OPEN,235.20,280.60
+020,College of Agricultural Engineering JAU Junagadh,B.Tech. Agricultural Engineering,2024,1,SEBC,225.80,252.30
+020,College of Agricultural Engineering JAU Junagadh,B.Tech. Agricultural Engineering,2024,1,SC,200.10,228.90
+004,B.A. College of Agriculture AAU Anand,B.Sc. Agriculture,2024,1,OPEN,248.30,295.10
+004,B.A. College of Agriculture AAU Anand,B.Sc. Agriculture,2024,1,SEBC,240.10,270.80
+004,B.A. College of Agriculture AAU Anand,B.Sc. Agriculture,2024,1,SC,212.50,242.90
+004,B.A. College of Agriculture AAU Anand,B.Sc. Agriculture,2024,1,ST,198.30,228.10
+004,B.A. College of Agriculture AAU Anand,B.Sc. Agriculture,2024,1,EWS,234.60,260.30
+021,College of Agricultural Engineering AAU Godhra,B.Tech. Agricultural Engineering,2024,1,OPEN,230.50,272.80
+021,College of Agricultural Engineering AAU Godhra,B.Tech. Agricultural Engineering,2024,1,SEBC,220.30,248.60
+021,College of Agricultural Engineering AAU Godhra,B.Tech. Agricultural Engineering,2024,1,SC,195.80,225.40
+023,College of Food Processing Technology AAU Anand,B.Tech. Food Technology,2024,1,OPEN,228.70,270.50
+023,College of Food Processing Technology AAU Anand,B.Tech. Food Technology,2024,1,SEBC,218.90,245.30
+026,College of Agricultural IT AAU Anand,B.Tech. Agricultural IT,2024,1,OPEN,222.40,265.80
+026,College of Agricultural IT AAU Anand,B.Tech. Agricultural IT,2024,1,SEBC,212.60,240.10
+007,N.M. College of Agriculture NAU Navsari,B.Sc. Agriculture,2024,1,OPEN,244.10,291.80
+007,N.M. College of Agriculture NAU Navsari,B.Sc. Agriculture,2024,1,SEBC,235.80,266.40
+007,N.M. College of Agriculture NAU Navsari,B.Sc. Agriculture,2024,1,SC,208.30,238.70
+007,N.M. College of Agriculture NAU Navsari,B.Sc. Agriculture,2024,1,ST,192.60,222.90
+016,ASPEE College of Horticulture NAU Navsari,B.Sc. Horticulture,2024,1,OPEN,236.50,282.10
+016,ASPEE College of Horticulture NAU Navsari,B.Sc. Horticulture,2024,1,SEBC,226.80,253.40
+019,College of Forestry NAU Navsari,B.Sc. Forestry,2024,1,OPEN,228.30,272.60
+019,College of Forestry NAU Navsari,B.Sc. Forestry,2024,1,SEBC,218.50,245.80
+010,CP College of Agriculture SDAU Sardarkrushinagar,B.Sc. Agriculture,2024,1,OPEN,238.90,284.70
+010,CP College of Agriculture SDAU Sardarkrushinagar,B.Sc. Agriculture,2024,1,SEBC,229.30,257.60
+010,CP College of Agriculture SDAU Sardarkrushinagar,B.Sc. Agriculture,2024,1,SC,203.80,234.20
+010,CP College of Agriculture SDAU Sardarkrushinagar,B.Sc. Agriculture,2024,1,ST,186.40,216.80
+027,ASPEE College of Nutrition SDAU Community Science,B.Sc. Community Science,2024,1,OPEN,225.60,268.30
+027,ASPEE College of Nutrition SDAU Community Science,B.Sc. Community Science,2024,1,SEBC,215.20,242.70
+027,ASPEE College of Nutrition SDAU Community Science,B.Sc. Community Science,2024,1,SC,192.80,222.30
+028,ASPEE College of Nutrition SDAU FND,B.Sc. Food Nutrition & Dietetics,2024,1,OPEN,222.10,264.50
+028,ASPEE College of Nutrition SDAU FND,B.Sc. Food Nutrition & Dietetics,2024,1,SEBC,212.30,238.90

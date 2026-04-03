@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "College List" %} | AgriPredict{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-1">{% trans "Agricultural Colleges in Gujarat" %}</h2>
+  <p class="text-muted mb-4">{% trans "31 colleges across 4 universities offering agriculture programmes." %}</p>
+  {% for university in universities %}
+  <div class="mb-5">
+    <h4 class="fw-bold text-success border-bottom pb-2 mb-3">{{ university.safe_translation_getter:"name,any_language=True" }}</h4>
+    <div class="row g-3">
+      {% for college in university.colleges.all %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <span class="badge bg-success-subtle text-success fw-semibold">{{ college.code }}</span>
+              <span class="badge bg-body-secondary text-muted">Cat {{ college.category }}</span>
+            </div>
+            <h6 class="fw-semibold mb-1">{{ college.safe_translation_getter:"name,any_language=True" }}</h6>
+            <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>{{ college.safe_translation_getter:"city,any_language=True" }}</p>
+            <div class="d-flex gap-2">
+              <a href="{% url 'colleges:detail' college.code %}" class="btn btn-sm btn-outline-success">{% trans "Details" %}</a>
+              {% if college.brochure %}
+              <a href="{{ college.brochure.url }}" class="btn btn-sm btn-success" target="_blank"><i class="bi bi-download me-1"></i>{% trans "Brochure" %}</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Contact" %} | AgriPredict{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width:640px">
+  <h2 class="fw-bold mb-4">{% trans "Contact Us" %}</h2>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{% trans "Your Name" %}</label>
+          <input type="text" name="name" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{% trans "Email Address" %}</label>
+          <input type="email" name="email" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{% trans "Message" %}</label>
+          <textarea name="message" class="form-control" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">{% trans "Send Message" %}</button>
+      </form>
+    </div>
+  </div>
+  <div class="mt-4 text-muted small">
+    <p><i class="bi bi-envelope me-2"></i>darshilgajera1501@gmail.com</p>
+    <p><i class="bi bi-geo-alt me-2"></i>{% trans "Gujarat, India" %}</p>
+  </div>
+</div>
+{% endblock %}

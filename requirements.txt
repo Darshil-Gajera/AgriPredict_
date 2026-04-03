@@ -1,0 +1,56 @@
+# ── Django Core ──────────────────────────────────────────────
+Django==4.2.13
+psycopg2-binary==2.9.9
+django-environ==0.11.2
+django-crispy-forms==2.1
+crispy-bootstrap5==0.7
+Pillow==10.3.0
+django-storages==1.14.3
+whitenoise==6.6.0
+
+# ── Authentication ────────────────────────────────────────────
+django-allauth==0.63.3
+
+# ── REST & API ────────────────────────────────────────────────
+djangorestframework==3.15.1
+django-cors-headers==4.3.1
+
+# ── Celery (async email/SMS tasks) ───────────────────────────
+celery==5.4.0
+redis==5.0.4
+django-celery-beat==2.6.0
+
+# ── Email / SMS ───────────────────────────────────────────────
+twilio==9.0.4
+
+# ── i18n / Translation ────────────────────────────────────────
+django-parler==2.3
+
+# ── FastAPI Chatbot Service ───────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+httpx==0.27.0
+python-multipart==0.0.9
+pydantic==2.7.1
+pydantic-settings==2.2.1
+
+# ── LangChain RAG Stack ───────────────────────────────────────
+langchain==0.2.1
+langchain-community==0.2.1
+langchain-google-genai==1.0.5
+langchain-core==0.2.1
+faiss-cpu==1.8.0
+google-generativeai==0.5.4
+
+# ── Document Loaders ──────────────────────────────────────────
+pypdf==4.2.0
+unstructured==0.13.7
+openpyxl==3.1.2
+pandas==2.2.2
+
+# ── Embeddings ────────────────────────────────────────────────
+sentence-transformers==3.0.0
+
+# ── Utilities ─────────────────────────────────────────────────
+python-dotenv==1.0.1
+requests==2.32.2

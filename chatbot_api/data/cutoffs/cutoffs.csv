@@ -1,0 +1,20 @@
+college_code,college_name,university,city,course,category,year,round,student_category,last_merit,first_merit
+001,College of Agriculture JAU,JAU,Junagadh,B.Sc. Agriculture,1,2024,1,OPEN,212.45,285.60
+001,College of Agriculture JAU,JAU,Junagadh,B.Sc. Agriculture,1,2024,1,SEBC,198.30,210.10
+001,College of Agriculture JAU,JAU,Junagadh,B.Sc. Agriculture,1,2024,1,SC,175.80,197.50
+001,College of Agriculture JAU,JAU,Junagadh,B.Sc. Agriculture,1,2024,1,ST,155.20,174.90
+001,College of Agriculture JAU,JAU,Junagadh,B.Sc. Agriculture,1,2024,1,EWS,200.10,212.00
+004,B.A. College of Agriculture AAU,AAU,Anand,B.Sc. Agriculture,1,2024,1,OPEN,205.30,278.40
+004,B.A. College of Agriculture AAU,AAU,Anand,B.Sc. Agriculture,1,2024,1,SEBC,190.50,204.80
+004,B.A. College of Agriculture AAU,AAU,Anand,B.Sc. Agriculture,1,2024,1,SC,168.70,189.90
+007,N.M. College of Agriculture NAU,NAU,Navsari,B.Sc. Agriculture,1,2024,1,OPEN,208.90,280.10
+007,N.M. College of Agriculture NAU,NAU,Navsari,B.Sc. Agriculture,1,2024,1,SEBC,195.40,208.00
+010,CP College of Agriculture SDAU,SDAU,Sardarkrushinagar,B.Sc. Agriculture,1,2024,1,OPEN,199.60,270.50
+010,CP College of Agriculture SDAU,SDAU,Sardarkrushinagar,B.Sc. Agriculture,1,2024,1,SEBC,185.20,198.90
+020,College of Agri Engg JAU,JAU,Junagadh,B.Tech. Agricultural Engineering,2,2024,1,OPEN,220.15,290.30
+020,College of Agri Engg JAU,JAU,Junagadh,B.Tech. Agricultural Engineering,2,2024,1,SEBC,205.70,219.80
+021,College of Agri Engg AAU,AAU,Godhra,B.Tech. Agricultural Engineering,2,2024,1,OPEN,215.80,285.60
+023,College of Food Processing AAU,AAU,Anand,B.Tech. Food Technology,2,2024,1,OPEN,210.40,282.10
+026,College of Agri IT AAU,AAU,Anand,B.Tech. Agricultural IT,2,2024,1,OPEN,218.90,288.00
+027,ASPEE College SDAU,SDAU,Sardarkrushinagar,B.Sc. Community Science,3,2024,1,OPEN,180.30,240.50
+028,ASPEE College SDAU,SDAU,Sardarkrushinagar,B.Sc. Dietetics & Nutrition,3,2024,1,OPEN,175.60,235.80

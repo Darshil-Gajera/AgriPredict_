@@ -1,0 +1,50 @@
+[
+  {
+    "q": "How is the merit score calculated?",
+    "q_gu": "Merit score કેવી રીતે ગણવામાં આવે છે?",
+    "a": "Merit = (Theory Marks / Theory Total) × 200 + (GUJCET Marks / 120) × 100. For farming background students an additional 5% bonus is added. Maximum merit is 300.",
+    "a_gu": "Merit = (Theory Marks / Theory Total) × 200 + (GUJCET Marks / 120) × 100. ખેડૂત પૃષ્ઠભૂમિ ધરાવતા વિદ્યાર્થીઓ માટે 5% bonus ઉમેરવામાં આવે છે. મહત્તમ merit 300 છે."
+  },
+  {
+    "q": "What is the difference between Category 1, 2, and 3?",
+    "q_gu": "Category 1, 2 અને 3 વચ્ચે શો ફરક છે?",
+    "a": "Category 1 is for B-Group (PCB) students only and covers core agriculture programs (B.Sc. Agriculture, Horticulture, Forestry, Biotechnology). Category 2 is for both A-Group (PCM) and B-Group students and covers technical programs (B.Tech. Agricultural Engineering, Food Technology, Agri IT). Category 3 is for both groups and covers Home & Community Science (B.Sc. Community Science, Dietetics & Nutrition).",
+    "a_gu": "Category 1 ફક્ત B-Group (PCB) વિદ્યાર્થીઓ માટે છે — B.Sc. Agriculture, Horticulture, Forestry, Biotechnology. Category 2 A-Group (PCM) અને B-Group બંને માટે — B.Tech. Agricultural Engineering, Food Technology, Agri IT. Category 3 બંને group માટે — B.Sc. Community Science, Dietetics & Nutrition."
+  },
+  {
+    "q": "Which documents are required for the application form?",
+    "q_gu": "Application form માટે કયા documents જરૂરી છે?",
+    "a": "You need: Class 10 marksheet, Class 12 marksheet, GUJCET scorecard, Category certificate (if applicable), Domicile certificate, Farming certificate (if claiming bonus), Passport-size photograph, and Signature scan.",
+    "a_gu": "ધો.10 marksheet, ધો.12 marksheet, GUJCET scorecard, Category certificate (જો લાગુ હોય), Domicile certificate, Farming certificate (bonus claim માટે), Passport-size ફોટો, Signature scan."
+  },
+  {
+    "q": "What is the GUJCET exam?",
+    "q_gu": "GUJCET exam શું છે?",
+    "a": "GUJCET (Gujarat Common Entrance Test) is a state-level exam conducted by GSEB for admission to engineering, pharmacy, and agriculture programs in Gujarat. For agriculture admissions it is out of 120 marks (Biology + Chemistry sections).",
+    "a_gu": "GUJCET (Gujarat Common Entrance Test) GSEB દ્વારા આયોજિત રાજ્ય-સ્તરીય પ્રવેશ પરીક્ષા છે. Agriculture admissions માટે 120 marks (Biology + Chemistry sections) ની પ્રવેશ પરીક્ষા."
+  },
+  {
+    "q": "How many rounds of admission are there?",
+    "q_gu": "Admission ના કેટલા rounds હોય છે?",
+    "a": "There are typically 3 main rounds of admission plus a Mop-up round. In each round, colleges are allotted based on merit and your college preferences. You must accept/reject the allotment within the given timeframe.",
+    "a_gu": "સામાન્ય રીતે 3 main rounds + 1 Mop-up round. દરેક round માં merit અને college preferences ના આધારે college allot થાય છે. Allotment accept/reject ચોક્કસ સમયમર્યાદામાં કરવું પડે છે."
+  },
+  {
+    "q": "What is the farming background bonus?",
+    "q_gu": "Farming background bonus શું છે?",
+    "a": "Students whose parents are farmers (holding a farming certificate from the Talati/Mamlatdar office) get a 5% bonus on their calculated merit score. For example, a merit of 240 becomes 252 with the bonus.",
+    "a_gu": "જે વિદ્યાર્થીઓના parents ખેડૂત છે (Talati/Mamlatdar નું farming certificate હોય) તેઓ calculated merit score પર 5% bonus મળે. ઉદાહરણ: merit 240 હોય, bonus સાથે 252 થઈ જાય."
+  },
+  {
+    "q": "Can I apply for multiple categories?",
+    "q_gu": "શું હું multiple categories માટે apply કરી શકું?",
+    "a": "Yes, but you must satisfy the stream eligibility. B-Group students can apply for all 3 categories. A-Group students can only apply for Category 2 and Category 3.",
+    "a_gu": "હા, પરંતુ stream eligibility પૂરી કરવી જરૂરી. B-Group વિદ્યાર્થીઓ ત્રણેય category માટે apply કરી શકે. A-Group ફક્ત Category 2 અને 3 માટે apply કરી શકે."
+  },
+  {
+    "q": "How do I know which college I am eligible for?",
+    "q_gu": "હું કઈ college માટે eligible છું તે કેવી રીતે જાણીશ?",
+    "a": "Use AgriPredict's Merit Calculator. Enter your theory marks, GUJCET score, and reservation category. The calculator will show all colleges ranked by your admission probability based on last year's cutoff data.",
+    "a_gu": "AgriPredict ના Merit Calculator નો ઉપયોગ કરો. Theory marks, GUJCET score અને reservation category નાખો. Calculator ગયા વર્ષ ના cutoff ના આધારે probability સહિત colleges ની list બતાવશે."
+  }
+]

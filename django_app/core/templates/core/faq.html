@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}FAQ | AgriPredict{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width:800px">
+  <h2 class="fw-bold mb-4">{% trans "Frequently Asked Questions" %}</h2>
+  <div class="accordion" id="faqAccordion">
+    {% with faqs=faq_list %}
+    {% for faq in faqs %}
+    <div class="accordion-item border-0 shadow-sm mb-2">
+      <h2 class="accordion-header">
+        <button class="accordion-button {% if not forloop.first %}collapsed{% endif %} fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ forloop.counter }}">
+          {{ faq.q }}
+        </button>
+      </h2>
+      <div id="faq{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" data-bs-parent="#faqAccordion">
+        <div class="accordion-body text-muted">{{ faq.a }}</div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="text-muted">{% trans "FAQ content coming soon." %}</div>
+    {% endfor %}
+    {% endwith %}
+  </div>
+</div>
+{% endblock %}

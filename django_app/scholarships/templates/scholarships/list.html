@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Scholarships" %} | AgriPredict{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-2">{% trans "Available Agriculture Scholarships" %}</h2>
+  <p class="text-muted mb-5">{% trans "10 scholarships available for Gujarat agriculture students." %}</p>
+  <div class="row g-4">
+    {% for s in scholarships %}
+    <div class="col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-header bg-success-subtle border-0">
+          <h6 class="fw-bold mb-0 text-success">{{ s.safe_translation_getter:"name,any_language=True" }}</h6>
+          {% if s.notes %}<small class="text-muted">{{ s.safe_translation_getter:"notes,any_language=True" }}</small>{% endif %}
+        </div>
+        <div class="card-body small">
+          <p class="mb-1"><strong>{% trans "Eligible Courses" %}:</strong> {{ s.safe_translation_getter:"eligible_courses,any_language=True" }}</p>
+          <p class="mb-1"><strong>{% trans "Eligibility" %}:</strong> {{ s.safe_translation_getter:"eligibility_criteria,any_language=True" }}</p>
+          <p class="mb-1"><strong>{% trans "Benefits" %}:</strong> {{ s.safe_translation_getter:"benefits,any_language=True" }}</p>
+          {% if s.max_income_lakh %}<p class="mb-1 text-muted"><i class="bi bi-info-circle me-1"></i>{% trans "Max family income" %}: ₹{{ s.max_income_lakh }} {% trans "lakh/year" %}</p>{% endif %}
+        </div>
+        {% if s.apply_url %}
+        <div class="card-footer bg-transparent border-0">
+          <a href="{{ s.apply_url }}" target="_blank" class="btn btn-sm btn-success">{% trans "Apply Now" %} <i class="bi bi-arrow-up-right-circle ms-1"></i></a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

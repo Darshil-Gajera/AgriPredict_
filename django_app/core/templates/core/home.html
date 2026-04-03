@@ -1,0 +1,579 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "AgriPredict — Find Your Agriculture Future" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<style>
+  /* ── ANIMATED BACKGROUND ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(120deg, #ecfdf5, #f0fdf4, #ecfeff);
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
+  opacity: 0.6;
+}
+
+[data-bs-theme="dark"] body::before {
+  background: linear-gradient(120deg, #020617, #0f172a, #020617);
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+:root {
+  /* Premium Light Theme: Soft Pastels with Depth */
+  --section-1: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); /* Mint glass */
+  --section-2: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); /* Ice blue */
+  --section-3: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%); /* Soft Lavender */
+  --section-4: linear-gradient(180deg, #fff7ed 0%, #ffedd5 100%); /* Champagne */
+  --section-5: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%); /* Porcelain */
+  
+  --transition-speed: 0.8s ease-in-out;
+}
+
+[data-bs-theme="dark"] {
+  /* Premium Dark Theme: Deep Jewels and Midnight */
+  --section-1: linear-gradient(180deg, #064e3b 0%, #022c22 100%); /* Deep Emerald */
+  --section-2: linear-gradient(180deg, #1e3a8a 0%, #172554 100%); /* Royal Navy */
+  --section-3: linear-gradient(180deg, #581c87 0%, #2e1065 100%); /* Deep Grape */
+  --section-4: linear-gradient(180deg, #7c2d12 0%, #431407 100%); /* Burnt Sienna */
+  --section-5: linear-gradient(180deg, #0f172a 0%, #020617 100%); /* Onyx Black */
+}
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+section {
+  scroll-snap-align: start;
+}
+
+  /* ── THEME VARIABLES ── */
+  :root {
+    --bg-main: #fcfcfd; 
+    --bg-surface: #ffffff;
+    --bg-surface-alt: #f0fdf4;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --border-color: #e2e8f0;
+    --primary: #059669;
+    --primary-hover: #047857;
+    --primary-light: #d1fae5;
+    --accent: #0284c7;
+    --accent-light: #e0f2fe;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 10px 25px -5px rgb(0 0 0 / 0.05);
+    --shadow-xl: 0 20px 40px -10px rgb(0 0 0 / 0.1);
+  }
+
+  [data-bs-theme="dark"] {
+    --bg-main: #0b1120;
+    --bg-surface: #1e293b;
+    --bg-surface-alt: #0f172a;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --primary: #10b981;
+    --primary-hover: #34d399;
+    --primary-light: rgba(16, 185, 129, 0.15);
+    --accent: #3b82f6;
+    --accent-light: rgba(59, 130, 246, 0.15);
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --shadow-md: 0 10px 25px -5px rgb(0 0 0 / 0.3);
+    --shadow-xl: 0 20px 40px -10px rgb(0 0 0 / 0.5);
+  }
+
+  /* ── GLOBAL STYLES ── */
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-modern {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.8rem 1.6rem; border-radius: 999px; font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; text-decoration: none;
+  }
+  .btn-primary-modern {
+    background: var(--primary); color: #ffffff !important; box-shadow: 0 4px 14px var(--primary-light);
+  }
+  .btn-primary-modern:hover {
+    background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 25px var(--primary-light);
+  }
+  .btn-outline-modern {
+    background: transparent; border: 2px solid var(--border-color); color: var(--text-main);
+  }
+  .btn-outline-modern:hover {
+    border-color: var(--primary); color: var(--primary); background: var(--primary-light);
+  }
+
+  /* ── HERO SECTION ── */
+  .hero-wrap {
+    
+    min-height: 100vh; display: flex; align-items: center; position: relative; padding: 100px 0 60px;
+  }
+  .hero-bg-glow {
+    position: absolute; width: 600px; height: 600px; 
+    background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
+    top: -100px; right: -100px; border-radius: 50%; z-index: -1; pointer-events: none; filter: blur(60px);
+  }
+  .hero-h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--primary); /* Fallback */
+    display: inline-block;
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--bg-surface);
+    border: 1px solid var(--border-color); padding: 6px 16px; border-radius: 100px; font-size: 0.875rem;
+    font-weight: 600; color: var(--text-muted); box-shadow: var(--shadow-sm); margin-bottom: 2rem;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px; background-color: var(--primary); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(5, 150, 105, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+  }
+  
+  .hero-visual {
+    position: relative; z-index: 1; border-radius: 2rem; overflow: visible; 
+    perspective: 1000px;
+  }
+  .hero-img-container {
+    border-radius: 2rem; overflow: hidden; box-shadow: var(--shadow-xl);
+    transform: rotateY(-5deg); transition: transform 0.5s ease; border: 1px solid var(--border-color);
+  }
+  .hero-img-container:hover { transform: rotateY(0deg); }
+  .hero-img { width: 100%; height: auto; max-height: 600px; object-fit: cover; display: block; }
+  
+  .hero-floating-card {
+    position: absolute; bottom: 30px; left: -40px; background: var(--glass-bg); backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 1.5rem;
+    box-shadow: var(--shadow-xl); animation: float 6s ease-in-out infinite; width: 280px; z-index: 2;
+  }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+  /* ── SECTIONS ── */
+  .section-tag {
+    color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: 0.875rem; margin-bottom: 0.5rem; display: block;
+  }
+  .section-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; color: var(--text-main); margin-bottom: 1.5rem; }
+
+  .how-it-works-img {
+    width: 100%; height: 500px; object-fit: cover; border-radius: 2rem; box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border-color);
+  }
+  @media (min-width: 992px) {
+    .sticky-lg-top-custom { position: sticky; top: 120px; }
+  }
+
+  .step-row {
+    background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 1.5rem;
+    padding: 2rem; margin-bottom: 1.25rem; display: flex; gap: 1.5rem; transition: all 0.3s ease;
+  }
+  .step-row:hover { transform: translateX(10px); border-color: var(--primary); box-shadow: var(--shadow-md); }
+  .step-num-circle {
+    width: 50px; height: 50px; background: var(--primary-light); color: var(--primary);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; font-weight: 800; flex-shrink: 0;
+  }
+
+  /* ── CARDS ── */
+  .cat-card {
+    border-radius: 1.5rem; overflow: hidden; position: relative; height: 400px; display: flex; flex-direction: column;
+    justify-content: flex-end; transition: transform 0.4s ease; box-shadow: var(--shadow-md);
+  }
+  .cat-card:hover { transform: translateY(-10px); }
+  .cat-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform 0.7s ease; }
+  .cat-card:hover .cat-img { transform: scale(1.05); }
+  .cat-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 70%); z-index: 1; }
+  .cat-content { position: relative; z-index: 2; padding: 2rem; color: white; }
+  .cat-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; border: 1px solid rgba(255,255,255,0.1); }
+
+  .uni-card {
+    position: relative; border-radius: 1.5rem; overflow: hidden; height: 240px; display: flex; 
+    align-items: center; text-align: center; transition: all 0.4s ease; box-shadow: var(--shadow-md);
+  }
+  .uni-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform 0.8s ease; }
+  .uni-card:hover .uni-img { transform: scale(1.1); }
+  .uni-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 1; transition: background 0.4s ease; }
+  .uni-card:hover .uni-overlay { background: rgba(0,0,0,0.7); }
+  .uni-content { position: relative; z-index: 2; padding: 1.5rem; color: #fff; width: 100%; }
+  .uni-abbr { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+  /* ── TICKER ── */
+  .ticker-wrap { background: var(--primary); color: white; padding: 10px 0; overflow: hidden; white-space: nowrap; }
+  .ticker-track { display: inline-block; animation: ticker 40s linear infinite; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .ticker-item { display: inline-flex; align-items: center; gap: 8px; margin-right: 3rem; }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.5, 0, 0, 1); }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    .hero-floating-card { display: none; }
+    .hero-wrap { padding-top: 80px; text-align: center; }
+    .eyebrow { justify-content: center; }
+    .step-row:hover { transform: none; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if important_notifications %}
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    {% for n in important_notifications %}
+      <span class="ticker-item"><i class="bi bi-megaphone-fill"></i> {{n.title}}</span>
+    {% endfor %}
+    {% for n in important_notifications %}
+      <span class="ticker-item"><i class="bi bi-megaphone-fill"></i> {{n.title}}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<section class="hero-wrap section-1">
+  <div class="hero-bg-glow"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center g-5">
+      
+      <div class="col-lg-6 reveal active">
+        <div class="eyebrow">
+          <span class="pulse-dot"></span>
+          {% trans "Gujarat Agriculture Admissions 2025–26" %}
+        </div>
+        
+        <h1 class="hero-h1">
+          {% trans "Secure Your Future in" %} <br>
+          <span class="text-gradient">{% trans "Agriculture Science" %}</span>
+        </h1>
+        
+        <p class="mb-4 text-muted" style="font-size: 1.1rem; line-height: 1.6; max-width: 550px;">
+          {% trans "Calculate your official merit score, discover eligible colleges across JAU, AAU, NAU & SDAU, and get AI-powered guidance in Gujarati or English." %}
+        </p>
+        
+        <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+          <a href="{% url 'predict:category' 1 %}" class="btn-modern btn-primary-modern">
+            <i class="bi bi-calculator-fill"></i> {% trans "Calculate Merit Score" %}
+          </a>
+          <a href="{% url 'colleges:list' %}" class="btn-modern btn-outline-modern">
+            {% trans "Explore Colleges" %} <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="row mt-5 pt-4 border-top border-light-subtle g-3">
+          <div class="col-4">
+            <div class="font-display fs-3 fw-bold">31</div>
+            <div class="text-muted small fw-medium">{% trans "Colleges" %}</div>
+          </div>
+          <div class="col-4">
+            <div class="font-display fs-3 fw-bold">4</div>
+            <div class="text-muted small fw-medium">{% trans "Universities" %}</div>
+          </div>
+          <div class="col-4">
+            <div class="font-display fs-3 fw-bold">10+</div>
+            <div class="text-muted small fw-medium">{% trans "Scholarships" %}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6 d-none d-lg-block reveal active delay-2">
+        <div class="hero-visual">
+          <div class="hero-img-container">
+            <img src="{% static 'images/hero.png' %}" alt="{% trans 'Agriculture Education' %}" class="hero-img" loading="eager">
+          </div>
+          
+          <div class="hero-floating-card">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="bg-success rounded-circle p-2 text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                <i class="bi bi-check-lg"></i>
+              </div>
+              <div>
+                <h6 class="mb-0 fw-bold small">{% trans "Merit Calculated" %}</h6>
+                <small class="text-muted">{% trans "Top Pick: JAU Junagadh" %}</small>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between text-muted x-small mb-1" style="font-size: 0.7rem;">
+              <span class="fw-bold">{% trans "Probability" %}</span>
+              <span class="text-success fw-bold">{% trans "High Match" %}</span>
+            </div>
+            <div class="progress" style="height: 6px;">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="py-5 section-2">
+  <div class="container py-lg-5">
+    <div class="row g-5 align-items-start">
+      
+      <div class="col-lg-5 d-none d-lg-block reveal delay-1">
+        <div class="position-relative sticky-lg-top-custom">
+          <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1000&auto=format&fit=crop" class="how-it-works-img" alt="{% trans 'Digital Farming' %}" loading="lazy">
+          
+          <div class="position-absolute bottom-0 start-0 m-4 p-3 rounded-4" style="background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);">
+            <div class="d-flex align-items-center gap-3">
+              <i class="bi bi-robot fs-2 text-primary"></i>
+              <div>
+                <h6 class="mb-0 fw-bold">{% trans "AI Powered" %}</h6>
+                <small class="text-muted">{% trans "Fast & Accurate" %}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7 reveal delay-2 ">
+        <span class="section-tag">{% trans "How It Works" %}</span>
+        <h2 class="section-title">{% trans "Your Admission Journey Simplified" %}</h2>
+
+        <div class="mt-4">
+          <div class="step-row">
+            <div class="step-num-circle">1</div>
+            <div>
+              <h4 class="fw-bold h5 mb-2">{% trans "Calculate Merit" %}</h4>
+              <p class="text-muted mb-0 small">{% trans "Enter your 12th standard theory marks and GUJCET score. Our algorithm instantly calculates your official Gujarat board merit score." %}</p>
+            </div>
+          </div>
+
+          <div class="step-row">
+            <div class="step-num-circle">2</div>
+            <div>
+              <h4 class="fw-bold h5 mb-2">{% trans "Discover Colleges" %}</h4>
+              <p class="text-muted mb-0 small">{% trans "Compare your score against previous years' cutoffs to see exactly which programs and universities you have the highest probability of joining." %}</p>
+            </div>
+          </div>
+
+          <div class="step-row">
+            <div class="step-num-circle">3</div>
+            <div>
+              <h4 class="fw-bold h5 mb-2">{% trans "Ask AgriBot" %}</h4>
+              <p class="text-muted mb-0 small">{% trans "Have questions about documents or scholarships? Our AI assistant answers instantly in both English and Gujarati." %}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-surface-alt border-top border-bottom section-3">
+  <div class="container py-lg-5">
+    <div class="row mb-5 reveal">
+      <div class="col-lg-8">
+        <span class="section-tag">{% trans "Programmes" %}</span>
+        <h2 class="section-title">{% trans "Choose Your Path" %}</h2>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 reveal delay-1">
+        <a href="{% url 'predict:category' 1 %}" class="cat-card text-decoration-none">
+          <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=1200&auto=format&fit=crop" 
+     class="h-100 w-100 object-fit-cover position-absolute top-0 start-0" 
+     style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);" 
+     alt="{% trans 'B.Sc. Horticulture & Forestry' %}" 
+     loading="lazy">
+          
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <span class="badge bg-primary mb-3">{% trans "Group B Only" %}</span>
+            <h3 class="h4 fw-bold mb-2">{% trans "Core Agriculture" %}</h3>
+            <p class="mb-3 opacity-75 small">{% trans "B.Sc. Agriculture, Horticulture, Forestry & Biotechnology." %}</p>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="cat-tag">JAU</span><span class="cat-tag">AAU</span><span class="cat-tag">NAU</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 reveal delay-2">
+        <a href="{% url 'predict:category' 2 %}" class="cat-card text-decoration-none">
+          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" 
+     class="cat-img position-absolute h-100 w-100 top-0 start-0" 
+     style="object-fit: cover; z-index: 0; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);" 
+     alt="{% trans 'Agricultural Engineering & Technology' %}" 
+     loading="lazy">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <span class="badge bg-warning text-dark mb-3">{% trans "Group A & B" %}</span>
+            <h3 class="h4 fw-bold mb-2">{% trans "Tech & Engineering" %}</h3>
+            <p class="mb-3 opacity-75 small">{% trans "B.Tech Agri Engineering, Food Tech & IT." %}</p>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="cat-tag"><i class="bi bi-graph-up-arrow"></i> {% trans "High Demand" %}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-4 reveal delay-3">
+        <a href="{% url 'predict:category' 3 %}" class="cat-card text-decoration-none">
+          <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800&auto=format&fit=crop" 
+     class="cat-img position-absolute h-100 w-100 top-0 start-0" 
+     style="object-fit: cover; z-index: 0; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);" 
+     alt="{% trans 'Community Science & Nutrition' %}" 
+     loading="lazy">
+     <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1000&auto=format&fit=crop" 
+     class="h-100 w-100 object-fit-cover position-absolute top-0 start-0" 
+     style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);" 
+     alt="{% trans 'B.Sc. Community Science, Dietetics & Nutrition' %}" 
+     loading="lazy">
+          <div class="cat-overlay"></div>
+          <div class="cat-content">
+            <span class="badge bg-success mb-3">{% trans "Group A & B" %}</span>
+            <h3 class="h4 fw-bold mb-2">{% trans "Community Science" %}</h3>
+            <p class="mb-3 opacity-75 small">{% trans "B.Sc. Community Science, Dietetics & Nutrition." %}</p>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="cat-tag">{% trans "Healthcare" %}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 section-5">
+  <div class="container py-lg-5">
+    <div class="text-center mb-5 reveal">
+      <span class="section-tag">{% trans "Institutions" %}</span>
+      <h2 class="section-title">{% trans "Partner Universities" %}</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-lg-3 reveal delay-1">
+        <div class="uni-card">
+          <img src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=600" class="uni-img" alt="JAU" loading="lazy">
+          <div class="uni-overlay"></div>
+          <div class="uni-content">
+            <div class="uni-abbr">JAU</div>
+            <div class="small opacity-75">{% trans "Junagadh" %}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 reveal delay-2">
+        <div class="uni-card">
+          <img src="https://images.unsplash.com/photo-1498084393753-b411b2d26b34?q=80&w=600" class="uni-img" alt="AAU" loading="lazy">
+          <div class="uni-overlay"></div>
+          <div class="uni-content">
+            <div class="uni-abbr text-warning">AAU</div>
+            <div class="small opacity-75">{% trans "Anand" %}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 reveal delay-3">
+        <div class="uni-card">
+          <img src="https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80&w=1200&auto=format&fit=crop" 
+     class="h-100 w-100 object-fit-cover position-absolute top-0 start-0" 
+     style="transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);" 
+     alt="{% trans 'B.Sc. Agriculture, Horticulture, Forestry & Biotechnology' %}" 
+     loading="lazy">
+          <div class="uni-overlay"></div>
+          <div class="uni-content">
+            <div class="uni-abbr text-success">NAU</div>
+            <div class="small opacity-75">{% trans "Navsari" %}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 reveal delay-4">
+        <div class="uni-card">
+          <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600" class="uni-img" alt="SDAU" loading="lazy">
+          <div class="uni-overlay"></div>
+          <div class="uni-content">
+            <div class="uni-abbr text-primary">SDAU</div>
+            <div class="small opacity-75">{% trans "Dantiwada" %}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 mb-5 reveal ">
+  <div class="container">
+    <div class="p-5 text-center rounded-5 position-relative overflow-hidden shadow-lg">
+      <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1200&auto=format&fit=crop" 
+     class="position-absolute h-100 w-100 top-0 start-0" 
+     style="object-fit: cover; z-index: -2;" 
+     alt="{% trans 'Modern Agriculture Field' %}">
+      <div class="position-absolute h-100 w-100 top-0 start-0" style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.95), rgba(2, 132, 199, 0.9)); z-index: -1;"></div>
+      
+      <div class="py-4">
+        <h2 class="font-display fw-bold mb-3 text-white h1">{% trans "Ready to Find Your Perfect College?" %}</h2>
+        <p class="mb-5 text-white-50 mx-auto" style="max-width: 600px;">{% trans "Join thousands of Gujarat students planning their education with confidence and AI-backed accuracy." %}</p>
+        
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="{% url 'predict:category' 1 %}" class="btn-modern bg-white text-dark shadow-lg">
+            <i class="bi bi-calculator-fill text-success"></i> {% trans "Start Calculating Free" %}
+          </a>
+          {% if not user.is_authenticated %}
+          <a href="{% url 'account_signup' %}" class="btn-modern border border-white-50 text-white">
+            {% trans "Create Account" %}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>
+{% endblock %}

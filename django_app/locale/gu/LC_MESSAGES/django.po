@@ -1,0 +1,187 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AgriPredict\n"
+"Language: gu\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+# ── NAVBAR ──
+msgid "Home"
+msgstr "હોમ"
+
+msgid "Merit Calculator"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
+
+msgid "College List"
+msgstr "કોલેજ યાદી"
+
+msgid "Admission Guide"
+msgstr "પ્રવેશ માર્ગદર્શિકા"
+
+msgid "Notifications"
+msgstr "સૂચનાઓ"
+
+msgid "Scholarships"
+msgstr "સ્કોલરશિપ"
+
+msgid "FAQ"
+msgstr "પ્રશ્નોતરી"
+
+msgid "Contact"
+msgstr "સંપર્ક"
+
+# ── AUTH ──
+msgid "Login"
+msgstr "લોગિન"
+
+msgid "Sign Up"
+msgstr "સાઇન અપ"
+
+msgid "Logout"
+msgstr "લૉગઆઉટ"
+
+msgid "Profile"
+msgstr "પ્રોફાઇલ"
+
+msgid "Saved Results"
+msgstr "સેવ કરેલા પરિણામો"
+
+# ── HERO ──
+msgid "AgriPredict — Find Your Agriculture Future"
+msgstr "AgriPredict — તમારું કૃષિ ભવિષ્ય શોધો"
+
+msgid "Gujarat Agriculture Admissions 2025–26"
+msgstr "ગુજરાત કૃષિ પ્રવેશ 2025–26"
+
+msgid "Secure Your Future in"
+msgstr "તમારું ભવિષ્ય સુરક્ષિત બનાવો"
+
+msgid "Agriculture Science"
+msgstr "કૃષિ વિજ્ઞાન"
+
+msgid "Calculate your official merit score, discover eligible colleges across JAU, AAU, NAU & SDAU, and get AI-powered guidance in Gujarati or English."
+msgstr "તમારો સત્તાવાર મેરિટ સ્કોર ગણો, JAU, AAU, NAU અને SDAUમાં યોગ્ય કોલેજ શોધો અને ગુજરાતી અથવા અંગ્રેજીમાં AI માર્ગદર્શન મેળવો"
+
+msgid "Calculate Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+msgid "Explore Colleges"
+msgstr "કોલેજ શોધો"
+
+msgid "Merit Calculated"
+msgstr "મેરિટ ગણાઈ"
+
+msgid "Top Pick: JAU Junagadh"
+msgstr "ટોપ પસંદગી: JAU જુનાગઢ"
+
+# ── COMMON ──
+msgid "Colleges"
+msgstr "કોલેજો"
+
+msgid "Universities"
+msgstr "યુનિવર્સિટીઓ"
+
+msgid "Quick Links"
+msgstr "ઝડપી લિંક્સ"
+
+msgid "All rights reserved."
+msgstr "બધા અધિકારો સુરક્ષિત છે"
+
+# ── HOW IT WORKS ──
+msgid "How It Works"
+msgstr "કેવી રીતે કાર્ય કરે છે"
+
+msgid "Your Admission Journey"
+msgstr "તમારો પ્રવેશ માર્ગ"
+
+msgid "Simplified"
+msgstr "સરળ બનાવેલ"
+
+msgid "Calculate Merit"
+msgstr "મેરિટ ગણો"
+
+msgid "Discover Colleges"
+msgstr "કોલેજ શોધો"
+
+msgid "Ask AgriBot"
+msgstr "AgriBot ને પૂછો"
+
+msgid "Enter your 12th standard theory marks and GUJCET score. Our algorithm instantly calculates your official Gujarat board merit score."
+msgstr "તમારા 12મા ધોરણના થિયરી માર્ક્સ અને GUJCET સ્કોર દાખલ કરો. અમારો એલ્ગોરિધમ તરત જ તમારો મેરિટ સ્કોર ગણશે"
+
+msgid "Compare your score against previous years' cutoffs to see exactly which programs and universities you have the highest probability of joining."
+msgstr "તમારા સ્કોરની અગાઉના વર્ષના કટઓફ સાથે તુલના કરો અને જાણો કે કયા કાર્યક્રમમાં પ્રવેશની વધુ શક્યતા છે"
+
+msgid "Have questions about documents or scholarships? Our AI assistant answers instantly in both English and Gujarati."
+msgstr "દસ્તાવેજો અથવા સ્કોલરશિપ વિશે પ્રશ્ન છે? અમારો AI સહાયક તરત જ ગુજરાતી અને અંગ્રેજીમાં જવાબ આપે છે"
+
+# ── PROGRAMMES ──
+msgid "Programmes"
+msgstr "કાર્યક્રમો"
+
+msgid "Choose Your Path"
+msgstr "તમારો માર્ગ પસંદ કરો"
+
+msgid "Group B Only"
+msgstr "માત્ર ગ્રુપ B"
+
+msgid "Group A & B"
+msgstr "ગ્રુપ A અને B"
+
+msgid "Core Agriculture"
+msgstr "મૂળ કૃષિ"
+
+msgid "Tech & Engineering"
+msgstr "ટેક અને એન્જિનિયરિંગ"
+
+msgid "Community Science"
+msgstr "સમુદાય વિજ્ઞાન"
+
+msgid "High Demand"
+msgstr "ઉચ્ચ માંગ"
+
+msgid "Healthcare"
+msgstr "આરોગ્ય ક્ષેત્ર"
+
+msgid "Nutrition"
+msgstr "પોષણ"
+
+msgid "B.Sc. Agriculture, Horticulture, Forestry & Biotechnology."
+msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
+
+msgid "B.Tech Agri Engineering, Food Tech & IT."
+msgstr "બી.ટેક કૃષિ એન્જિનિયરિંગ, ફૂડ ટેક અને આઈટી"
+
+msgid "B.Sc. Community Science, Dietetics & Nutrition."
+msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
+
+# ── UNIVERSITIES ──
+msgid "Institutions"
+msgstr "સંસ્થાઓ"
+
+msgid "Partner Universities"
+msgstr "ભાગીદાર યુનિવર્સિટીઓ"
+
+msgid "Junagadh Agricultural University"
+msgstr "જુનાગઢ કૃષિ યુનિવર્સિટી"
+
+msgid "Anand Agricultural University"
+msgstr "આણંદ કૃષિ યુનિવર્સિટી"
+
+msgid "Navsari Agricultural University"
+msgstr "નવસારી કૃષિ યુનિવર્સિટી"
+
+msgid "Sardarkrushinagar Dantiwada"
+msgstr "સરદારકૃષ્ણનગર ડાંતીવાડા"
+
+# ── CTA ──
+msgid "Ready to Find Your Perfect College?"
+msgstr "તમારી યોગ્ય કોલેજ શોધવા તૈયાર છો?"
+
+msgid "Join thousands of Gujarat students planning their education with confidence."
+msgstr "હજારો ગુજરાતના વિદ્યાર્થીઓ સાથે આત્મવિશ્વાસથી તમારું શિક્ષણ આયોજન કરો"
+
+msgid "Start Calculating Free"
+msgstr "મફતમાં ગણતરી શરૂ કરો"
+
+msgid "Create Account"
+msgstr "એકાઉન્ટ બનાવો"
