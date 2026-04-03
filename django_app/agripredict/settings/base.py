@@ -103,7 +103,7 @@ ACCOUNT_SIGNUP_FIELDS = [
     "password2*"
 ]
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
 
 # ── Password Validation ───────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
