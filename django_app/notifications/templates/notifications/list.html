@@ -1,38 +1,120 @@
 {% extends "base.html" %}
 {% load i18n %}
+
 {% block title %}{% trans "Notifications" %} | AgriPredict{% endblock %}
+
 {% block content %}
 <div class="container py-5">
-  <h2 class="fw-bold mb-4">{% trans "Admission Notifications" %}</h2>
-  <div class="row g-3">
-    {% for n in notifications %}
-    <div class="col-12">
-      <div class="card border-0 shadow-sm {% if n.is_important %}border-start border-4 border-warning{% endif %}">
-        <div class="card-body d-flex justify-content-between align-items-center flex-wrap gap-2">
-          <div>
-            {% if n.is_important %}<span class="badge bg-warning text-dark me-2">{% trans "Important" %}</span>{% endif %}
-            <span class="text-muted small me-3">{{ n.published_date|date:"d/m/Y" }}</span>
-            <strong>{{ n.safe_translation_getter:"title,any_language=True" }}</strong>
-            {% if n.safe_translation_getter:"summary,any_language=True" %}
-            <p class="text-muted small mb-0 mt-1">{{ n.safe_translation_getter:"summary,any_language=True" }}</p>
-            {% endif %}
-          </div>
-          {% if n.pdf %}
-          <a href="{{ n.pdf.url }}" target="_blank" class="btn btn-sm btn-success flex-shrink-0">
-            <i class="bi bi-file-earmark-pdf me-1"></i>{% trans "View PDF" %}
-          </a>
-          {% elif n.external_url %}
-          <a href="{{ n.external_url }}" target="_blank" class="btn btn-sm btn-outline-success flex-shrink-0">{% trans "View" %}</a>
-          {% endif %}
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="fw-bold display-6 mb-2 text-body">{% trans "Admission Notifications" %}</h2>
+            <div class="mx-auto bg-success rounded-pill" style="width: 80px; height: 4px;"></div>
+            <p class="text-secondary mt-3">{% trans "Stay updated with the latest announcements from the admission committee." %}</p>
         </div>
-      </div>
     </div>
-    {% empty %}
-    <div class="col-12 text-center text-muted py-5">
-      <i class="bi bi-bell-slash fs-1"></i>
-      <p class="mt-2">{% trans "No notifications yet." %}</p>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="notification-timeline">
+                {% for n in notifications %}
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body {% if n.is_important %}important-border{% endif %}">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0">
+                                    <div class="d-md-block">
+                                        <span class="d-block fw-bold fs-4 text-success mb-0">{{ n.published_date|date:"d" }}</span>
+                                        <span class="text-uppercase small fw-bold text-secondary">{{ n.published_date|date:"M Y" }}</span>
+                                    </div>
+                                    {% if n.is_important %}
+                                        <span class="badge rounded-pill bg-warning text-dark mt-2 px-3 py-2 shadow-sm">
+                                            <i class="bi bi-exclamation-triangle-fill me-1"></i>{% trans "Important" %}
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md">
+                                    <h5 class="fw-bold mb-2">{{ n.title }}</h5>
+                                    {% if n.summary %}
+                                        <p class="text-secondary mb-0 small line-clamp-2">{{ n.summary }}</p>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md-auto mt-3 mt-md-0 ps-md-4 border-start-separator">
+                                    <div class="d-flex flex-row flex-md-column gap-2 justify-content-center">
+                                        {% if n.pdf %}
+                                        <a href="{{ n.pdf.url }}" target="_blank" class="btn btn-success px-3 py-2 rounded-pill shadow-sm">
+                                            <i class="bi bi-file-earmark-pdf-fill me-1"></i>{% trans "View PDF" %}
+                                        </a>
+                                        {% endif %}
+                                        
+                                        {% if n.external_url %}
+                                        <a href="{{ n.external_url }}" target="_blank" class="btn btn-outline-success px-3 py-2 rounded-pill shadow-sm">
+                                            <i class="bi bi-box-arrow-up-right me-1"></i>{% trans "Details" %}
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <div class="display-1 text-secondary opacity-25 mb-4">
+                        <i class="bi bi-bell-slash"></i>
+                    </div>
+                    <h4 class="text-secondary">{% trans "No notifications yet." %}</h4>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-    {% endfor %}
-  </div>
 </div>
+
+<style>
+    /* Dark Mode Text Safety */
+    .text-body { color: var(--bs-body-color) !important; }
+    .text-secondary { color: var(--bs-secondary-color) !important; }
+
+    /* Modern UI Effects */
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.15) !important;
+    }
+    
+    .transition-all {
+        transition: all 0.3s ease-in-out;
+    }
+    
+    /* Warning border for important items */
+    .important-border {
+        border-left: 6px solid #ffc107 !important;
+    }
+
+    /* Dynamic Border colors for Dark/Light Mode */
+    .border-end-separator, .border-start-separator {
+        border-color: var(--bs-border-color) !important;
+    }
+
+    @media (min-width: 768px) {
+        .border-end-separator { border-right: 1px solid var(--bs-border-color) !important; }
+        .border-start-separator { border-left: 1px solid var(--bs-border-color) !important; }
+    }
+
+    /* Summary truncation */
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
+        overflow: hidden;
+    }
+
+    .btn {
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+</style>
 {% endblock %}

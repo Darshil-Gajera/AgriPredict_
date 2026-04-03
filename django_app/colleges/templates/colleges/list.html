@@ -1,36 +1,128 @@
 {% extends "base.html" %}
 {% load i18n %}
+
 {% block title %}{% trans "College List" %} | AgriPredict{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-  <h2 class="fw-bold mb-1">{% trans "Agricultural Colleges in Gujarat" %}</h2>
-  <p class="text-muted mb-4">{% trans "31 colleges across 4 universities offering agriculture programmes." %}</p>
-  {% for university in universities %}
-  <div class="mb-5">
-    <h4 class="fw-bold text-success border-bottom pb-2 mb-3">{{ university.safe_translation_getter:"name,any_language=True" }}</h4>
-    <div class="row g-3">
-      {% for college in university.colleges.all %}
-      <div class="col-md-6 col-lg-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-              <span class="badge bg-success-subtle text-success fw-semibold">{{ college.code }}</span>
-              <span class="badge bg-body-secondary text-muted">Cat {{ college.category }}</span>
+<div class="bg-body-tertiary border-bottom mb-5">
+    <div class="container py-5 text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="fw-bold display-6 mb-2 text-body">
+                    {% trans "Agricultural Colleges in Gujarat" %}
+                </h1>
+                
+                <div class="d-flex justify-content-center my-3" aria-hidden="true">
+                    <div style="width: 60px; height: 4px;" class="bg-success rounded-pill shadow-sm"></div>
+                </div>
+
+                <p class="text-secondary mt-3">
+                    {% trans "Explore colleges across 4 universities offering agriculture programmes." %}
+                </p>
             </div>
-            <h6 class="fw-semibold mb-1">{{ college.safe_translation_getter:"name,any_language=True" }}</h6>
-            <p class="small text-muted mb-2"><i class="bi bi-geo-alt me-1"></i>{{ college.safe_translation_getter:"city,any_language=True" }}</p>
-            <div class="d-flex gap-2">
-              <a href="{% url 'colleges:detail' college.code %}" class="btn btn-sm btn-outline-success">{% trans "Details" %}</a>
-              {% if college.brochure %}
-              <a href="{{ college.brochure.url }}" class="btn btn-sm btn-success" target="_blank"><i class="bi bi-download me-1"></i>{% trans "Brochure" %}</a>
-              {% endif %}
-            </div>
-          </div>
         </div>
-      </div>
-      {% endfor %}
     </div>
-  </div>
-  {% endfor %}
 </div>
+
+<div class="container py-2 mb-5">
+    {% for university in universities %}
+    <div class="mb-5">
+        <div class="d-flex align-items-center mb-4">
+            <h4 class="fw-bold text-success border-bottom border-3 border-success pb-2 mb-0 fs-4">
+                {{ university.name }}
+            </h4>
+            <div class="flex-grow-1 ms-3 border-bottom opacity-25" aria-hidden="true"></div>
+        </div>
+
+        <div class="row g-4">
+            {% for college in university.colleges.all %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border bg-body shadow-sm hover-shadow transition">
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 fw-semibold">
+                                {{ college.code }}
+                            </span>
+                            <span class="badge bg-body-tertiary text-body border px-2 py-1 fw-medium">
+                                {% trans "Category" %} {{ college.category }}
+                            </span>
+                        </div>
+
+                        <h5 class="fw-bold mb-2 text-body lh-base fs-5">{{ college.name }}</h5>
+                        
+                        <div class="mb-4" style="min-height: 1.5rem;">
+                            {% if college.city or college.district %}
+                                <p class="small text-secondary mb-0">
+                                    <i class="bi bi-geo-alt-fill text-danger me-1" aria-hidden="true"></i>
+                                    
+                                    {% if college.city %}
+                                        {{ college.city }}
+                                    {% endif %}
+
+                                    {% if college.district and college.district != college.city %}
+                                        {% if college.city %}, {% endif %}
+                                        {{ college.district }}
+                                    {% elif not college.city and college.district %}
+                                        {{ college.district }}
+                                    {% endif %}
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <div class="mt-auto d-flex gap-2">
+                            <a href="{% url 'colleges:detail' college.code %}" 
+                               class="btn btn-sm btn-outline-success flex-grow-1 rounded-pill fw-bold"
+                               aria-label="{% trans 'View details for' %} {{ college.name }}">
+                                <i class="bi bi-info-circle me-1"></i>{% trans "Details" %}
+                            </a>
+                            
+                            {% if college.brochure %}
+                            <a href="{{ college.brochure.url }}" 
+                               class="btn btn-sm btn-success flex-grow-1 rounded-pill fw-bold" 
+                               target="_blank"
+                               aria-label="{% trans 'Download brochure for' %} {{ college.name }}">
+                                <i class="bi bi-download me-1"></i>{% trans "Brochure" %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-building-exclamation display-4 text-secondary opacity-25 mb-3"></i>
+                <p class="text-secondary italic fs-6">{% trans "No colleges listed for this university yet." %}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    /* Premium Scaling and Shadow Transition */
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,.125)!important;
+    }
+    
+    .transition {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Dark Mode specific border and shadow adjustments */
+    [data-bs-theme="dark"] .card {
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    [data-bs-theme="dark"] .hover-shadow:hover {
+        border-color: var(--bs-success-border-subtle);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,.5)!important;
+    }
+
+    /* Italic fallback for empty states */
+    .italic {
+        font-style: italic;
+    }
+</style>
 {% endblock %}

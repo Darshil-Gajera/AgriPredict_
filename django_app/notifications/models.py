@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from parler.models import TranslatableModel, TranslatedFields
-
+# Import the auto_translate_fields from your colleges.models or common utils
+from colleges.models import auto_translate_fields 
 
 class Notification(TranslatableModel):
     """Official admission notification with optional PDF attachment."""
@@ -22,7 +23,14 @@ class Notification(TranslatableModel):
         verbose_name = _("notification")
         verbose_name_plural = _("notifications")
 
+    def save(self, *args, **kwargs):
+        # Save the main record first
+        super().save(*args, **kwargs)
+        # Generate Gujarati translation automatically if it's missing
+        auto_translate_fields(self, ['title', 'summary'])
+
     def __str__(self):
+        # Parler helper to get title in any available language
         return self.safe_translation_getter("title", any_language=True) or f"Notification {self.pk}"
 
 
@@ -37,7 +45,7 @@ class AdmissionDate(models.Model):
         ("other", _("Other")),
     ]
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200) # English only, or consider TranslatableModel
     event_type = models.CharField(max_length=10, choices=EVENT_TYPES)
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)

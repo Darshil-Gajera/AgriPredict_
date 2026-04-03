@@ -1,187 +1,793 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: AgriPredict\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-03 17:24+0530\n"
 "Language: gu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
-# ── NAVBAR ──
-msgid "Home"
-msgstr "હોમ"
+#: .\accounts\admin.py:13
+msgid "Personal info"
+msgstr ""
 
-msgid "Merit Calculator"
-msgstr "મેરિટ કેલ્ક્યુલેટર"
+#: .\accounts\admin.py:14
+msgid "Preferences"
+msgstr ""
 
-msgid "College List"
-msgstr "કોલેજ યાદી"
+#: .\accounts\admin.py:15
+msgid "Permissions"
+msgstr ""
 
-msgid "Admission Guide"
-msgstr "પ્રવેશ માર્ગદર્શિકા"
+#: .\accounts\admin.py:16
+msgid "Important dates"
+msgstr ""
 
-msgid "Notifications"
+#: .\accounts\forms.py:14
+msgid "Receive email notifications"
 msgstr "સૂચનાઓ"
 
-msgid "Scholarships"
-msgstr "સ્કોલરશિપ"
+#: .\accounts\forms.py:15
+msgid "Receive SMS notifications"
+msgstr "સૂચનાઓ"
 
-msgid "FAQ"
-msgstr "પ્રશ્નોતરી"
+#: .\accounts\models.py:10
+msgid "email address"
+msgstr ""
 
-msgid "Contact"
-msgstr "સંપર્ક"
+#: .\accounts\models.py:11
+msgid "phone number"
+msgstr ""
 
-# ── AUTH ──
-msgid "Login"
-msgstr "લોગિન"
+#: .\accounts\models.py:25
+msgid "user"
+msgstr ""
 
-msgid "Sign Up"
-msgstr "સાઇન અપ"
+#: .\accounts\models.py:26
+msgid "users"
+msgstr ""
 
-msgid "Logout"
-msgstr "લૉગઆઉટ"
-
-msgid "Profile"
-msgstr "પ્રોફાઇલ"
-
-msgid "Saved Results"
+#: .\accounts\models.py:53
+msgid "saved result"
 msgstr "સેવ કરેલા પરિણામો"
 
+#: .\accounts\views.py:16
+msgid "Profile updated successfully."
+msgstr ""
+
+#: .\accounts\views.py:34
+msgid "Result deleted."
+msgstr ""
+
 # ── HERO ──
+#: .\agripredict\templates\base.html:8 .\core\templates\core\home.html:4
 msgid "AgriPredict — Find Your Agriculture Future"
 msgstr "AgriPredict — તમારું કૃષિ ભવિષ્ય શોધો"
 
-msgid "Gujarat Agriculture Admissions 2025–26"
-msgstr "ગુજરાત કૃષિ પ્રવેશ 2025–26"
+# ── NAVBAR ──
+#: .\agripredict\templates\base.html:31
+msgid "Home"
+msgstr "હોમ"
 
-msgid "Secure Your Future in"
-msgstr "તમારું ભવિષ્ય સુરક્ષિત બનાવો"
+#: .\agripredict\templates\base.html:34 .\agripredict\templates\base.html:129
+msgid "Merit Calculator"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
 
-msgid "Agriculture Science"
-msgstr "કૃષિ વિજ્ઞાન"
+#: .\agripredict\templates\base.html:36
+msgid "Core Agriculture Programs"
+msgstr "મૂળ કૃષિ"
 
-msgid "Calculate your official merit score, discover eligible colleges across JAU, AAU, NAU & SDAU, and get AI-powered guidance in Gujarati or English."
-msgstr "તમારો સત્તાવાર મેરિટ સ્કોર ગણો, JAU, AAU, NAU અને SDAUમાં યોગ્ય કોલેજ શોધો અને ગુજરાતી અથવા અંગ્રેજીમાં AI માર્ગદર્શન મેળવો"
+#: .\agripredict\templates\base.html:37
+msgid "Technical Agriculture Programs"
+msgstr ""
 
-msgid "Calculate Merit Score"
-msgstr "મેરિટ સ્કોર ગણો"
+#: .\agripredict\templates\base.html:38 .\colleges\models.py:64
+msgid "Home & Community Science"
+msgstr "સમુદાય વિજ્ઞાન"
 
-msgid "Explore Colleges"
-msgstr "કોલેજ શોધો"
+#: .\agripredict\templates\base.html:42
+#: .\colleges\templates\colleges\list.html:4
+msgid "College List"
+msgstr "કોલેજ યાદી"
 
-msgid "Merit Calculated"
-msgstr "મેરિટ ગણાઈ"
+#: .\agripredict\templates\base.html:43
+#: .\core\templates\core\admission_guide.html:3
+msgid "Admission Guide"
+msgstr "પ્રવેશ માર્ગદર્શિકા"
 
-msgid "Top Pick: JAU Junagadh"
-msgstr "ટોપ પસંદગી: JAU જુનાગઢ"
+#: .\agripredict\templates\base.html:44
+#: .\notifications\templates\notifications\list.html:4
+msgid "Notifications"
+msgstr "સૂચનાઓ"
 
-# ── COMMON ──
-msgid "Colleges"
-msgstr "કોલેજો"
+#: .\agripredict\templates\base.html:45 .\agripredict\templates\base.html:124
+#: .\core\templates\core\home.html:313
+#: .\scholarships\templates\scholarships\list.html:3
+msgid "Scholarships"
+msgstr "સ્કોલરશિપ"
 
-msgid "Universities"
-msgstr "યુનિવર્સિટીઓ"
+#: .\agripredict\templates\base.html:46 .\agripredict\templates\base.html:123
+msgid "FAQ"
+msgstr "પ્રશ્નોતરી"
 
+#: .\agripredict\templates\base.html:81
+msgid "Profile"
+msgstr "પ્રોફાઇલ"
+
+#: .\agripredict\templates\base.html:82
+msgid "Saved Results"
+msgstr "સેવ કરેલા પરિણામો"
+
+#: .\agripredict\templates\base.html:84
+msgid "Logout"
+msgstr "લૉગઆઉટ"
+
+# ── AUTH ──
+#: .\agripredict\templates\base.html:88
+msgid "Login"
+msgstr "લોગિન"
+
+#: .\agripredict\templates\base.html:89
+msgid "Sign Up"
+msgstr "સાઇન અપ"
+
+#: .\agripredict\templates\base.html:117
+msgid ""
+"Empowering Gujarat's agriculture students with data-driven admission "
+"insights."
+msgstr ""
+
+#: .\agripredict\templates\base.html:121
 msgid "Quick Links"
 msgstr "ઝડપી લિંક્સ"
 
-msgid "All rights reserved."
-msgstr "બધા અધિકારો સુરક્ષિત છે"
+#: .\agripredict\templates\base.html:125 .\core\templates\core\contact.html:3
+msgid "Contact"
+msgstr "સંપર્ક"
 
-# ── HOW IT WORKS ──
-msgid "How It Works"
-msgstr "કેવી રીતે કાર્ય કરે છે"
-
-msgid "Your Admission Journey"
-msgstr "તમારો પ્રવેશ માર્ગ"
-
-msgid "Simplified"
-msgstr "સરળ બનાવેલ"
-
-msgid "Calculate Merit"
-msgstr "મેરિટ ગણો"
-
-msgid "Discover Colleges"
-msgstr "કોલેજ શોધો"
-
-msgid "Ask AgriBot"
-msgstr "AgriBot ને પૂછો"
-
-msgid "Enter your 12th standard theory marks and GUJCET score. Our algorithm instantly calculates your official Gujarat board merit score."
-msgstr "તમારા 12મા ધોરણના થિયરી માર્ક્સ અને GUJCET સ્કોર દાખલ કરો. અમારો એલ્ગોરિધમ તરત જ તમારો મેરિટ સ્કોર ગણશે"
-
-msgid "Compare your score against previous years' cutoffs to see exactly which programs and universities you have the highest probability of joining."
-msgstr "તમારા સ્કોરની અગાઉના વર્ષના કટઓફ સાથે તુલના કરો અને જાણો કે કયા કાર્યક્રમમાં પ્રવેશની વધુ શક્યતા છે"
-
-msgid "Have questions about documents or scholarships? Our AI assistant answers instantly in both English and Gujarati."
-msgstr "દસ્તાવેજો અથવા સ્કોલરશિપ વિશે પ્રશ્ન છે? અમારો AI સહાયક તરત જ ગુજરાતી અને અંગ્રેજીમાં જવાબ આપે છે"
-
-# ── PROGRAMMES ──
-msgid "Programmes"
-msgstr "કાર્યક્રમો"
-
-msgid "Choose Your Path"
-msgstr "તમારો માર્ગ પસંદ કરો"
-
-msgid "Group B Only"
-msgstr "માત્ર ગ્રુપ B"
-
-msgid "Group A & B"
-msgstr "ગ્રુપ A અને B"
-
+#: .\agripredict\templates\base.html:131 .\colleges\models.py:62
+#: .\core\templates\core\home.html:424
 msgid "Core Agriculture"
 msgstr "મૂળ કૃષિ"
 
-msgid "Tech & Engineering"
-msgstr "ટેક અને એન્જિનિયરિંગ"
+#: .\agripredict\templates\base.html:132
+msgid "Technical Programs"
+msgstr ""
 
-msgid "Community Science"
-msgstr "સમુદાય વિજ્ઞાન"
+#: .\agripredict\templates\base.html:133
+msgid "Home & Community"
+msgstr ""
 
-msgid "High Demand"
-msgstr "ઉચ્ચ માંગ"
+#: .\agripredict\templates\base.html:137 .\core\templates\core\home.html:309
+msgid "Universities"
+msgstr "યુનિવર્સિટીઓ"
 
-msgid "Healthcare"
-msgstr "આરોગ્ય ક્ષેત્ર"
+#: .\agripredict\templates\base.html:148
+msgid "All rights reserved."
+msgstr "બધા અધિકારો સુરક્ષિત છે"
 
-msgid "Nutrition"
-msgstr "પોષણ"
+#: .\agripredict\templates\base.html:149
+msgid "Developed by Gajera Darshil N."
+msgstr ""
 
+#: .\agripredict\templates\base.html:155 .\core\templates\core\home.html:393
+msgid "Ask AgriBot"
+msgstr "AgriBot ને પૂછો"
+
+#: .\agripredict\templates\base.html:169
+msgid ""
+"Hi! I'm AgriBot. Ask me about admissions, merit, colleges, or scholarships."
+msgstr ""
+
+#: .\agripredict\templates\base.html:176
+msgid "Type your question…"
+msgstr ""
+
+#: .\colleges\models.py:47
+msgid "university"
+msgstr "યુનિવર્સિટીઓ"
+
+#: .\colleges\models.py:48
+msgid "universities"
+msgstr "યુનિવર્સિટીઓ"
+
+#: .\colleges\models.py:63
+msgid "Technical Agriculture"
+msgstr "મૂળ કૃષિ"
+
+# ── COMMON ──
+#: .\colleges\models.py:79
+msgid "college"
+msgstr "કોલેજો"
+
+# ── COMMON ──
+#: .\colleges\models.py:80
+msgid "colleges"
+msgstr "કોલેજો"
+
+#: .\colleges\models.py:105
+msgid "course"
+msgstr ""
+
+#: .\colleges\models.py:138
+msgid "cutoff merit"
+msgstr ""
+
+#: .\colleges\templates\colleges\list.html:10
+msgid "Agricultural Colleges in Gujarat"
+msgstr "ગુજરાતની કૃષિ કોલેજો"
+
+#: .\colleges\templates\colleges\list.html:11
+msgid "Explore colleges across 4 universities offering agriculture programmes."
+msgstr "કૃષિ કાર્યક્રમો ઓફર કરતી 4 યુનિવર્સિટીઓની કોલેજો શોધો."
+
+#: .\colleges\templates\colleges\list.html:34
+#: .\predict\templates\predict\category1.html:35
+msgid "Category"
+msgstr "શ્રેણી"
+
+#: .\colleges\templates\colleges\list.html:48
+#: .\notifications\templates\notifications\list.html:54
+msgid "Details"
+msgstr "વિગતો"
+
+#: .\colleges\templates\colleges\list.html:55
+msgid "Brochure"
+msgstr "પુસ્તિકા"
+
+#: .\colleges\templates\colleges\list.html:64
+msgid "No colleges listed for this university yet."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:6
+msgid "Admission Guide 2025–26"
+msgstr "પ્રવેશ માર્ગદર્શિકા"
+
+#: .\core\templates\core\admission_guide.html:7
+msgid ""
+"Complete step-by-step process for Gujarat agriculture university admissions."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:22
+msgid "Fill Online Form"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:22
+msgid ""
+"Register on the official Gujarat agriculture admission portal and fill the "
+"application form."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:26
+msgid "Upload Documents"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:26
+msgid ""
+"Upload mark sheets, category certificate, domicile certificate, passport "
+"photo, and signature."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:30
+msgid "Merit List Publication"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:30
+msgid ""
+"Merit lists are published based on your Class 12 theory marks and GUJCET "
+"score."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:34
+msgid "College Allotment & Rounds"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:34
+msgid ""
+"Colleges are allotted over 3 rounds. Accept your allotment and report to the "
+"college."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:38 .\notifications\models.py:44
+msgid "Fee Payment"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:38
+msgid ""
+"Pay the required tuition and hostel fees online to confirm your admission."
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:46
+msgid "Key Dates"
+msgstr ""
+
+#: .\core\templates\core\contact.html:6
+msgid "Contact Us"
+msgstr "સંપર્ક"
+
+#: .\core\templates\core\contact.html:12
+msgid "Your Name"
+msgstr ""
+
+#: .\core\templates\core\contact.html:16
+msgid "Email Address"
+msgstr ""
+
+#: .\core\templates\core\contact.html:20
+msgid "Message"
+msgstr ""
+
+#: .\core\templates\core\contact.html:23
+msgid "Send Message"
+msgstr ""
+
+#: .\core\templates\core\contact.html:29
+msgid "Gujarat, India"
+msgstr ""
+
+#: .\core\templates\core\faq.html:6
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: .\core\templates\core\faq.html:21
+msgid "FAQ content coming soon."
+msgstr ""
+
+#: .\core\templates\core\home.html:281
+msgid "Gujarat Agriculture Admissions 2025–26"
+msgstr "ગુજરાત કૃષિ પ્રવેશ 2025–26"
+
+#: .\core\templates\core\home.html:285
+msgid "Secure Your Future in"
+msgstr "તમારું ભવિષ્ય સુરક્ષિત બનાવો"
+
+#: .\core\templates\core\home.html:286
+msgid "Agriculture Science"
+msgstr "કૃષિ વિજ્ઞાન"
+
+#: .\core\templates\core\home.html:290
+msgid ""
+"Calculate your official merit score, discover eligible colleges across JAU, "
+"AAU, NAU & SDAU, and get AI-powered guidance in Gujarati or English."
+msgstr ""
+"તમારો સત્તાવાર મેરિટ સ્કોર ગણો, JAU, AAU, NAU અને SDAUમાં યોગ્ય કોલેજ શોધો અને "
+"ગુજરાતી અથવા અંગ્રેજીમાં AI માર્ગદર્શન મેળવો"
+
+#: .\core\templates\core\home.html:295
+msgid "Calculate Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\core\templates\core\home.html:298
+msgid "Explore Colleges"
+msgstr "કોલેજ શોધો"
+
+# ── COMMON ──
+#: .\core\templates\core\home.html:305
+msgid "Colleges"
+msgstr "કોલેજો"
+
+#: .\core\templates\core\home.html:321
+msgid "Agriculture Education"
+msgstr "કૃષિ વિજ્ઞાન"
+
+#: .\core\templates\core\home.html:330
+msgid "Merit Calculated"
+msgstr "મેરિટ ગણાઈ"
+
+#: .\core\templates\core\home.html:331
+msgid "Top Pick: JAU Junagadh"
+msgstr "ટોપ પસંદગી: JAU જુનાગઢ"
+
+#: .\core\templates\core\home.html:335
+#: .\predict\templates\predict\category1.html:117
+msgid "Probability"
+msgstr ""
+
+#: .\core\templates\core\home.html:336
+msgid "High Match"
+msgstr ""
+
+#: .\core\templates\core\home.html:355
+msgid "Digital Farming"
+msgstr ""
+
+#: .\core\templates\core\home.html:361
+msgid "AI Powered"
+msgstr ""
+
+#: .\core\templates\core\home.html:362
+msgid "Fast & Accurate"
+msgstr ""
+
+# ── HOW IT WORKS ──
+#: .\core\templates\core\home.html:370
+msgid "How It Works"
+msgstr "કેવી રીતે કાર્ય કરે છે"
+
+#: .\core\templates\core\home.html:371
+msgid "Your Admission Journey Simplified"
+msgstr "તમારો પ્રવેશ માર્ગ"
+
+#: .\core\templates\core\home.html:377
+#: .\predict\templates\predict\category1.html:58
+msgid "Calculate Merit"
+msgstr "મેરિટ ગણો"
+
+#: .\core\templates\core\home.html:378
+msgid ""
+"Enter your 12th standard theory marks and GUJCET score. Our algorithm "
+"instantly calculates your official Gujarat board merit score."
+msgstr ""
+"તમારા 12મા ધોરણના થિયરી માર્ક્સ અને GUJCET સ્કોર દાખલ કરો. અમારો એલ્ગોરિધમ તરત જ "
+"તમારો મેરિટ સ્કોર ગણશે"
+
+#: .\core\templates\core\home.html:385
+msgid "Discover Colleges"
+msgstr "કોલેજ શોધો"
+
+#: .\core\templates\core\home.html:386
+msgid ""
+"Compare your score against previous years' cutoffs to see exactly which "
+"programs and universities you have the highest probability of joining."
+msgstr ""
+"તમારા સ્કોરની અગાઉના વર્ષના કટઓફ સાથે તુલના કરો અને જાણો કે કયા કાર્યક્રમમાં પ્રવેશની "
+"વધુ શક્યતા છે"
+
+#: .\core\templates\core\home.html:394
+msgid ""
+"Have questions about documents or scholarships? Our AI assistant answers "
+"instantly in both English and Gujarati."
+msgstr ""
+"દસ્તાવેજો અથવા સ્કોલરશિપ વિશે પ્રશ્ન છે? અમારો AI સહાયક તરત જ ગુજરાતી અને અંગ્રેજીમાં "
+"જવાબ આપે છે"
+
+# ── PROGRAMMES ──
+#: .\core\templates\core\home.html:407
+msgid "Programmes"
+msgstr "કાર્યક્રમો"
+
+#: .\core\templates\core\home.html:408
+msgid "Choose Your Path"
+msgstr "તમારો માર્ગ પસંદ કરો"
+
+#: .\core\templates\core\home.html:418
+msgid "B.Sc. Horticulture & Forestry"
+msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
+
+#: .\core\templates\core\home.html:423
+msgid "Group B Only"
+msgstr "માત્ર ગ્રુપ B"
+
+#: .\core\templates\core\home.html:425
 msgid "B.Sc. Agriculture, Horticulture, Forestry & Biotechnology."
 msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
 
+#: .\core\templates\core\home.html:438
+msgid "Agricultural Engineering & Technology"
+msgstr ""
+
+#: .\core\templates\core\home.html:442 .\core\templates\core\home.html:466
+msgid "Group A & B"
+msgstr "ગ્રુપ A અને B"
+
+#: .\core\templates\core\home.html:443
+msgid "Tech & Engineering"
+msgstr "ટેક અને એન્જિનિયરિંગ"
+
+#: .\core\templates\core\home.html:444
 msgid "B.Tech Agri Engineering, Food Tech & IT."
 msgstr "બી.ટેક કૃષિ એન્જિનિયરિંગ, ફૂડ ટેક અને આઈટી"
 
+#: .\core\templates\core\home.html:446
+msgid "High Demand"
+msgstr "ઉચ્ચ માંગ"
+
+#: .\core\templates\core\home.html:457
+msgid "Community Science & Nutrition"
+msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
+
+#: .\core\templates\core\home.html:462
+msgid "B.Sc. Community Science, Dietetics & Nutrition"
+msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
+
+#: .\core\templates\core\home.html:467
+msgid "Community Science"
+msgstr "સમુદાય વિજ્ઞાન"
+
+#: .\core\templates\core\home.html:468
 msgid "B.Sc. Community Science, Dietetics & Nutrition."
 msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
 
+#: .\core\templates\core\home.html:470
+msgid "Healthcare"
+msgstr "આરોગ્ય ક્ષેત્ર"
+
 # ── UNIVERSITIES ──
+#: .\core\templates\core\home.html:482
 msgid "Institutions"
 msgstr "સંસ્થાઓ"
 
+#: .\core\templates\core\home.html:483
 msgid "Partner Universities"
 msgstr "ભાગીદાર યુનિવર્સિટીઓ"
 
-msgid "Junagadh Agricultural University"
-msgstr "જુનાગઢ કૃષિ યુનિવર્સિટી"
+#: .\core\templates\core\home.html:492
+msgid "Junagadh"
+msgstr ""
 
-msgid "Anand Agricultural University"
-msgstr "આણંદ કૃષિ યુનિવર્સિટી"
+#: .\core\templates\core\home.html:502
+msgid "Anand"
+msgstr ""
 
-msgid "Navsari Agricultural University"
-msgstr "નવસારી કૃષિ યુનિવર્સિટી"
+#: .\core\templates\core\home.html:511
+msgid "B.Sc. Agriculture, Horticulture, Forestry & Biotechnology"
+msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
 
-msgid "Sardarkrushinagar Dantiwada"
-msgstr "સરદારકૃષ્ણનગર ડાંતીવાડા"
+#: .\core\templates\core\home.html:516
+msgid "Navsari"
+msgstr ""
+
+#: .\core\templates\core\home.html:526
+msgid "Dantiwada"
+msgstr ""
+
+#: .\core\templates\core\home.html:540
+msgid "Modern Agriculture Field"
+msgstr "મૂળ કૃષિ"
 
 # ── CTA ──
+#: .\core\templates\core\home.html:544
 msgid "Ready to Find Your Perfect College?"
 msgstr "તમારી યોગ્ય કોલેજ શોધવા તૈયાર છો?"
 
-msgid "Join thousands of Gujarat students planning their education with confidence."
+#: .\core\templates\core\home.html:545
+msgid ""
+"Join thousands of Gujarat students planning their education with confidence "
+"and AI-backed accuracy."
 msgstr "હજારો ગુજરાતના વિદ્યાર્થીઓ સાથે આત્મવિશ્વાસથી તમારું શિક્ષણ આયોજન કરો"
 
+#: .\core\templates\core\home.html:549
 msgid "Start Calculating Free"
 msgstr "મફતમાં ગણતરી શરૂ કરો"
 
+#: .\core\templates\core\home.html:553
 msgid "Create Account"
 msgstr "એકાઉન્ટ બનાવો"
+
+#: .\core\views.py:66
+msgid "Your message has been sent. We'll get back to you soon."
+msgstr ""
+
+#: .\core\views.py:68
+msgid "Please fill in all fields."
+msgstr ""
+
+#: .\core\views.py:109
+msgid "Chatbot is temporarily unavailable. Please try again later."
+msgstr ""
+
+#: .\notifications\models.py:23
+msgid "notification"
+msgstr "સૂચનાઓ"
+
+#: .\notifications\models.py:24
+msgid "notifications"
+msgstr "સૂચનાઓ"
+
+#: .\notifications\models.py:41
+msgid "Form Submission"
+msgstr ""
+
+#: .\notifications\models.py:42
+msgid "Merit List"
+msgstr ""
+
+#: .\notifications\models.py:43
+msgid "Admission Round"
+msgstr "પ્રવેશ માર્ગદર્શિકા"
+
+#: .\notifications\models.py:45
+msgid "Other"
+msgstr ""
+
+#: .\notifications\models.py:58
+msgid "admission date"
+msgstr "પ્રવેશ માર્ગદર્શિકા"
+
+#: .\notifications\templates\notifications\list.html:10
+msgid "Admission Notifications"
+msgstr "સૂચનાઓ"
+
+#: .\notifications\templates\notifications\list.html:12
+msgid ""
+"Stay updated with the latest announcements from the admission committee."
+msgstr ""
+
+#: .\notifications\templates\notifications\list.html:32
+msgid "Important"
+msgstr ""
+
+#: .\notifications\templates\notifications\list.html:48
+msgid "View PDF"
+msgstr ""
+
+#: .\notifications\templates\notifications\list.html:69
+msgid "No notifications yet."
+msgstr "સૂચનાઓ"
+
+#: .\predict\templates\predict\category1.html:4
+msgid "Merit Calculator — Category 1"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
+
+#: .\predict\templates\predict\category1.html:13
+msgid "Category 1 Merit Calculator"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
+
+#: .\predict\templates\predict\category1.html:14
+msgid "Core Agriculture Programs (B-Group only)"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:18
+msgid "Theory Marks Total Type"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:20
+msgid "Select total marks"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:21
+msgid "Out of 300"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:22
+msgid "Out of 210"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:23
+msgid "Out of 240"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:27
+msgid "Theory Marks Obtained"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:31
+msgid "GUJCET Marks (Out of 120)"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:37
+msgid "Select category"
+msgstr "શ્રેણી"
+
+#: .\predict\templates\predict\category1.html:38
+msgid "General / Open"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:43
+msgid "Other Board"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:45
+msgid "Ex-Serviceman"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:50
+#, python-format
+msgid "Farming Background (+5%% bonus)"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:53
+msgid "Your City"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:54
+msgid "e.g. Ahmedabad"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:60
+msgid "Reset"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:72
+msgid "Your Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\predict\templates\predict\category1.html:77
+msgid "Theory"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:89
+msgid "Bonus"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:96
+msgid "Save Result"
+msgstr "સેવ કરેલા પરિણામો"
+
+#: .\predict\templates\predict\category1.html:107
+msgid "Filter by City"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:108
+msgid "All cities"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:111
+msgid "Filter by Course"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:112
+msgid "All courses"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:115
+msgid "Sort by"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:118
+msgid "Merit"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:119
+msgid "City"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:129
+msgid "College Recommendations"
+msgstr ""
+
+# ── COMMON ──
+#: .\predict\templates\predict\category1.html:137
+msgid "College"
+msgstr "કોલેજો"
+
+#: .\predict\templates\predict\category1.html:138
+msgid "Course"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:139
+msgid "Last Cutoff"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:140
+msgid "Chance"
+msgstr ""
+
+#: .\predict\templates\predict\category1.html:154
+msgid "Enter your marks above to see college recommendations."
+msgstr ""
+
+#: .\scholarships\models.py:27
+msgid "scholarship"
+msgstr "સ્કોલરશિપ"
+
+#: .\scholarships\templates\scholarships\list.html:6
+msgid "Available Agriculture Scholarships"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:7
+msgid "10 scholarships available for Gujarat agriculture students."
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:17
+msgid "Eligible Courses"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:18
+msgid "Eligibility"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:19
+msgid "Benefits"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:20
+msgid "Max family income"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:20
+msgid "lakh/year"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:24
+msgid "Apply Now"
+msgstr ""
