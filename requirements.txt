@@ -1,10 +1,10 @@
 # ── Django Core ──────────────────────────────────────────────
 Django==4.2.13
-psycopg2-binary==2.9.9
+psycopg2-binary==2.9.11
 django-environ==0.11.2
 django-crispy-forms==2.1
 crispy-bootstrap5==0.7
-Pillow==10.3.0
+Pillow==10.4.0
 django-storages==1.14.3
 whitenoise==6.6.0
 
@@ -39,18 +39,18 @@ langchain==0.2.1
 langchain-community==0.2.1
 langchain-google-genai==1.0.5
 langchain-core==0.2.1
-faiss-cpu==1.8.0
+faiss-cpu==1.13.2
 google-generativeai==0.5.4
 
 # ── Document Loaders ──────────────────────────────────────────
 pypdf==4.2.0
-unstructured==0.13.7
+unstructured==0.22.12
 openpyxl==3.1.2
-pandas==2.2.2
+pandas
 
 # ── Embeddings ────────────────────────────────────────────────
-sentence-transformers==3.0.0
+sentence-transformers
 
 # ── Utilities ─────────────────────────────────────────────────
-python-dotenv==1.0.1
-requests==2.32.2
+python-dotenv
+requests
