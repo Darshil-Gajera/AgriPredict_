@@ -6,7 +6,8 @@
 {% block content %}
 <div class="container py-5">
   <div class="row g-4">
-    <!-- Form column -->
+
+    <!-- ── Form column ── -->
     <div class="col-lg-5">
       <div class="card shadow-sm border-0 sticky-top" style="top:80px">
         <div class="card-header bg-success text-white">
@@ -14,23 +15,27 @@
           <small>{% trans "Core Agriculture Programs (B-Group only)" %}</small>
         </div>
         <div class="card-body p-4">
+
           <div class="mb-3">
-            <label class="form-label fw-semibold">{% trans "Theory Marks Total Type" %}</label>
+            <label class="form-label fw-semibold">{% trans "Theory Marks Total" %}</label>
             <select id="theoryTotal" class="form-select">
               <option value="">{% trans "Select total marks" %}</option>
               <option value="300">{% trans "Out of 300" %}</option>
-              <option value="210">{% trans "Out of 210" %}</option>
               <option value="240">{% trans "Out of 240" %}</option>
+              <option value="210">{% trans "Out of 210" %}</option>
             </select>
           </div>
+
           <div class="mb-3">
             <label class="form-label fw-semibold">{% trans "Theory Marks Obtained" %}</label>
             <input type="number" id="theoryObtained" class="form-control" min="0" step="0.01" placeholder="e.g. 245" />
           </div>
+
           <div class="mb-3">
             <label class="form-label fw-semibold">{% trans "GUJCET Marks (Out of 120)" %}</label>
             <input type="number" id="gujcetMarks" class="form-control" min="0" max="120" step="0.01" placeholder="e.g. 85" />
           </div>
+
           <div class="mb-3">
             <label class="form-label fw-semibold">{% trans "Category" %}</label>
             <select id="studentCategory" class="form-select">
@@ -45,33 +50,41 @@
               <option value="EX">{% trans "Ex-Serviceman" %}</option>
             </select>
           </div>
+
           <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="farmingBonus" />
             <label class="form-check-label" for="farmingBonus">{% trans "Farming Background (+5% bonus)" %}</label>
           </div>
+
           <div class="mb-3">
             <label class="form-label fw-semibold">{% trans "Your City" %}</label>
             <input type="text" id="cityInput" class="form-control" placeholder="{% trans 'e.g. Ahmedabad' %}" />
           </div>
+
+          <div id="formAlert"></div>
+
           <div class="d-grid gap-2">
             <button class="btn btn-success btn-lg" id="calculateBtn">
               <i class="bi bi-calculator me-2"></i>{% trans "Calculate Merit" %}
             </button>
             <button class="btn btn-outline-secondary" id="resetBtn">{% trans "Reset" %}</button>
           </div>
+
         </div>
       </div>
     </div>
 
-    <!-- Results column -->
+    <!-- ── Results column ── -->
     <div class="col-lg-7">
+
       <div id="resultsPanel" class="d-none">
+
         <!-- Merit score card -->
         <div class="card border-0 shadow-sm mb-4 text-center">
           <div class="card-body py-4">
             <p class="text-muted mb-1">{% trans "Your Merit Score" %}</p>
             <h1 class="display-3 fw-bold text-success" id="meritDisplay">—</h1>
-            <div class="row g-2 mt-2 text-center">
+            <div class="row g-2 mt-2">
               <div class="col-4">
                 <div class="bg-body-secondary rounded p-2">
                   <div class="small text-muted">{% trans "Theory" %}</div>
@@ -105,17 +118,21 @@
             <div class="row g-2 align-items-end">
               <div class="col-md-4">
                 <label class="form-label small fw-semibold">{% trans "Filter by City" %}</label>
-                <select id="filterCity" class="form-select form-select-sm"><option value="">{% trans "All cities" %}</option></select>
+                <select id="filterCity" class="form-select form-select-sm">
+                  <option value="">{% trans "All Cities" %}</option>
+                </select>
               </div>
               <div class="col-md-4">
                 <label class="form-label small fw-semibold">{% trans "Filter by Course" %}</label>
-                <select id="filterCourse" class="form-select form-select-sm"><option value="">{% trans "All courses" %}</option></select>
+                <select id="filterCourse" class="form-select form-select-sm">
+                  <option value="">{% trans "All Courses" %}</option>
+                </select>
               </div>
               <div class="col-md-4">
                 <label class="form-label small fw-semibold">{% trans "Sort by" %}</label>
                 <select id="sortBy" class="form-select form-select-sm">
                   <option value="probability">{% trans "Probability" %}</option>
-                  <option value="merit">{% trans "Merit" %}</option>
+                  <option value="cutoff_asc">{% trans "Cutoff Low→High" %}</option>
                   <option value="city">{% trans "City" %}</option>
                 </select>
               </div>
@@ -131,7 +148,7 @@
           </div>
           <div class="card-body p-0">
             <div class="table-responsive">
-              <table class="table table-hover mb-0 align-middle" id="collegeTable">
+              <table class="table table-hover mb-0 align-middle">
                 <thead class="table-light">
                   <tr>
                     <th>{% trans "College" %}</th>
@@ -146,23 +163,255 @@
             </div>
           </div>
         </div>
-      </div>
+
+      </div><!-- /resultsPanel -->
 
       <!-- Empty state -->
       <div id="emptyState" class="text-center py-5">
         <i class="bi bi-calculator fs-1 text-muted"></i>
         <p class="text-muted mt-3">{% trans "Enter your marks above to see college recommendations." %}</p>
       </div>
-    </div>
+
+    </div><!-- /col results -->
   </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+/* ============================================================
+   AgriPredict Merit Calculator — Inline JS (no cache issues)
+   Category: 1
+   ============================================================ */
+
 const CATEGORY = "1";
-const CSRF = "{{ csrf_token }}";
-const IS_AUTH = {{ user.is_authenticated|yesno:"true,false" }};
+const CSRF     = "{{ csrf_token }}";
+
+let _colleges = [];   // master list for filter/sort
+
+/* ---------- helpers ---------- */
+function $id(id) { return document.getElementById(id); }
+
+function val(id) {
+  const el = $id(id);
+  return el ? el.value.trim() : "";
+}
+
+function setText(id, v) {
+  const el = $id(id);
+  if (el) el.textContent = (v !== null && v !== undefined && v !== "") ? v : "—";
+}
+
+function showAlert(msg, type) {
+  const el = $id("formAlert");
+  if (!el) return;
+  el.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show py-2 mb-3">
+    ${msg}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>`;
+}
+
+function clearAlert() {
+  const el = $id("formAlert");
+  if (el) el.innerHTML = "";
+}
+
+function escHtml(s) {
+  return String(s ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+/* ---------- loading ---------- */
+function setLoading(on) {
+  const btn = $id("calculateBtn");
+  if (!btn) return;
+  btn.disabled = on;
+  btn.innerHTML = on
+    ? '<span class="spinner-border spinner-border-sm me-2"></span>Calculating...'
+    : '<i class="bi bi-calculator me-2"></i>Calculate Merit';
+}
+
+/* ---------- render table ---------- */
+function renderTable(list) {
+  const tbody = $id("collegeTableBody");
+  const badge = $id("collegeCount");
+  if (!tbody) return;
+
+  if (!list || list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">No colleges match your filters.</td></tr>`;
+    if (badge) badge.textContent = "0";
+    return;
+  }
+
+  tbody.innerHTML = list.map(c => {
+    const name     = escHtml(c.name     || "N/A");
+    const course   = escHtml(c.course   || "N/A");
+    const location = escHtml(c.location || "");
+    const cutoff   = c.cutoff     ?? "—";
+    const prob     = c.probability ?? 0;
+    const roundP   = escHtml(c.round_prediction || "—");
+    const chance   = c.chance_label || "Low";
+
+    const badgeCls = chance === "High"   ? "bg-success" :
+                     chance === "Medium" ? "bg-warning text-dark" :
+                                           "bg-danger";
+
+    return `<tr>
+      <td>
+        <div class="fw-bold">${name}</div>
+        ${location ? `<small class="text-muted">${location}</small>` : ""}
+      </td>
+      <td>${course}</td>
+      <td class="fw-semibold">${cutoff}</td>
+      <td><span class="badge ${badgeCls}">${roundP} (${prob}%)</span></td>
+      <td><a href="#" class="btn btn-sm btn-link text-success p-0"><i class="bi bi-info-circle"></i></a></td>
+    </tr>`;
+  }).join("");
+
+  if (badge) badge.textContent = list.length;
+}
+
+/* ---------- filters ---------- */
+function populateFilters(list) {
+  const cities  = [...new Set(list.map(c => c.location).filter(Boolean))].sort();
+  const courses = [...new Set(list.map(c => c.course).filter(Boolean))].sort();
+
+  const cityEl = $id("filterCity");
+  if (cityEl) {
+    cityEl.innerHTML = '<option value="">All Cities</option>' +
+      cities.map(v => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
+  }
+
+  const courseEl = $id("filterCourse");
+  if (courseEl) {
+    courseEl.innerHTML = '<option value="">All Courses</option>' +
+      courses.map(v => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
+  }
+}
+
+function applyFilters() {
+  const city   = val("filterCity");
+  const course = val("filterCourse");
+  const sort   = val("sortBy") || "probability";
+
+  let list = [..._colleges];
+  if (city)   list = list.filter(c => c.location === city);
+  if (course) list = list.filter(c => c.course   === course);
+
+  list.sort((a, b) => {
+    if (sort === "probability") return (b.probability || 0) - (a.probability || 0);
+    if (sort === "cutoff_asc")  return (a.cutoff      || 0) - (b.cutoff      || 0);
+    if (sort === "city")        return (a.location || "").localeCompare(b.location || "");
+    return 0;
+  });
+
+  renderTable(list);
+}
+
+/* ---------- main calculate ---------- */
+async function doCalculate() {
+  clearAlert();
+
+  const theoryOb  = val("theoryObtained");
+  const theoryTot = val("theoryTotal") || "300";
+  const gujcet    = val("gujcetMarks");
+  const studCat   = val("studentCategory") || "OPEN";
+  const farming   = $id("farmingBonus")?.checked || false;
+
+  if (!theoryOb) { showAlert("Please enter Theory Marks Obtained.", "warning"); return; }
+  if (!gujcet)   { showAlert("Please enter GUJCET Marks.", "warning"); return; }
+
+  setLoading(true);
+
+  try {
+    const resp = await fetch("/api/predict/calculate/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": CSRF,
+      },
+      body: JSON.stringify({
+        category:           CATEGORY,
+        theory_obtained:    parseFloat(theoryOb),
+        theory_total:       parseFloat(theoryTot),
+        gujcet_marks:       parseFloat(gujcet),
+        student_category:   studCat,
+        farming_background: farming,
+      }),
+    });
+
+    const data = await resp.json();
+
+    if (!resp.ok) {
+      throw new Error(data.details || data.error || `Server error ${resp.status}`);
+    }
+
+    /* ── Update merit breakdown ── */
+    setText("meritDisplay", data.merit);
+    setText("theoryComp",   data.theory_comp);
+    setText("gujcetComp",   data.gujcet_comp);
+    setText("bonusComp",    data.bonus_comp);
+
+    /* ── Show panel ── */
+    $id("resultsPanel")?.classList.remove("d-none");
+    $id("emptyState")?.classList.add("d-none");
+
+    /* ── Store & render colleges ── */
+    _colleges = Array.isArray(data.colleges) ? data.colleges : [];
+    populateFilters(_colleges);
+    renderTable(_colleges);
+
+    /* ── Scroll ── */
+    $id("resultsPanel")?.scrollIntoView({ behavior: "smooth" });
+
+  } catch (err) {
+    console.error("❌", err);
+    showAlert("Error: " + err.message, "danger");
+  } finally {
+    setLoading(false);
+  }
+}
+
+/* ---------- reset ---------- */
+function doReset() {
+  ["theoryObtained", "gujcetMarks", "cityInput"].forEach(id => {
+    const el = $id(id); if (el) el.value = "";
+  });
+  ["theoryTotal", "studentCategory", "filterCity", "filterCourse"].forEach(id => {
+    const el = $id(id); if (el) el.selectedIndex = 0;
+  });
+  const cb = $id("farmingBonus"); if (cb) cb.checked = false;
+
+  _colleges = [];
+  clearAlert();
+  $id("resultsPanel")?.classList.add("d-none");
+  $id("emptyState")?.classList.remove("d-none");
+}
+
+/* ---------- wire up events ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  $id("calculateBtn")?.addEventListener("click", doCalculate);
+  $id("resetBtn")?.addEventListener("click", doReset);
+  $id("filterCity")?.addEventListener("change", applyFilters);
+  $id("filterCourse")?.addEventListener("change", applyFilters);
+  $id("sortBy")?.addEventListener("change", applyFilters);
+
+  {% if user.is_authenticated %}
+  $id("saveResultBtn")?.addEventListener("click", async () => {
+    try {
+      const r = await fetch("/api/predict/save/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+        body: JSON.stringify({ merit: $id("meritDisplay")?.textContent }),
+      });
+      const d = await r.json();
+      showAlert(d.saved ? "Result saved!" : "Could not save.", d.saved ? "success" : "warning");
+    } catch (e) {
+      showAlert("Save failed: " + e.message, "danger");
+    }
+  });
+  {% endif %}
+});
 </script>
-<script src="{% static 'js/merit_calculator.js' %}"></script>
 {% endblock %}

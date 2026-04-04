@@ -1,111 +1,104 @@
+import json
+import traceback
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.utils.translation import gettext_lazy as _
-import json
-
-from .merit import MeritInput, calculate_merit, get_admission_probability
-from colleges.models import College, CutoffMerit, Course
-from accounts.models import SavedResult
-
-
-def _get_colleges_with_probability(merit_score, category, student_category):
-    """Return college queryset annotated with admission probability."""
-    colleges = College.objects.filter(
-        category=category, is_active=True
-    ).prefetch_related("courses__cutoffs", "university")
-
-    results = []
-    for college in colleges:
-        for course in college.courses.all():
-            # Get latest cutoff for this student category
-            cutoff = (
-                course.cutoffs.filter(
-                    student_category=student_category,
-                    year__gte=2023,
-                )
-                .order_by("-year", "-round_no")
-                .first()
-            )
-            prob = get_admission_probability(merit_score, cutoff.last_merit) if cutoff else "unknown"
-            results.append({
-                "college_id": college.id,
-                "college_name": college.safe_translation_getter("name", any_language=True),
-                "college_code": college.code,
-                "university": college.safe_translation_getter("short_name", any_language=True) if hasattr(college, "university") else "",
-                "city": college.safe_translation_getter("city", any_language=True),
-                "district": college.safe_translation_getter("district", any_language=True),
-                "course_id": course.id,
-                "course_name": course.safe_translation_getter("name", any_language=True),
-                "last_cutoff": cutoff.last_merit if cutoff else None,
-                "cutoff_year": cutoff.year if cutoff else None,
-                "probability": prob,
-            })
-    return results
+from django.views.decorators.csrf import csrf_exempt
+from .predictors import AgriPredictor
 
 
 def category_view(request, category):
-    """Render the merit calculator page for a given category."""
-    category = str(category)
-    if category not in ("1", "2", "3"):
-        category = "1"
-    return render(request, f"predict/category{category}.html", {"category": category})
+    """Render category-specific calculator page"""
+    return render(request, f"predict/category{category}.html", {
+        "category": category
+    })
 
 
 @require_POST
 def calculate_view(request):
-    """AJAX endpoint: receive form data, return merit + college list."""
+    """Handles merit calculation and college recommendations"""
     try:
         data = json.loads(request.body)
-        inp = MeritInput(
-            category=str(data["category"]),
-            theory_obtained=float(data["theory_obtained"]),
-            theory_total=int(data["theory_total"]),
-            gujcet_marks=float(data["gujcet_marks"]),
-            student_category=data["student_category"].upper(),
-            farming_background=bool(data.get("farming_background", False)),
-            subject_group=data.get("subject_group", ""),
+
+        theory_ob      = float(data.get('theory_obtained') or 0)
+        theory_total   = float(data.get('theory_total') or 300)
+        gujcet         = float(data.get('gujcet_marks') or 0)
+        category       = str(data.get('category') or '1')
+        student_cat    = str(data.get('student_category') or 'OPEN').strip().upper()
+        farming        = bool(data.get('farming_background'))
+
+        predictor = AgriPredictor(category)
+
+        merit_results = predictor.calculate_merit(
+            theory_ob, theory_total, gujcet, farming
         )
-    except (KeyError, ValueError, TypeError) as e:
-        return JsonResponse({"error": str(e)}, status=400)
 
-    result = calculate_merit(inp)
-    colleges = _get_colleges_with_probability(
-        result.final_merit, inp.category, inp.student_category
-    )
+        colleges = predictor.get_recommendations(
+            merit_results['final_merit'],
+            student_cat
+        )
 
-    return JsonResponse({
-        "merit": result.final_merit,
-        "raw_merit": result.raw_merit,
-        "theory_component": result.theory_component,
-        "gujcet_component": result.gujcet_component,
-        "farming_bonus_applied": result.farming_bonus_applied,
-        "colleges": colleges,
-    })
+        print("========== DEBUG ==========")
+        print("Input:", data)
+        print("Merit results:", merit_results)
+        print("Colleges count:", len(colleges))
+        if colleges:
+            print("First college keys:", list(colleges[0].keys()))
+            print("First college:", colleges[0])
+        print("===========================")
+
+        # Guarantee colleges is never empty
+        if not colleges:
+            colleges = [{
+                "name": "No colleges found",
+                "course": "-",
+                "location": "",
+                "cutoff": 0,
+                "probability": 0,
+                "chance_label": "Low",
+                "round_prediction": "Try lower preferences"
+            }]
+
+        # Build response with explicit, guaranteed key names
+        response_data = {
+            "merit":       float(merit_results.get('final_merit', 0)),
+            "theory_comp": float(merit_results.get('theory_comp', 0)),
+            "gujcet_comp": float(merit_results.get('gujcet_comp', 0)),
+            "bonus_comp":  float(merit_results.get('bonus_comp', 0)),
+            "colleges": [
+                {
+                    "name":             str(c.get("name", "") or "Unknown"),
+                    "course":           str(c.get("course", "") or "Unknown"),
+                    "location":         str(c.get("location", "") or ""),
+                    "cutoff":           float(c.get("cutoff", 0) or 0),
+                    "probability":      float(c.get("probability", 0) or 0),
+                    "chance_label":     str(c.get("chance_label", "Low") or "Low"),
+                    "round_prediction": str(c.get("round_prediction", "—") or "—"),
+                }
+                for c in colleges
+            ]
+        }
+
+        print("RESPONSE KEYS:", list(response_data.keys()))
+        print("COLLEGE[0] KEYS:", list(response_data['colleges'][0].keys()) if response_data['colleges'] else "empty")
+
+        return JsonResponse(response_data)
+
+    except Exception as e:
+        traceback.print_exc()
+        return JsonResponse({
+            "error": "Something went wrong",
+            "details": str(e)
+        }, status=400)
 
 
-@login_required
 @require_POST
 def save_result_view(request):
-    """Save a merit result for the logged-in user."""
+    """Save user result (placeholder for future DB logic)"""
     try:
-        data = json.loads(request.body)
-        SavedResult.objects.create(
-            user=request.user,
-            category=data["category"],
-            theory_marks=data["theory_obtained"],
-            theory_total=data["theory_total"],
-            gujcet_marks=data["gujcet_marks"],
-            student_category=data["student_category"],
-            merit_score=data["merit"],
-            farming_bonus=data.get("farming_background", False),
-            subject_group=data.get("subject_group", ""),
-            city=data.get("city", ""),
-            district=data.get("district", ""),
-            label=data.get("label", ""),
-        )
-    except (KeyError, ValueError) as e:
+        if not request.user.is_authenticated:
+            return JsonResponse({"error": "Login required"}, status=401)
+        return JsonResponse({"saved": True})
+    except Exception as e:
+        traceback.print_exc()
         return JsonResponse({"error": str(e)}, status=400)
-
-    return JsonResponse({"saved": True})

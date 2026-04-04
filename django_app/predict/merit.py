@@ -1,87 +1,44 @@
-"""
-Merit calculation logic for all 3 categories.
-
-Category 1  — Core Agriculture  (B-group only)
-  merit = (theory_obtained / theory_total) × 200 + (gujcet / 120) × 100
-  farming bonus: +5% on final merit
-
-Category 2  — Technical Agriculture (A or B group)
-  PCM: merit = (theory / total) × 200 + (gujcet / 120) × 100
-  PCB: same formula
-
-Category 3  — Home & Community Science
-  Same formula as category 1 but different course pool
-"""
-
+import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
 from dataclasses import dataclass
-from typing import Literal
 
+# --- Random Forest Setup ---
+# We train on the "Gap" (Merit - Cutoff) to predict Probability %
+# Based on your data: +2 diff = 73.5% chance, 0 diff = 60%, etc.
+X_train = np.array([[-10], [-5], [-2], [0], [2], [5], [10]]).reshape(-1, 1)
+y_train = np.array([10.0, 26.25, 42.0, 60.0, 73.5, 94.5, 98.0])
 
-CATEGORY_WEIGHTS = {
-    "1": {"theory_out_of": 200, "gujcet_out_of": 100},
-    "2": {"theory_out_of": 200, "gujcet_out_of": 100},
-    "3": {"theory_out_of": 200, "gujcet_out_of": 100},
-}
-
-FARMING_BONUS_PERCENT = 5.0
-MAX_MERIT = 300.0
-
-
-@dataclass
-class MeritInput:
-    category: Literal["1", "2", "3"]
-    theory_obtained: float
-    theory_total: int          # 300 / 240 / 210
-    gujcet_marks: float        # out of 120
-    student_category: str      # OPEN, SEBC, SC, ST, EWS, PH, EX, OB
-    farming_background: bool = False
-    subject_group: str = ""    # "PCM" or "PCB" for category 2
-
+rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
+rf_model.fit(X_train, y_train)
 
 @dataclass
 class MeritResult:
-    raw_merit: float
     final_merit: float
-    farming_bonus_applied: bool
-    theory_component: float
-    gujcet_component: float
+    theory_percent: float
+    gujcet_percent: float
 
-
-def calculate_merit(inp: MeritInput) -> MeritResult:
-    """Return merit score rounded to 4 decimal places."""
-    weights = CATEGORY_WEIGHTS[inp.category]
-
-    # Normalise theory to 200
-    theory_component = (inp.theory_obtained / inp.theory_total) * weights["theory_out_of"]
-    # Normalise GUJCET to 100
-    gujcet_component = (inp.gujcet_marks / 120.0) * weights["gujcet_out_of"]
-
-    raw_merit = theory_component + gujcet_component
-
-    # Farming bonus: +5% of raw merit (capped at MAX_MERIT)
-    if inp.farming_background:
-        bonus = raw_merit * (FARMING_BONUS_PERCENT / 100)
-        final_merit = min(raw_merit + bonus, MAX_MERIT)
-    else:
-        final_merit = raw_merit
-
+def calculate_merit(theory_ob, theory_tot, gujcet, has_farming):
+    # 60% Theory + 40% GUJCET
+    theory_p = (theory_ob / theory_tot) * 60
+    gujcet_p = (gujcet / 120) * 40
+    merit = theory_p + gujcet_p
+    
+    if has_farming:
+        merit += 5.0 # Fixed 5% bonus points
+        
     return MeritResult(
-        raw_merit=round(raw_merit, 4),
-        final_merit=round(final_merit, 4),
-        farming_bonus_applied=inp.farming_background,
-        theory_component=round(theory_component, 4),
-        gujcet_component=round(gujcet_component, 4),
+        final_merit=round(min(merit, 100), 4),
+        theory_percent=round(theory_p, 4),
+        gujcet_percent=round(gujcet_p, 4)
     )
 
-
-def get_admission_probability(merit: float, last_cutoff: float) -> str:
-    """Rough probability label based on merit vs last year cutoff."""
-    diff = merit - last_cutoff
-    if diff >= 5:
-        return "high"
-    elif diff >= 0:
-        return "medium"
-    elif diff >= -5:
-        return "low"
-    else:
-        return "unlikely"
+def get_rf_prediction(merit, cutoff):
+    if not cutoff or cutoff == 0:
+        return {"chance": 0, "label": "Wait Recommended"}
+    
+    diff = merit - cutoff
+    prob = rf_model.predict([[diff]])[0]
+    
+    label = "High" if prob >= 85 else "Medium" if prob >= 50 else "Low"
+    return {"chance": round(prob, 2), "label": label}

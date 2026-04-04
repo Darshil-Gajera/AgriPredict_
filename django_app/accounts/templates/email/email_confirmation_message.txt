@@ -1,0 +1,9 @@
+Welcome to AgriPredict 🌱
+
+Hi {{ user.email }},
+
+Please confirm your email by clicking below:
+{{ activate_url }}
+
+Thank you,
+AgriPredict Team 🚜

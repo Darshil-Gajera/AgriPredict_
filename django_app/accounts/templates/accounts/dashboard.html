@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group shadow-sm">
+                <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
+                <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action">Update Profile</a>
+                <a href="{% url 'accounts:logout' %}" class="list-group-item list-group-item-action text-danger">Logout</a>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>Welcome, {{ user.first_name }}!</h3>
+                <a href="/predict/" class="btn btn-primary">New Prediction</a>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white font-weight-bold">Saved Prediction History</div>
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Merit Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                            <tr>
+                                <td>{{ result.created_at|date:"d M Y" }}</td>
+                                <td>{{ result.student_category }}</td>
+                                <td><strong>{{ result.merit_score }}</strong></td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-info">View Colleges</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">No history found. Start your first prediction!</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
