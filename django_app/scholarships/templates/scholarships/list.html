@@ -1,32 +1,138 @@
 {% extends "base.html" %}
 {% load i18n %}
+
 {% block title %}{% trans "Scholarships" %} | AgriPredict{% endblock %}
+
 {% block content %}
 <div class="container py-5">
-  <h2 class="fw-bold mb-2">{% trans "Available Agriculture Scholarships" %}</h2>
-  <p class="text-muted mb-5">{% trans "10 scholarships available for Gujarat agriculture students." %}</p>
-  <div class="row g-4">
-    {% for s in scholarships %}
-    <div class="col-md-6">
-      <div class="card h-100 border-0 shadow-sm">
-        <div class="card-header bg-success-subtle border-0">
-          <h6 class="fw-bold mb-0 text-success">{{ s.safe_translation_getter:"name,any_language=True" }}</h6>
-          {% if s.notes %}<small class="text-muted">{{ s.safe_translation_getter:"notes,any_language=True" }}</small>{% endif %}
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="fw-bold display-6 mb-2 text-body">{% trans "Available Scholarships" %}</h2>
+            <div class="mx-auto bg-success rounded-pill" style="width: 80px; height: 4px;"></div>
+            <p class="text-secondary mt-3">
+                {% blocktrans with count=scholarships.count %}{{ count }} scholarships available for Gujarat agriculture students.{% endblocktrans %}
+            </p>
         </div>
-        <div class="card-body small">
-          <p class="mb-1"><strong>{% trans "Eligible Courses" %}:</strong> {{ s.safe_translation_getter:"eligible_courses,any_language=True" }}</p>
-          <p class="mb-1"><strong>{% trans "Eligibility" %}:</strong> {{ s.safe_translation_getter:"eligibility_criteria,any_language=True" }}</p>
-          <p class="mb-1"><strong>{% trans "Benefits" %}:</strong> {{ s.safe_translation_getter:"benefits,any_language=True" }}</p>
-          {% if s.max_income_lakh %}<p class="mb-1 text-muted"><i class="bi bi-info-circle me-1"></i>{% trans "Max family income" %}: ₹{{ s.max_income_lakh }} {% trans "lakh/year" %}</p>{% endif %}
-        </div>
-        {% if s.apply_url %}
-        <div class="card-footer bg-transparent border-0">
-          <a href="{{ s.apply_url }}" target="_blank" class="btn btn-sm btn-success">{% trans "Apply Now" %} <i class="bi bi-arrow-up-right-circle ms-1"></i></a>
-        </div>
-        {% endif %}
-      </div>
     </div>
-    {% endfor %}
-  </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="scholarship-list">
+                {% for s in scholarships %}
+                <div class="scholarship-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body {% if s.max_income_lakh %}income-limited-border{% endif %}">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 140px;">
+                                    <div class="d-md-block">
+                                        <i class="bi bi-mortarboard fs-1 text-success mb-2 d-block"></i>
+                                        <span class="d-block fw-bold fs-5 text-success mb-0">{% trans "Scholarship" %}</span>
+                                    </div>
+                                    {% if s.student_categories %}
+                                        <span class="badge rounded-pill bg-success-subtle text-success mt-2 px-3 py-2 border border-success-subtle">
+                                            {{ s.student_categories }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-2">{{ s.name }}</h5>
+                                    
+                                    <div class="mb-2">
+                                        <span class="small fw-bold text-uppercase text-secondary">{% trans "Benefits" %}:</span>
+                                        <p class="text-body mb-1 small">{{ s.benefits }}</p>
+                                    </div>
+
+                                    <div class="row g-2 mt-1">
+                                        <div class="col-sm-6">
+                                            <span class="small fw-bold text-uppercase text-secondary d-block">{% trans "Eligibility" %}:</span>
+                                            <span class="small text-secondary">{{ s.eligibility_criteria|truncatechars:100 }}</span>
+                                        </div>
+                                        {% if s.max_income_lakh %}
+                                        <div class="col-sm-6">
+                                            <span class="small fw-bold text-uppercase text-secondary d-block">{% trans "Income Limit" %}:</span>
+                                            <span class="small text-secondary">₹{{ s.max_income_lakh }} {% trans "lakh/year" %}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-auto mt-3 mt-md-0 ps-md-4 border-start-separator">
+                                    <div class="d-flex flex-row flex-md-column gap-2 justify-content-center">
+                                        {% if s.apply_url %}
+                                        <a href="{{ s.apply_url }}" target="_blank" class="btn btn-success px-4 py-2 rounded-pill shadow-sm">
+                                            <i class="bi bi-pencil-square me-1"></i>{% trans "Apply Now" %}
+                                        </a>
+                                        {% endif %}
+                                        
+                                        <button class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm small" data-bs-toggle="collapse" data-bs-target="#details-{{ s.pk }}">
+                                            <i class="bi bi-info-circle me-1"></i>{% trans "Courses" %}
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                            <div class="collapse mt-3 pt-3 border-top" id="details-{{ s.pk }}">
+                                <div class="p-3 bg-body rounded">
+                                    <h6 class="fw-bold small text-uppercase">{% trans "Eligible Courses" %}:</h6>
+                                    <p class="small text-secondary mb-0">{{ s.eligible_courses }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center py-5">
+                    <div class="display-1 text-secondary opacity-25 mb-4">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <h4 class="text-secondary">{% trans "No scholarships found at this time." %}</h4>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Dark Mode Text Safety */
+    .text-body { color: var(--bs-body-color) !important; }
+    .text-secondary { color: var(--bs-secondary-color) !important; }
+
+    /* Modern UI Effects */
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.15) !important;
+    }
+    
+    .transition-all {
+        transition: all 0.3s ease-in-out;
+    }
+    
+    /* Subtle border for financial aid items */
+    .income-limited-border {
+        border-left: 6px solid var(--bs-success) !important;
+    }
+
+    /* Dynamic Border colors */
+    .border-end-separator, .border-start-separator {
+        border-color: var(--bs-border-color) !important;
+    }
+
+    @media (min-width: 768px) {
+        .border-end-separator { border-right: 1px solid var(--bs-border-color) !important; }
+        .border-start-separator { border-left: 1px solid var(--bs-border-color) !important; }
+    }
+
+    .bg-success-subtle {
+        background-color: rgba(25, 135, 84, 0.1) !important;
+    }
+
+    .btn {
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+</style>
 {% endblock %}

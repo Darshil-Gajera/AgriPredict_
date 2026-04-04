@@ -1,63 +1,214 @@
 {% extends "base.html" %}
 {% load i18n %}
+
 {% block title %}{% trans "Admission Guide" %} | AgriPredict{% endblock %}
+
 {% block content %}
 <div class="container py-5">
-  <h2 class="fw-bold mb-2">{% trans "Admission Guide 2025–26" %}</h2>
-  <p class="text-muted mb-5">{% trans "Complete step-by-step process for Gujarat agriculture university admissions." %}</p>
-
-  <div class="row g-4">
-    <div class="col-lg-8">
-      {% for step in steps %}
-      <div class="d-flex gap-3 mb-4">
-        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">{{ step.num }}</div>
-        <div>
-          <h5 class="fw-bold mb-1">{{ step.title }}</h5>
-          <p class="text-muted mb-0">{{ step.desc }}</p>
+    <div class="row mb-5 text-center">
+        <div class="col-lg-8 mx-auto">
+            <h2 class="fw-bold display-6 mb-2 text-body">{% trans "Admission Guide 2025–26" %}</h2>
+            <div class="mx-auto bg-success rounded-pill" style="width: 80px; height: 4px;"></div>
+            <p class="text-secondary mt-3">{% trans "Complete step-by-step process for Gujarat agriculture university admissions." %}</p>
         </div>
-      </div>
-      {% empty %}
-      <div class="d-flex gap-3 mb-4">
-        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">1</div>
-        <div><h5 class="fw-bold mb-1">{% trans "Fill Online Form" %}</h5><p class="text-muted mb-0">{% trans "Register on the official Gujarat agriculture admission portal and fill the application form." %}</p></div>
-      </div>
-      <div class="d-flex gap-3 mb-4">
-        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">2</div>
-        <div><h5 class="fw-bold mb-1">{% trans "Upload Documents" %}</h5><p class="text-muted mb-0">{% trans "Upload mark sheets, category certificate, domicile certificate, passport photo, and signature." %}</p></div>
-      </div>
-      <div class="d-flex gap-3 mb-4">
-        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">3</div>
-        <div><h5 class="fw-bold mb-1">{% trans "Merit List Publication" %}</h5><p class="text-muted mb-0">{% trans "Merit lists are published based on your Class 12 theory marks and GUJCET score." %}</p></div>
-      </div>
-      <div class="d-flex gap-3 mb-4">
-        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">4</div>
-        <div><h5 class="fw-bold mb-1">{% trans "College Allotment & Rounds" %}</h5><p class="text-muted mb-0">{% trans "Colleges are allotted over 3 rounds. Accept your allotment and report to the college." %}</p></div>
-      </div>
-      <div class="d-flex gap-3 mb-4">
-        <div class="flex-shrink-0 bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:40px;height:40px">5</div>
-        <div><h5 class="fw-bold mb-1">{% trans "Fee Payment" %}</h5><p class="text-muted mb-0">{% trans "Pay the required tuition and hostel fees online to confirm your admission." %}</p></div>
-      </div>
-      {% endfor %}
     </div>
 
-    {% if dates %}
-    <div class="col-lg-4">
-      <div class="card border-0 shadow-sm">
-        <div class="card-header bg-success text-white fw-semibold">{% trans "Key Dates" %}</div>
-        <ul class="list-group list-group-flush">
-          {% for d in dates %}
-          <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="small">
-              <div class="fw-semibold">{{ d.title }}</div>
-              <div class="text-muted">{{ d.get_event_type_display }}</div>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="notification-timeline">
+                {% for step in steps %}
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 100px;">
+                                    <div class="step-circle bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm">
+                                        <span class="fs-4 fw-bold">{{ step.num }}</span>
+                                    </div>
+                                    <span class="text-uppercase small fw-bold text-secondary mt-2 d-block">{% trans "Step" %}</span>
+                                </div>
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-2">{{ step.title }}</h5>
+                                    <p class="text-secondary mb-0">{{ step.desc }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 100px;">
+                                    <div class="step-circle bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm">
+                                        <span class="fs-4 fw-bold">1</span>
+                                    </div>
+                                    <span class="text-uppercase small fw-bold text-secondary mt-2 d-block">{% trans "Step" %}</span>
+                                </div>
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-1">{% trans "Online Registration" %}</h5>
+                                    <p class="text-secondary mb-0">{% trans "Create an account on the official portal and fill in your personal and academic details carefully." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 100px;">
+                                    <div class="step-circle bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm">
+                                        <span class="fs-4 fw-bold">2</span>
+                                    </div>
+                                    <span class="text-uppercase small fw-bold text-secondary mt-2 d-block">{% trans "Step" %}</span>
+                                </div>
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-1">{% trans "Document Upload" %}</h5>
+                                    <p class="text-secondary mb-0">{% trans "Scan and upload your 10th/12th marksheet, GUJCET result, and category certificates in the required format." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 100px;">
+                                    <div class="step-circle bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm">
+                                        <span class="fs-4 fw-bold">3</span>
+                                    </div>
+                                    <span class="text-uppercase small fw-bold text-secondary mt-2 d-block">{% trans "Step" %}</span>
+                                </div>
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-1">{% trans "Choice Filling" %}</h5>
+                                    <p class="text-secondary mb-0">{% trans "Select your preferred colleges and courses. Prioritize them based on your merit and interests." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 100px;">
+                                    <div class="step-circle bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm">
+                                        <span class="fs-4 fw-bold">4</span>
+                                    </div>
+                                    <span class="text-uppercase small fw-bold text-secondary mt-2 d-block">{% trans "Step" %}</span>
+                                </div>
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-1">{% trans "Seat Allotment" %}</h5>
+                                    <p class="text-secondary mb-0">{% trans "Check the allotment result. If satisfied, confirm your seat by paying the partial admission fee." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notification-item mb-4">
+                    <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary text-body">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-auto text-center border-end-separator pe-md-4 mb-3 mb-md-0" style="min-width: 100px;">
+                                    <div class="step-circle bg-success text-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow-sm">
+                                        <span class="fs-4 fw-bold">5</span>
+                                    </div>
+                                    <span class="text-uppercase small fw-bold text-secondary mt-2 d-block">{% trans "Step" %}</span>
+                                </div>
+                                <div class="col-md px-md-4">
+                                    <h5 class="fw-bold mb-1">{% trans "Physical Reporting" %}</h5>
+                                    <p class="text-secondary mb-0">{% trans "Visit the allotted college with original documents for verification to finalize your admission." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
             </div>
-            <span class="badge bg-success-subtle text-success text-nowrap">{{ d.start_date|date:"d M" }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm bg-body-tertiary sticky-top" style="top: 100px;">
+                <div class="card-header bg-success text-white py-3 border-0">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-calendar-event me-2"></i>{% trans "Key Dates" %}</h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if dates %}
+                    <ul class="list-group list-group-flush rounded-bottom">
+                        {% for d in dates %}
+                        <li class="list-group-item bg-transparent py-3 border-bottom d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fw-bold text-body small">{{ d.title }}</div>
+                                <div class="text-secondary x-small">{{ d.get_event_type_display }}</div>
+                            </div>
+                            <span class="badge rounded-pill bg-success-subtle text-success border border-success-subtle">
+                                {{ d.start_date|date:"d M" }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="p-4 text-center">
+                        <p class="text-muted small mb-0">{% trans "Dates will be announced soon." %}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
-  </div>
 </div>
+
+<style>
+    /* Dark Mode and UI Basics */
+    .text-body { color: var(--bs-body-color) !important; }
+    .text-secondary { color: var(--bs-secondary-color) !important; }
+    .x-small { font-size: 0.75rem; }
+
+    /* Step Circle and Hover Effects */
+    .step-circle { 
+        width: 50px; 
+        height: 50px; 
+        transition: transform 0.3s ease; 
+        z-index: 2;
+        position: relative;
+    }
+    .hover-lift:hover { 
+        transform: translateY(-5px); 
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.15) !important; 
+    }
+    .hover-lift:hover .step-circle { transform: scale(1.1); }
+    .transition-all { transition: all 0.3s ease-in-out; }
+
+    /* Responsive Borders */
+    .border-end-separator { border-color: var(--bs-border-color) !important; }
+    @media (min-width: 768px) {
+        .border-end-separator { border-right: 1px solid var(--bs-border-color) !important; }
+    }
+
+    .bg-success-subtle { background-color: rgba(25, 135, 84, 0.1) !important; }
+
+    /* Vertical Timeline Line */
+    @media (min-width: 768px) {
+        .notification-timeline { position: relative; }
+        .notification-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 20px;
+            bottom: 20px;
+            width: 2px;
+            background: var(--bs-border-color);
+            z-index: 1;
+            opacity: 0.3;
+        }
+    }
+</style>
 {% endblock %}

@@ -1,16 +1,15 @@
-from django import forms
-from django.utils.translation import gettext_lazy as _
-from .models import User
+from django.urls import path, include
+from . import views
 
+app_name = "accounts"
 
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ["first_name", "last_name", "phone", "preferred_language", "notify_email", "notify_sms"]
-        widgets = {
-            "preferred_language": forms.Select(attrs={"class": "form-select"}),
-        }
-        labels = {
-            "notify_email": _("Receive email notifications"),
-            "notify_sms": _("Receive SMS notifications"),
-        }
+urlpatterns = [
+    # Custom Profile and Dashboard Views
+    path("profile/", views.profile, name="profile"),
+    path("saved/", views.saved_results, name="saved_results"),
+    path("saved/<int:pk>/delete/", views.delete_saved_result, name="delete_result"),
+    
+    # Inclusion of Django-allauth or standard auth
+    # This provides 'account_login', 'account_logout', and 'account_signup'
+    path("", include("allauth.urls")), 
+]
