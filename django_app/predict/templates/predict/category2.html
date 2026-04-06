@@ -3,13 +3,37 @@
 
 {% block title %}{% trans "Merit Calculator — Category 2" %} | AgriPredict{% endblock %}
 
+{% block extra_css %}
+<style>
+  /* Custom sticky behavior to interact properly with the Navbar */
+  @media (min-width: 992px) {
+    .sticky-calculator {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5.5rem; /* Adjust this based on your navbar height */
+      z-index: 1010;
+    }
+  }
+
+  /* Ensures scroll-to-results doesn't hide the panel under the navbar */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; 
+  }
+
+  /* Visual polish for the cards */
+  .card {
+    transition: box-shadow 0.3s ease;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
   <div class="row g-4">
 
-    <!-- ── Form column ── -->
     <div class="col-lg-5">
-      <div class="card shadow-sm border-0 sticky-top" style="top:80px">
+      <div class="card shadow-sm border-0 sticky-calculator">
         <div class="card-header bg-primary text-white">
           <h5 class="mb-0"><i class="bi bi-calculator me-2"></i>{% trans "Category 2: Technical Agriculture" %}</h5>
           <small>{% trans "Engineering / Technology Programs" %}</small>
@@ -57,10 +81,7 @@
             </select>
           </div>
 
-          <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="farmingBonus" />
-            <label class="form-check-label" for="farmingBonus">{% trans "Farming Background (+5% bonus)" %}</label>
-          </div>
+          
 
           <div id="formAlert"></div>
 
@@ -75,7 +96,6 @@
       </div>
     </div>
 
-    <!-- ── Results column ── -->
     <div class="col-lg-7">
 
       <div id="resultsPanel" class="d-none">
@@ -104,11 +124,6 @@
                 </div>
               </div>
             </div>
-            {% if user.is_authenticated %}
-            <button class="btn btn-outline-primary btn-sm mt-3" id="saveResultBtn">
-              <i class="bi bi-bookmark me-1"></i>{% trans "Save Result" %}
-            </button>
-            {% endif %}
           </div>
         </div>
 
@@ -235,30 +250,31 @@ function applyFilters(){
 async function doCalculate(){
   clearAlert();
   const theoryOb=val("theoryObtained"), theoryTot=val("theoryTotal")||"300", gujcet=val("gujcetMarks"), studCat=val("studentCategory")||"OPEN", farming=$id("farmingBonus")?.checked||false;
-  if(!theoryOb){showAlert("Please enter Theory Marks Obtained.","warning");return;}
-  if(!gujcet){showAlert("Please enter GUJCET Marks.","warning");return;}
+  if(!theoryOb || !gujcet){ showAlert("Please enter all marks correctly.","warning"); return; }
+  
   setLoading(true);
   try{
     const resp=await fetch("/api/predict/calculate/",{method:"POST",headers:{"Content-Type":"application/json","X-CSRFToken":CSRF},body:JSON.stringify({category:CATEGORY,theory_obtained:parseFloat(theoryOb),theory_total:parseFloat(theoryTot),gujcet_marks:parseFloat(gujcet),student_category:studCat,farming_background:farming})});
     const data=await resp.json();
     if(!resp.ok) throw new Error(data.details||data.error||`Server error ${resp.status}`);
+    
     setText("meritDisplay",data.merit); setText("theoryComp",data.theory_comp);
     setText("gujcetComp",data.gujcet_comp); setText("bonusComp",data.bonus_comp);
+    
     $id("resultsPanel")?.classList.remove("d-none"); $id("emptyState")?.classList.add("d-none");
     _colleges=Array.isArray(data.colleges)?data.colleges:[];
     populateFilters(_colleges); renderTable(_colleges);
-    $id("resultsPanel")?.scrollIntoView({behavior:"smooth"});
+    
+    // Trigger scroll to results
+    $id("resultsPanel")?.scrollIntoView({behavior:"smooth", block: "start"});
   }catch(err){showAlert("Error: "+err.message,"danger");}
   finally{setLoading(false);}
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
   $id("calculateBtn")?.addEventListener("click",doCalculate);
-  $id("resetBtn")?.addEventListener("click",()=>{
-    ["theoryObtained","gujcetMarks"].forEach(id=>{const el=$id(id);if(el)el.value="";});
-    ["theoryTotal","studentCategory","subjectGroup","filterCity","filterCourse"].forEach(id=>{const el=$id(id);if(el)el.selectedIndex=0;});
-    const cb=$id("farmingBonus");if(cb)cb.checked=false;
-    _colleges=[];clearAlert();$id("resultsPanel")?.classList.add("d-none");$id("emptyState")?.classList.remove("d-none");
+  $id("resetBtn")?.addEventListener("click",() => {
+    location.reload(); // Simplest way to ensure everything resets including select filters
   });
   ["filterCity","filterCourse","sortBy"].forEach(id=>$id(id)?.addEventListener("change",applyFilters));
 });

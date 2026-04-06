@@ -8,33 +8,34 @@ class ChatMessage(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    message: str = Field(..., min_length=1, max_length=1000)
+    message: str = Field(..., min_length=1, max_length=2000)
     language: Literal["en", "gu"] = "en"
     history: list[ChatMessage] = Field(default_factory=list, max_length=10)
-    # Optional context from Django merit calculator
+    # Optional context forwarded from Django merit calculator
     user_merit: Optional[float] = None
-    user_category: Optional[str] = None      # "1", "2", "3"
-    student_category: Optional[str] = None   # OPEN, SC, ST, SEBC, EWS
+    user_category: Optional[str] = None       # "1" | "2" | "3"
+    student_category: Optional[str] = None    # GENERAL | SEBC | SC | ST | EWS
 
 
 class SourceDocument(BaseModel):
     source: str
-    page: Optional[int] = None
     content_preview: str
+    score: Optional[float] = None
 
 
 class ChatResponse(BaseModel):
     answer: str
     language: str = "en"
     sources: list[SourceDocument] = []
-    intent: Optional[str] = None  # merit | college | scholarship | admission | general
+    intent: Optional[str] = None   # merit | college | scholarship | admission | general
 
 
 class IngestRequest(BaseModel):
-    secret: str  # must match INGEST_SECRET env var
+    secret: str
 
 
 class HealthResponse(BaseModel):
     status: str
     vector_store_loaded: bool
     doc_count: int
+    model: str

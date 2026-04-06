@@ -3,13 +3,36 @@
 
 {% block title %}{% trans "Merit Calculator — Category 3" %} | AgriPredict{% endblock %}
 
+{% block extra_css %}
+<style>
+  /* Custom sticky offset to account for the AgriPredict Navbar */
+  @media (min-width: 992px) {
+    .sticky-calculator {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 5.5rem; /* Navbar height + buffer */
+      z-index: 1010;
+    }
+  }
+
+  /* Ensures smooth scrolling doesn't hide headers under the fixed navbar */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  .card {
+    transition: transform 0.2s ease-in-out;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
   <div class="row g-4">
 
-    <!-- ── Form column ── -->
     <div class="col-lg-5">
-      <div class="card shadow-sm border-0 sticky-top" style="top:80px">
+      <div class="card shadow-sm border-0 sticky-calculator">
         <div class="card-header bg-info text-white">
           <h5 class="mb-0"><i class="bi bi-calculator me-2"></i>{% trans "Category 3: Community Science" %}</h5>
           <small>{% trans "Home Science / Community Science Programs" %}</small>
@@ -75,7 +98,6 @@
       </div>
     </div>
 
-    <!-- ── Results column ── -->
     <div class="col-lg-7">
 
       <div id="resultsPanel" class="d-none">
@@ -234,30 +256,34 @@ function applyFilters(){
 async function doCalculate(){
   clearAlert();
   const theoryOb=val("theoryObtained"),theoryTot=val("theoryTotal")||"300",gujcet=val("gujcetMarks"),studCat=val("studentCategory")||"OPEN",farming=$id("farmingBonus")?.checked||false;
-  if(!theoryOb){showAlert("Please enter Theory Marks Obtained.","warning");return;}
-  if(!gujcet){showAlert("Please enter GUJCET Marks.","warning");return;}
+  if(!theoryOb || !gujcet){showAlert("Please fill in your marks first.","warning");return;}
   setLoading(true);
   try{
     const resp=await fetch("/api/predict/calculate/",{method:"POST",headers:{"Content-Type":"application/json","X-CSRFToken":CSRF},body:JSON.stringify({category:CATEGORY,theory_obtained:parseFloat(theoryOb),theory_total:parseFloat(theoryTot),gujcet_marks:parseFloat(gujcet),student_category:studCat,farming_background:farming})});
     const data=await resp.json();
     if(!resp.ok)throw new Error(data.details||data.error||`Server error ${resp.status}`);
+    
     setText("meritDisplay",data.merit);setText("theoryComp",data.theory_comp);
     setText("gujcetComp",data.gujcet_comp);setText("bonusComp",data.bonus_comp);
+    
     $id("resultsPanel")?.classList.remove("d-none");$id("emptyState")?.classList.add("d-none");
     _colleges=Array.isArray(data.colleges)?data.colleges:[];
     populateFilters(_colleges);renderTable(_colleges);
-    $id("resultsPanel")?.scrollIntoView({behavior:"smooth"});
+    
+    // Scrolled specifically to results with custom behavior
+    window.scrollTo({
+      top: $id("resultsPanel").offsetTop - 100,
+      behavior: "smooth"
+    });
   }catch(err){showAlert("Error: "+err.message,"danger");}
   finally{setLoading(false);}
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
   $id("calculateBtn")?.addEventListener("click",doCalculate);
-  $id("resetBtn")?.addEventListener("click",()=>{
-    ["theoryObtained","gujcetMarks"].forEach(id=>{const el=$id(id);if(el)el.value="";});
-    ["theoryTotal","studentCategory","subjectGroup","filterCity","filterCourse"].forEach(id=>{const el=$id(id);if(el)el.selectedIndex=0;});
-    const cb=$id("farmingBonus");if(cb)cb.checked=false;
-    _colleges=[];clearAlert();$id("resultsPanel")?.classList.add("d-none");$id("emptyState")?.classList.remove("d-none");
+  $id("resetBtn")?.addEventListener("click",() => {
+    // Reloading is the safest way to reset all UI states correctly
+    window.location.reload();
   });
   ["filterCity","filterCourse","sortBy"].forEach(id=>$id(id)?.addEventListener("change",applyFilters));
 });

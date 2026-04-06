@@ -17,6 +17,7 @@ urlpatterns += i18n_patterns(
     path("notifications/", include("notifications.urls")),
     path("scholarships/", include("scholarships.urls")),
     path("", include("core.urls")),
+    
     prefix_default_language=False,
 )
 
@@ -24,6 +25,8 @@ urlpatterns += i18n_patterns(
 urlpatterns += [
     path("api/predict/", include("predict.api_urls")),
     path("api/colleges/", include("colleges.api_urls")),
+    path("api/chat/", include("core.chat_urls")),
+    path("api/accounts/", include("accounts.urls")),
 ]
 
 if settings.DEBUG:

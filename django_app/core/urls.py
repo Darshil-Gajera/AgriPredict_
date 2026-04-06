@@ -8,5 +8,6 @@ urlpatterns = [
     path("faq/", views.faq, name="faq"),
     path("contact/", views.contact, name="contact"),
     path("admission-guide/", views.admission_guide, name="admission_guide"),
-    path("api/chat/", views.chat_proxy, name="chat_proxy"),
+
+    # ❌ REMOVE api/chat from here (important)
 ]
