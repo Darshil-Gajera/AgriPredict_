@@ -18,7 +18,7 @@ from functools import lru_cache
 
 class Settings(BaseSettings):
     # ── Gemini / Google ──────────────────────────────────────────────────────
-    google_api_key: str = ""                          # REQUIRED — set in .env
+    google_api_key: str = "AIzaSyDyMAGb88PoFnI_59AxUD7BI25yY1ND40I"                          # REQUIRED — set in .env
     llm_model: str = "gemini-2.5-flash"
     embedding_model: str = "models/gemini-embedding-001"  # Gemini embeddings (free)
     llm_temperature: float = 0.2

@@ -48,13 +48,7 @@ app = FastAPI(
 # ── CORS — allow requests from the main Django site ──────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-        "https://gajera06.pythonanywhere.com",
-        # Add your chatbot subdomain if hosted separately:
-        # "https://chatbot.gajera06.pythonanywhere.com",
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
