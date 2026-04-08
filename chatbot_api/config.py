@@ -17,7 +17,11 @@ load_dotenv(dotenv_path="/app/.env", override=True)
 
 class Settings(BaseSettings):
     # ── Gemini / Google ──────────────────────────────────────────────────────
+<<<<<<< HEAD
     google_api_key: str = "AIzaSyAx7lJw5mz4SQwvS9m2iiGUqC4aufRKHM0"
+=======
+    google_api_key: str = ""
+>>>>>>> bb6b1ea4014ea43aea7171a76e7c64385a1d0e84
     llm_model: str = "gemini-2.5-flash"
     embedding_model: str = "models/gemini-embedding-001"
     llm_temperature: float = 0.2
