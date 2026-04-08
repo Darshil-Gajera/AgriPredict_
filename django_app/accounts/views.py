@@ -35,21 +35,30 @@ def delete_saved_result(request, pk):
         messages.success(request, _("Result deleted."))
     return redirect("accounts:saved_results")
 
+# accounts/views.py
+
 @require_POST
-@login_required  # ← ADD THIS
+@login_required
 def save_prediction(request):
     try:
         data = json.loads(request.body)
+        
+        # Ensure data is saved to the database
         SavedResult.objects.create(
             user=request.user,
-            category=data.get('category', '1'),
+            category=str(data.get('category', '1')),
             merit_score=data.get('merit'),
-            theory_marks=data.get('theory'),
-            gujcet_marks=data.get('gujcet'),
-            has_farming=data.get('farming', False)
+            theory_marks=data.get('theory_obtained'),
+            theory_total=data.get('theory_total', 300),
+            gujcet_marks=data.get('gujcet_marks'),
+            farming_bonus=data.get('farming', False), # Matches model field
+            student_category=data.get('student_category', 'OPEN'),
+            # Optional: Add city/district if your JS sends it
+            city=data.get('city', ''),
+            district=data.get('district', '')
         )
         return JsonResponse({"saved": True})
     except Exception as e:
         import traceback
-        traceback.print_exc()  # ← so you see the real error in terminal
+        traceback.print_exc() 
         return JsonResponse({"saved": False, "error": str(e)}, status=400)
