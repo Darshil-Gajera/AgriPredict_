@@ -1,3 +1,4 @@
+#save
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -48,6 +49,9 @@ class User(AbstractUser):
         return self.email
 
 
+from django.db import models
+from django.conf import settings # Best practice: reference User via settings
+
 class SavedResult(models.Model):
     CATEGORY_CHOICES = [
         ("1", "Core Agriculture"),
@@ -55,26 +59,59 @@ class SavedResult(models.Model):
         ("3", "Home & Community"),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="saved_results")
+    # Use choices for student categories to match your predictor logic
+    STUDENT_CAT_CHOICES = [
+        ('OPEN', 'General / Open'),
+        ('SEBC', 'SEBC'),
+        ('SC', 'SC'),
+        ('ST', 'ST'),
+        ('EWS', 'EWS'),
+        ('OB', 'Other Board'),
+        ('PH', 'PH-VH'),
+        ('EX', 'Ex-Serviceman'),
+    ]
+
+    # Relationships
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        related_name="saved_results"
+    )
+
+    # Basic Info
     category = models.CharField(
-    max_length=1,
-    choices=CATEGORY_CHOICES,
-    default="1"   # ✅ prevents future issues
-)
-    theory_marks = models.FloatField()
-    theory_total = models.IntegerField()
-    gujcet_marks = models.FloatField()
-    student_category = models.CharField(max_length=20)
-    merit_score = models.FloatField()
+        max_length=1,
+        choices=CATEGORY_CHOICES,
+        default="1"
+    )
+    label = models.CharField(max_length=120, blank=True, help_text="Custom name for this result")
+
+    # Score Data - Using DecimalField for precision (prevents 85.000000002 errors)
+    theory_marks = models.DecimalField(max_digits=6, decimal_places=2)
+    theory_total = models.PositiveIntegerField(default=300)
+    gujcet_marks = models.DecimalField(max_digits=5, decimal_places=2)
+    merit_score = models.DecimalField(max_digits=7, decimal_places=4)
+    
+    # Selection Data
+    student_category = models.CharField(
+        max_length=10, 
+        choices=STUDENT_CAT_CHOICES, 
+        default='OPEN'
+    )
     farming_bonus = models.BooleanField(default=False)
     subject_group = models.CharField(max_length=10, blank=True)
+    # Location Info
     city = models.CharField(max_length=100, blank=True)
     district = models.CharField(max_length=100, blank=True)
+
+    # Metadata
     created_at = models.DateTimeField(auto_now_add=True)
-    label = models.CharField(max_length=120, blank=True)
 
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "Saved Prediction"
+        verbose_name_plural = "Saved Predictions"
 
     def __str__(self):
-        return f"{self.user.email} | Cat {self.category} | Merit {self.merit_score}"
+        # Using .format or f-string for a clean admin display
+        return f"{self.user.email} | {self.get_category_display()} | Merit: {self.merit_score}"

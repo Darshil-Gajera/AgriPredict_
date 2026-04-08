@@ -5,7 +5,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from .predictors import AgriPredictor
-
+from accounts.models import SavedResult
+from django.contrib.auth.decorators import login_required
 
 def category_view(request, category):
     """Render category-specific calculator page"""
@@ -91,14 +92,24 @@ def calculate_view(request):
             "details": str(e)
         }, status=400)
 
-
 @require_POST
+@login_required
 def save_result_view(request):
-    """Save user result (placeholder for future DB logic)"""
     try:
-        if not request.user.is_authenticated:
-            return JsonResponse({"error": "Login required"}, status=401)
+        data = json.loads(request.body)
+        
+        # Match the keys sent by the JavaScript
+        SavedResult.objects.create(
+            user=request.user,
+            category=str(data.get('category', '1')),
+            merit_score=float(data.get('merit', 0)),
+            theory_marks=float(data.get('theory_obtained', 0)),
+            theory_total=int(data.get('theory_total', 300)),
+            gujcet_marks=float(data.get('gujcet_marks', 0)),
+            student_category=data.get('student_category', 'OPEN'),
+            farming_bonus=bool(data.get('farming_background', False)),
+        )
+        
         return JsonResponse({"saved": True})
     except Exception as e:
-        traceback.print_exc()
         return JsonResponse({"error": str(e)}, status=400)
