@@ -45,10 +45,16 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# ── CORS — allow requests from the main Django site ──────────────────────────
+# ── CORS — allow requests from the main Django site ──────────────────────────mayur change
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:8000",
+        "http://chatbot:8001",
+        "https://gajera06.pythonanywhere.com",
+        # Add your chatbot subdomain if hosted separately:
+        # "https://chatbot.gajera06.pythonanywhere.com",
+    ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],

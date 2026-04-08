@@ -1,37 +1,36 @@
 """
 config.py — AgriPredict Chatbot Configuration
-Set environment variables with prefix CHATBOT_ in your .env file.
+Uses environment variables with prefix CHATBOT_
 
-Required:
-    CHATBOT_GOOGLE_API_KEY=your-gemini-api-key-here
-
-Optional (defaults shown):
-    CHATBOT_LLM_MODEL=gemini-1.5-flash
-    CHATBOT_LLM_TEMPERATURE=0.2
-    CHATBOT_MAX_RETRIEVED_DOCS=6
-    CHATBOT_INGEST_SECRET=change-me-in-production
+Example (.env):
+CHATBOT_GOOGLE_API_KEY=your_key
 """
 
-from pydantic_settings import BaseSettings
+import os
 from functools import lru_cache
+from pydantic_settings import BaseSettings
+from dotenv import load_dotenv
+
+# ✅ Explicitly load .env (important for Docker)
+load_dotenv(dotenv_path="/app/.env", override=True)
 
 
 class Settings(BaseSettings):
     # ── Gemini / Google ──────────────────────────────────────────────────────
-    google_api_key: str = "AIzaSyDyMAGb88PoFnI_59AxUD7BI25yY1ND40I"                          # REQUIRED — set in .env
+    google_api_key: str = "AIzaSyAto_PgH929jUytE_lSmBXevathLRLl9ds"                          # REQUIRED — set in .env
     llm_model: str = "gemini-2.5-flash"
-    embedding_model: str = "models/gemini-embedding-001"  # Gemini embeddings (free)
+    embedding_model: str = "models/gemini-embedding-001"
     llm_temperature: float = 0.2
 
     # ── Retrieval ────────────────────────────────────────────────────────────
     max_retrieved_docs: int = 6
-    similarity_threshold: float = 0.30               # cosine similarity cutoff
+    similarity_threshold: float = 0.30
 
     # ── Data paths ───────────────────────────────────────────────────────────
-    cutoff_data_dir: str = "./data/cutoffs"          # place CSV files here
-    faq_data_dir: str = "./data/faq"                 # place .md / .txt files here
-    pdf_data_dir: str = "./data/pdfs"                # place PDF brochures here
-    vector_cache_path: str = "./data/vector_cache.pkl"  # pickled embedding cache
+    cutoff_data_dir: str = "/app/data/cutoffs"
+    faq_data_dir: str = "/app/data/faq"
+    pdf_data_dir: str = "/app/data/pdfs"
+    vector_cache_path: str = "/app/data/vector_cache.pkl"
 
     # ── Security ─────────────────────────────────────────────────────────────
     ingest_secret: str = "change-me-in-production"
@@ -40,7 +39,6 @@ class Settings(BaseSettings):
     supported_languages: list[str] = ["en", "gu"]
 
     class Config:
-        env_file = ".env"
         env_prefix = "CHATBOT_"
         extra = "ignore"
 

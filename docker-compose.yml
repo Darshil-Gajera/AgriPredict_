@@ -1,0 +1,28 @@
+services:
+  chatbot:
+    image: agripredict-chatbot
+    build: ./chatbot_api
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env   # ✅ single root env file
+    volumes:
+      - ./chatbot_api/data:/app/data
+
+  django:
+    image: agripredict-django
+    build: ./django_app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - chatbot
+      - redis
+    environment:
+      - CHATBOT_API_URL=http://chatbot:8001
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
