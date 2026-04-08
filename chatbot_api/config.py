@@ -3,7 +3,7 @@ config.py — AgriPredict Chatbot Configuration
 Uses environment variables with prefix CHATBOT_
 
 Example (.env):
-CHATBOT_GOOGLE_API_KEY=your_key
+CHATBOT_GOOGLE_API_KEY=your_keyAIzaSyCxojZjGu7sZ2vhTTrwHVDltMw3vimHH_s
 """
 
 import os
@@ -16,19 +16,12 @@ load_dotenv(dotenv_path="/app/.env", override=True)
 
 
 class Settings(BaseSettings):
-    # ── Gemini / Google ──────────────────────────────────────────────────────
-<<<<<<< HEAD
-    google_api_key: str = "AIzaSyAto_PgH929jUytE_lSmBXevathLRLl9ds"                          # REQUIRED — set in .env
-=======
-<<<<<<< HEAD
-    google_api_key: str = "AIzaSyAx7lJw5mz4SQwvS9m2iiGUqC4aufRKHM0"
-=======
-    google_api_key: str = ""
->>>>>>> bb6b1ea4014ea43aea7171a76e7c64385a1d0e84
->>>>>>> 87584ec97c0be9fe44db858aef9d8b8813a9725c
+    # ── Gemini / Google ──────────────────────────────────────────────────────    google_api_key: str = "AIzaSyCxojZjGu7sZ2vhTTrwHVDltMw3vimHH_s"
     llm_model: str = "gemini-2.5-flash"
     embedding_model: str = "models/gemini-embedding-001"
     llm_temperature: float = 0.2
+    google_api_key: str ="AIzaSyAto_PgH929jUytE_lSmBXevathLRLl9ds"
+
 
     # ── Retrieval ────────────────────────────────────────────────────────────
     max_retrieved_docs: int = 6

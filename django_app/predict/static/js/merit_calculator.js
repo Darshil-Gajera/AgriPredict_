@@ -76,6 +76,7 @@ async function doCalculate() {
 }
 
 /* ─── SAVE ─── */
+/* ─── SAVE ─── */
 async function doSave() {
     if (typeof IS_AUTH !== 'undefined' && !IS_AUTH) {
         showAlert('Please <a href="/accounts/login/">log in</a> to save.', 'warning');
@@ -93,17 +94,22 @@ async function doSave() {
     try {
         const response = await fetch("/api/predict/save/", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+            credentials: "same-origin",  // ✅ VERY IMPORTANT FIX
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": CSRF
+            },
             body: JSON.stringify({
                 merit: _lastMerit,
-                theory: _lastPayload.theory_obtained,
+                theory_obtained: _lastPayload.theory_obtained,   // ✅ FIXED
                 theory_total: _lastPayload.theory_total,
-                gujcet: _lastPayload.gujcet_marks,
+                gujcet_marks: _lastPayload.gujcet_marks,         // ✅ FIXED
                 farming: _lastPayload.farming_background,
                 category: _lastPayload.category,
                 student_category: _lastPayload.student_category
             })
         });
+
         const result = await response.json();
 
         if (result.saved) {
@@ -111,14 +117,13 @@ async function doSave() {
             saveBtn.innerHTML = '<i class="bi bi-check-circle"></i> Saved!';
             showAlert("Result saved successfully!", "success");
         } else {
-            throw new Error(result.error);
+            throw new Error(result.error || "Save failed");
         }
     } catch (err) {
         showAlert("Save failed: " + err.message, "danger");
         resetSaveBtn();
     }
 }
-
 /* ─── UTILITIES ─── */
 function displayMerit(data) {
     const merit = data.merit ?? '—';

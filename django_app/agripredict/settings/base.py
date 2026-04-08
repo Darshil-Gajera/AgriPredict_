@@ -196,8 +196,8 @@ CORS_ALLOWED_ORIGINS = env.list(
 
 
 # ── Celery ────────────────────────────────────────────────────
-CELERY_BROKER_URL = env("REDIS_URL", default="redis://redis:6379/0")
-CELERY_RESULT_BACKEND = env("REDIS_URL", default="redis://redis:6379/0")
+CELERY_BROKER_URL = env("REDIS_URL", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = env("REDIS_URL", default="redis://localhost:6379/0")
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Asia/Kolkata"
@@ -228,7 +228,7 @@ TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER", default="")
 
 
 # ── Chatbot API ───────────────────────────────────────────────mayur change
-CHATBOT_API_URL = os.environ.get("CHATBOT_API_URL", "http://chatbot:8001")
+CHATBOT_API_URL = env("CHATBOT_API_URL", default="http://chatbot:8001")
 
 
 # ── Session (Recommended) ─────────────────────────────────────
