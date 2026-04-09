@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     llm_model: str = "gemini-2.5-flash"
     embedding_model: str = "models/gemini-embedding-001"
     llm_temperature: float = 0.2
-    google_api_key: str ="AIzaSyAYSUCxvb46L6Q0o5z3oepaHiiMCmINgAo"
+    google_api_key: str =""
 
 
     # ── Retrieval ────────────────────────────────────────────────────────────
