@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",   # ← comma here
     "crispy_forms",
     "crispy_bootstrap5",
     "rest_framework",
@@ -46,8 +47,6 @@ INSTALLED_APPS = [
     "scholarships",
     "core",
 ]
-
-
 # ── Middleware ─────────────────────────────────────────────────
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block title %}{% trans "Sign In" %} | AgriPredict{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0 overflow-hidden">
+    <div class="row g-0 min-vh-100">
+        <div class="col-lg-6 d-none d-lg-flex bg-success position-relative align-items-center justify-content-center text-white overflow-hidden">
+            <div class="position-absolute top-0 start-0 w-100 h-100 opacity-25" 
+                 style="background-image: url('https://www.transparenttextures.com/patterns/leaf.png');"></div>
+            
+            <div class="position-relative z-1 p-5 text-center" style="max-width: 500px;">
+                <div class="mb-4">
+                    <i class="bi bi-patch-check-fill display-1 shadow-sm"></i>
+                </div>
+                <h1 class="fw-bold mb-3">{% trans "Welcome Back to AgriPredict" %}</h1>
+                <p class="fs-5 opacity-75">
+                    {% trans "Access your personalized agriculture admission predictions and track your application journey in one place." %}
+                </p>
+                
+                <div class="mt-5 d-flex justify-content-center gap-4 small opacity-50">
+                    <span><i class="bi bi-shield-lock me-1"></i> {% trans "Secure Data" %}</span>
+                    <span><i class="bi bi-cpu me-1"></i> {% trans "AI Powered" %}</span>
+                    <span><i class="bi bi-clock-history me-1"></i> {% trans "24/7 Updates" %}</span>
+                </div>
+            </div>
+            
+            <div class="position-absolute bottom-0 start-0 w-100">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill="#ffffff" fill-opacity="0.1" d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,112C672,107,768,149,864,165.3C960,181,1056,171,1152,144C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="col-lg-6 d-flex align-items-center justify-content-center bg-body py-5">
+            <div class="login-box w-100 px-4" style="max-width: 420px;">
+                
+                <div class="text-center text-lg-start mb-5">
+                    <h2 class="fw-bold text-body">{% trans "Sign In" %}</h2>
+                    <p class="text-secondary">
+                        {% trans "Don't have an account?" %} 
+                        <a href="{{ signup_url }}" class="text-success fw-bold text-decoration-none border-bottom border-success border-2">
+                            {% trans "Create one now" %}
+                        </a>
+                    </p>
+                </div>
+
+                <div class="card border-0 shadow-sm hover-lift transition-all bg-body-tertiary">
+                    <div class="card-body p-4">
+                        <form class="login" method="POST" action="{% url 'account_login' %}">
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="id_login" class="form-label small fw-bold text-uppercase text-secondary">{% trans "Email Address" %}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0 text-secondary">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" name="login" class="form-control border-start-0 ps-0" 
+                                           placeholder="name@example.com" required id="id_login">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <label for="id_password" class="form-label small fw-bold text-uppercase text-secondary">{% trans "Password" %}</label>
+                                    <a class="x-small text-success text-decoration-none" href="{% url 'account_reset_password' %}">
+                                        {% trans "Forgot Password?" %}
+                                    </a>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent border-end-0 text-secondary">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    <input type="password" name="password" class="form-control border-start-0 ps-0" 
+                                           placeholder="••••••••" required id="id_password">
+                                </div>
+                            </div>
+
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" name="remember" class="form-check-input" id="id_remember">
+                                <label class="form-check-label text-secondary small" for="id_remember">
+                                    {% trans "Keep me signed in" %}
+                                </label>
+                            </div>
+
+                            <button class="btn btn-success btn-lg w-100 fw-bold shadow-sm py-2 mb-3" type="submit">
+                                {% trans "Sign In" %} <i class="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </form>
+
+                        <div class="position-relative my-4">
+                            <hr class="text-secondary opacity-25">
+                            <span class="position-absolute top-50 start-50 translate-middle bg-body-tertiary px-3 text-secondary x-small fw-bold">
+                                {% trans "OR CONTINUE WITH" %}
+                            </span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <a href="{% provider_login_url 'google' %}" class="btn btn-outline-dark d-flex align-items-center justify-content-center py-2 transition-all">
+                                <i class="bi bi-google me-2"></i> {% trans "Google Account" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center">
+                    <p class="x-small text-secondary mb-0">
+                        &copy; 2026 AgriPredict. {% trans "All rights reserved." %}
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Professional Overrides */
+    .x-small { font-size: 0.75rem; }
+    
+    .login-box {
+        animation: fadeInRight 0.6s ease-out;
+    }
+
+    .hover-lift:hover { 
+        transform: translateY(-8px); 
+        box-shadow: 0 1.5rem 4rem rgba(0,0,0,.12) !important; 
+    }
+    
+    .transition-all { transition: all 0.3s ease-in-out; }
+
+    .input-group-text {
+        border-color: var(--bs-border-color);
+    }
+    
+    .form-control {
+        border-color: var(--bs-border-color);
+        padding: 0.6rem 0.75rem;
+    }
+
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    @keyframes fadeInRight {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Dark Mode Text Safety */
+    .text-body { color: var(--bs-body-color) !important; }
+    .text-secondary { color: var(--bs-secondary-color) !important; }
+</style>
+{% endblock %}
