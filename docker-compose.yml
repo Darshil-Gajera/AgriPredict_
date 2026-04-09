@@ -1,29 +1,33 @@
 services:
   chatbot:
     image: agripredict-chatbot
-    build: ./chatbot_api
+    build:
+      context: ./chatbot_api
+      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     env_file:
-      - .env
+      - .env                              # ← root .env only
     volumes:
       - ./chatbot_api/data:/app/data
 
   django:
     image: agripredict-django
-    build: ./django_app
+    build:
+      context: ./django_app
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     env_file:
-      - .env
+      - .env                              # ← root .env only
     depends_on:
       - chatbot
       - redis
     environment:
       - CHATBOT_API_URL=http://chatbot:8001
     volumes:
-      - ./django_app:/app                      # ← code stays live
-      - ./db.sqlite3:/app/db.sqlite3           # ← database persists on your PC
+      - ./django_app:/app
+      - ./db.sqlite3:/app/db.sqlite3      # ← persists database
 
   redis:
     image: redis:7-alpine
