@@ -48,7 +48,7 @@
                                 <div class="col-md px-md-4">
 
                                     <h5 class="fw-bold mb-1">
-                                        {% trans "Category" %}: {{ res.category|default:"--" }}
+                                        {% trans "Category" %}: {{ res.get_category_display|default:"--" }}
                                     </h5>
 
                                     <div class="d-flex flex-wrap gap-3 small text-secondary">
@@ -65,7 +65,7 @@
                                         </span>
 
                                         <span>
-                                            <strong>{% trans "Category" %}:</strong>
+                                            <strong>{% trans "Student Category" %}:</strong>
                                             {{ res.student_category|default:"OPEN" }}
                                         </span>
 
@@ -93,8 +93,17 @@
 
                                 </div>
 
-                                <!-- DELETE -->
-                                <div class="col-md-auto mt-3 mt-md-0 ps-md-4 border-start-separator">
+                                <!-- ACTIONS -->
+                                <div class="col-md-auto mt-3 mt-md-0 ps-md-4 border-start-separator d-flex flex-column gap-2 align-items-end">
+
+                                    <!-- EDIT -->
+                                    <a href="{% url 'accounts:edit_result' res.pk %}"
+                                       class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                        <i class="bi bi-pencil me-1"></i>
+                                        {% trans "Edit" %}
+                                    </a>
+
+                                    <!-- DELETE -->
                                     <form action="{% url 'accounts:delete_result' res.pk %}" method="post"
                                           onsubmit="return confirm('{% trans "Are you sure?" %}');">
                                         {% csrf_token %}
@@ -103,6 +112,7 @@
                                             {% trans "Delete" %}
                                         </button>
                                     </form>
+
                                 </div>
 
                             </div>
@@ -150,4 +160,4 @@
 }
 </style>
 
-{% endblock %}docker-compose exec django python manage.py shell
+{% endblock %}

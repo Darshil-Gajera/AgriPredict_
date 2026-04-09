@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "agripredict.middleware.AdminSessionMiddleware",      # ← BEFORE SessionMiddleware
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -90,13 +91,13 @@ TEMPLATES = [
 WSGI_APPLICATION = "agripredict.wsgi.application"
 
 
-# ── Database ──────────────────────────────────────────────────
+# ── Database ───────────────────────────────────────────────────
 DATABASES = {
     "default": env.db("DATABASE_URL", default=f"sqlite:///{BASE_DIR}/db.sqlite3")
 }
 
 
-# ── Auth (UPDATED FIX) ─────────────────────────────────────────
+# ── Auth ───────────────────────────────────────────────────────
 AUTH_USER_MODEL = "accounts.User"
 
 AUTHENTICATION_BACKENDS = [
@@ -110,13 +111,12 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
 LOGIN_URL = "/accounts/login/"
 
-# ✅ Allauth Email-only Login (NO USERNAME)
+# Allauth Email-only Login
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_USERNAME_REQUIRED = False
-
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED         = False
+ACCOUNT_AUTHENTICATION_METHOD     = "email"
+ACCOUNT_EMAIL_REQUIRED            = True
+ACCOUNT_UNIQUE_EMAIL              = True
 
 ACCOUNT_SIGNUP_FIELDS = [
     "email*",
@@ -124,14 +124,13 @@ ACCOUNT_SIGNUP_FIELDS = [
     "password2*",
 ]
 
-ACCOUNT_EMAIL_VERIFICATION = "optional"  # change to "mandatory" in production
+ACCOUNT_EMAIL_VERIFICATION        = "optional"
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_SUBJECT_PREFIX      = "[AgriPredict] "
+ACCOUNT_DEFAULT_HTTP_PROTOCOL     = "http"
 
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "[AgriPredict] "
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
 
-
-# ── Password Validation ───────────────────────────────────────
+# ── Password Validation ────────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -140,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# ── i18n ──────────────────────────────────────────────────────
+# ── i18n ───────────────────────────────────────────────────────
 LANGUAGE_CODE = "en"
 
 LANGUAGES = [
@@ -150,11 +149,10 @@ LANGUAGES = [
 
 LOCALE_PATHS = [BASE_DIR / "locale"]
 
-TIME_ZONE = "Asia/Kolkata"
-
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
+TIME_ZONE          = "Asia/Kolkata"
+USE_I18N           = True
+USE_L10N           = True
+USE_TZ             = True
 
 PARLER_LANGUAGES = {
     None: ({"code": "en"}, {"code": "gu"}),
@@ -162,22 +160,22 @@ PARLER_LANGUAGES = {
 }
 
 
-# ── Static & Media ────────────────────────────────────────────
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# ── Static & Media ─────────────────────────────────────────────
+STATIC_URL       = "/static/"
+STATIC_ROOT      = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "agripredict" / "static"]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = "/media/"
+MEDIA_URL  = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
-# ── Crispy Forms ──────────────────────────────────────────────
+# ── Crispy Forms ───────────────────────────────────────────────
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_TEMPLATE_PACK          = "bootstrap5"
 
 
-# ── Django REST Framework ─────────────────────────────────────
+# ── Django REST Framework ──────────────────────────────────────
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
@@ -188,52 +186,57 @@ REST_FRAMEWORK = {
 }
 
 
-# ── CORS ──────────────────────────────────────────────────────mayur change
+# ── CORS ───────────────────────────────────────────────────────
 CORS_ALLOWED_ORIGINS = env.list(
     "CORS_ALLOWED_ORIGINS",
     default=["http://localhost:8001", "http://127.0.0.1:8001"],
 )
 
 
-# ── Celery ────────────────────────────────────────────────────
-CELERY_BROKER_URL = env("REDIS_URL", default="redis://localhost:6379/0")
-CELERY_RESULT_BACKEND = env("REDIS_URL", default="redis://localhost:6379/0")
-CELERY_ACCEPT_CONTENT = ["json"]
+# ── Celery ─────────────────────────────────────────────────────
+CELERY_BROKER_URL      = env("REDIS_URL", default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND  = env("REDIS_URL", default="redis://localhost:6379/0")
+CELERY_ACCEPT_CONTENT  = ["json"]
 CELERY_TASK_SERIALIZER = "json"
-CELERY_TIMEZONE = "Asia/Kolkata"
+CELERY_TIMEZONE        = "Asia/Kolkata"
 
 
-# ── Email ─────────────────────────────────────────────────────
+# ── Email ──────────────────────────────────────────────────────
 EMAIL_BACKEND = env(
     "EMAIL_BACKEND",
     default="django.core.mail.backends.console.EmailBackend",
 )
-
-EMAIL_HOST = env("EMAIL_HOST", default="smtp.gmail.com")
-EMAIL_PORT = env.int("EMAIL_PORT", default=587)
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
+EMAIL_HOST          = env("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT          = env.int("EMAIL_PORT", default=587)
+EMAIL_USE_TLS       = True
+EMAIL_HOST_USER     = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-
-DEFAULT_FROM_EMAIL = env(
+DEFAULT_FROM_EMAIL  = env(
     "DEFAULT_FROM_EMAIL",
     default="AgriPredict <noreply@agripredict.in>"
 )
 
 
-# ── Twilio SMS ────────────────────────────────────────────────
-TWILIO_ACCOUNT_SID = env("TWILIO_ACCOUNT_SID", default="")
-TWILIO_AUTH_TOKEN = env("TWILIO_AUTH_TOKEN", default="")
+# ── Twilio SMS ─────────────────────────────────────────────────
+TWILIO_ACCOUNT_SID  = env("TWILIO_ACCOUNT_SID", default="")
+TWILIO_AUTH_TOKEN   = env("TWILIO_AUTH_TOKEN", default="")
 TWILIO_PHONE_NUMBER = env("TWILIO_PHONE_NUMBER", default="")
 
 
-# ── Chatbot API ───────────────────────────────────────────────mayur change
+# ── Chatbot API ────────────────────────────────────────────────
 CHATBOT_API_URL = env("CHATBOT_API_URL", default="http://chatbot:8001")
 
 
-# ── Session (Recommended) ─────────────────────────────────────
-SESSION_COOKIE_AGE = 1209600
+# ── Session ────────────────────────────────────────────────────
+# SESSION_COOKIE_NAME is intentionally NOT set here.
+# AdminSessionMiddleware handles cookie naming:
+#   normal users → 'ap_session'
+#   admin users  → 'ap_admin_session'
+# Setting it here would conflict with the middleware.
+SESSION_COOKIE_AGE         = 1209600   # 2 weeks
 SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_HTTPONLY    = True
+SESSION_COOKIE_SAMESITE    = 'Lax'
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

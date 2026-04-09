@@ -186,13 +186,15 @@
     </div></div>
 </div>
 {% endblock %}
-
 {% block extra_js %}
 <script>
-/* JS remains functional, but logic updated for smoother scrolling */
 const CATEGORY = "1";
 const CSRF     = "{{ csrf_token }}";
-let _colleges = [];
+const IS_AUTH  = {{ user.is_authenticated|yesno:"true,false" }};
+
+let _colleges    = [];
+let _lastMerit   = null;
+let _lastPayload = null;
 
 function $id(id) { return document.getElementById(id); }
 function val(id) { return $id(id)?.value.trim() || ""; }
@@ -202,11 +204,11 @@ function showAlert(msg, type) {
   const el = $id("formAlert");
   if (!el) return;
   el.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show py-2 mb-3">
-    ${msg}<button type="button" class="btn-close" data-bs-alert="close" data-bs-dismiss="alert"></button>
+    ${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
   </div>`;
 }
 
-function clearAlert() { if($id("formAlert")) $id("formAlert").innerHTML = ""; }
+function clearAlert() { if ($id("formAlert")) $id("formAlert").innerHTML = ""; }
 
 function escHtml(s) {
   return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
@@ -216,7 +218,18 @@ function setLoading(on) {
   const btn = $id("calculateBtn");
   if (!btn) return;
   btn.disabled = on;
-  btn.innerHTML = on ? '<span class="spinner-border spinner-border-sm me-2"></span>...' : '<i class="bi bi-calculator me-2"></i>Calculate Merit';
+  btn.innerHTML = on
+    ? '<span class="spinner-border spinner-border-sm me-2"></span>Calculating...'
+    : '<i class="bi bi-calculator me-2"></i>Calculate Merit';
+}
+
+function populateFilters(list) {
+  const cities  = [...new Set(list.map(c => c.location).filter(Boolean))].sort();
+  const courses = [...new Set(list.map(c => c.course).filter(Boolean))].sort();
+  const ce = $id("filterCity");
+  const co = $id("filterCourse");
+  if (ce) ce.innerHTML = '<option value="">All Cities</option>'   + cities.map(v  => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
+  if (co) co.innerHTML = '<option value="">All Courses</option>'  + courses.map(v => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
 }
 
 function renderTable(list) {
@@ -224,10 +237,15 @@ function renderTable(list) {
   if (!tbody) return;
   if (!list || list.length === 0) {
     tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">No results found.</td></tr>`;
+    setText("collegeCount", 0);
     return;
   }
   tbody.innerHTML = list.map(c => {
-    const badgeCls = c.chance_label === "High" ? "bg-success" : c.chance_label === "Medium" ? "bg-warning text-dark" : "bg-danger";
+    const badgeCls = c.chance_label === "High"
+      ? "bg-success"
+      : c.chance_label === "Medium"
+        ? "bg-warning text-dark"
+        : "bg-danger";
     return `<tr>
       <td><div class="fw-bold">${escHtml(c.name)}</div><small class="text-muted">${escHtml(c.location)}</small></td>
       <td>${escHtml(c.course)}</td>
@@ -241,16 +259,14 @@ function renderTable(list) {
 
 function applyFilters() {
   let list = [..._colleges];
-  const city = val("filterCity");
+  const city   = val("filterCity");
   const course = val("filterCourse");
-  const sort = val("sortBy");
-
-  if (city) list = list.filter(c => c.location === city);
+  const sort   = val("sortBy");
+  if (city)   list = list.filter(c => c.location === city);
   if (course) list = list.filter(c => c.course === course);
-
   list.sort((a, b) => {
     if (sort === "cutoff_asc") return (a.cutoff || 0) - (b.cutoff || 0);
-    if (sort === "city") return (a.location || "").localeCompare(b.location || "");
+    if (sort === "city")       return (a.location || "").localeCompare(b.location || "");
     return (b.probability || 0) - (a.probability || 0);
   });
   renderTable(list);
@@ -259,41 +275,50 @@ function applyFilters() {
 async function doCalculate() {
   clearAlert();
   const theoryOb = val("theoryObtained");
-  const gujcet = val("gujcetMarks");
+  const gujcet   = val("gujcetMarks");
   if (!theoryOb || !gujcet) { showAlert("Please fill all marks.", "warning"); return; }
+
+  _lastPayload = {
+    category:           CATEGORY,
+    theory_obtained:    parseFloat(theoryOb),
+    theory_total:       parseFloat(val("theoryTotal") || 300),
+    gujcet_marks:       parseFloat(gujcet),
+    student_category:   val("studentCategory") || "OPEN",
+    farming_background: $id("farmingBonus")?.checked || false,
+  };
 
   setLoading(true);
   try {
     const resp = await fetch("/api/predict/calculate/", {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
-      body: JSON.stringify({
-        category: CATEGORY,
-        theory_obtained: parseFloat(theoryOb),
-        theory_total: parseFloat(val("theoryTotal") || 300),
-        gujcet_marks: parseFloat(gujcet),
-        student_category: val("studentCategory") || "OPEN",
-        farming_background: $id("farmingBonus")?.checked || false,
-      }),
+      body: JSON.stringify(_lastPayload),
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.error || "Calculation failed");
 
-    setText("meritDisplay", data.merit);
-    setText("theoryComp", data.theory_comp);
-    setText("gujcetComp", data.gujcet_comp);
-    setText("bonusComp", data.bonus_comp);
+    _lastMerit = data.merit;
+
+    setText("meritDisplay", typeof data.merit === "number" ? data.merit.toFixed(4) : data.merit);
+    setText("theoryComp",   data.theory_comp);
+    setText("gujcetComp",   data.gujcet_comp);
+    setText("bonusComp",    data.bonus_comp);
 
     $id("resultsPanel").classList.remove("d-none");
     $id("emptyState").classList.add("d-none");
     _colleges = data.colleges || [];
+    populateFilters(_colleges);
     renderTable(_colleges);
-    
-    // Smooth scroll with offset for navbar
-    window.scrollTo({
-      top: $id("resultsPanel").offsetTop - 100,
-      behavior: "smooth"
-    });
+
+    // Reset save button state for new calculation
+    const saveBtn = $id("saveResultBtn");
+    if (saveBtn) {
+      saveBtn.disabled  = false;
+      saveBtn.className = "btn btn-outline-success btn-sm mt-3";
+      saveBtn.innerHTML = '<i class="bi bi-bookmark me-1"></i>Save Result';
+    }
+
+    window.scrollTo({ top: $id("resultsPanel").offsetTop - 100, behavior: "smooth" });
 
   } catch (err) {
     showAlert(err.message, "danger");
@@ -302,9 +327,62 @@ async function doCalculate() {
   }
 }
 
+async function doSave() {
+  if (!IS_AUTH) {
+    showAlert('Please <a href="/accounts/login/">log in</a> to save results.', "warning");
+    return;
+  }
+  if (_lastMerit === null || _lastPayload === null) {
+    showAlert("Please calculate your merit first.", "warning");
+    return;
+  }
+
+  const btn = $id("saveResultBtn");
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving...'; }
+
+  try {
+    const resp = await fetch("/api/predict/save/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+      body: JSON.stringify({
+        category:           _lastPayload.category,
+        merit:              _lastMerit,
+        theory:             _lastPayload.theory_obtained,
+        theory_total:       _lastPayload.theory_total,
+        gujcet:             _lastPayload.gujcet_marks,
+        farming:            _lastPayload.farming_background,
+        student_category:   _lastPayload.student_category,
+      }),
+    });
+    const data = await resp.json();
+    if (resp.ok && data.saved) {
+      if (btn) {
+        btn.innerHTML  = '<i class="bi bi-check-circle me-1"></i> Saved!';
+        btn.className  = "btn btn-success btn-sm mt-3";
+        btn.disabled   = true;
+      }
+      showAlert("Result saved to your profile!", "success");
+    } else {
+      throw new Error(data.error || "Save failed");
+    }
+  } catch (err) {
+    showAlert("Save failed: " + err.message, "danger");
+    if (btn) {
+      btn.disabled  = false;
+      btn.innerHTML = '<i class="bi bi-bookmark me-1"></i> Save Result';
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   $id("calculateBtn")?.addEventListener("click", doCalculate);
   $id("resetBtn")?.addEventListener("click", () => location.reload());
+
+  // Event delegation — saveResultBtn is inside d-none panel at page load
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#saveResultBtn")) doSave();
+  });
+
   $id("filterCity")?.addEventListener("change", applyFilters);
   $id("filterCourse")?.addEventListener("change", applyFilters);
   $id("sortBy")?.addEventListener("change", applyFilters);

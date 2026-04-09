@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+={% extends "base.html" %}
 {% load i18n static %}
 
 {% block title %}{% trans "Merit Calculator — Category 2" %} | AgriPredict{% endblock %}
@@ -10,18 +10,16 @@
     .sticky-calculator {
       position: -webkit-sticky;
       position: sticky;
-      top: 5.5rem; /* Adjust this based on your navbar height */
+      top: 5.5rem;
       z-index: 1010;
     }
   }
 
-  /* Ensures scroll-to-results doesn't hide the panel under the navbar */
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 6rem; 
   }
 
-  /* Visual polish for the cards */
   .card {
     transition: box-shadow 0.3s ease;
   }
@@ -81,8 +79,6 @@
             </select>
           </div>
 
-          
-
           <div id="formAlert"></div>
 
           <div class="d-grid gap-2">
@@ -97,7 +93,6 @@
     </div>
 
     <div class="col-lg-7">
-
       <div id="resultsPanel" class="d-none">
 
         <div class="card border-0 shadow-sm mb-4 text-center">
@@ -124,6 +119,11 @@
                 </div>
               </div>
             </div>
+            {% if user.is_authenticated %}
+            <button class="btn btn-outline-success btn-sm mt-3" id="saveResultBtn">
+              <i class="bi bi-bookmark me-1"></i>{% trans "Save Result" %}
+            </button>
+            {% endif %}
           </div>
         </div>
 
@@ -172,7 +172,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div id="emptyState" class="text-center py-5">
@@ -189,94 +188,202 @@
 <script>
 const CATEGORY = "2";
 const CSRF     = "{{ csrf_token }}";
-let _colleges  = [];
+const IS_AUTH  = {{ user.is_authenticated|yesno:"true,false" }};
+
+let _colleges    = [];
+let _lastMerit   = null;
+let _lastPayload = null;
 
 function $id(id) { return document.getElementById(id); }
-function val(id) { const el=$id(id); return el?el.value.trim():""; }
-function setText(id,v){ const el=$id(id); if(el) el.textContent=(v!==null&&v!==undefined&&v!=="") ?v:"—"; }
-function escHtml(s){ return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function val(id) { return $id(id)?.value.trim() || ""; }
+function setText(id, v) { if ($id(id)) $id(id).textContent = v ?? "—"; }
 
-function showAlert(msg,type){
-  const el=$id("formAlert");
-  if(el) el.innerHTML=`<div class="alert alert-${type} alert-dismissible fade show py-2 mb-3">${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>`;
-}
-function clearAlert(){ const el=$id("formAlert"); if(el) el.innerHTML=""; }
-
-function setLoading(on){
-  const btn=$id("calculateBtn"); if(!btn) return;
-  btn.disabled=on;
-  btn.innerHTML=on?'<span class="spinner-border spinner-border-sm me-2"></span>Calculating...':'<i class="bi bi-calculator me-2"></i>Predict Admission';
+function showAlert(msg, type) {
+  const el = $id("formAlert");
+  if (!el) return;
+  el.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show py-2 mb-3">
+    ${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>`;
 }
 
-function renderTable(list){
-  const tbody=$id("collegeTableBody"), badge=$id("collegeCount");
-  if(!tbody) return;
-  if(!list||list.length===0){
-    tbody.innerHTML=`<tr><td colspan="5" class="text-center text-muted py-4">No colleges match your filters.</td></tr>`;
-    if(badge) badge.textContent="0"; return;
+function clearAlert() { if ($id("formAlert")) $id("formAlert").innerHTML = ""; }
+
+function escHtml(s) {
+  return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function setLoading(on) {
+  const btn = $id("calculateBtn");
+  if (!btn) return;
+  btn.disabled = on;
+  btn.innerHTML = on
+    ? '<span class="spinner-border spinner-border-sm me-2"></span>Calculating...'
+    : '<i class="bi bi-calculator me-2"></i>Predict Admission';
+}
+
+function populateFilters(list) {
+  const cities  = [...new Set(list.map(c => c.location).filter(Boolean))].sort();
+  const courses = [...new Set(list.map(c => c.course).filter(Boolean))].sort();
+  const ce = $id("filterCity");
+  const co = $id("filterCourse");
+  if (ce) ce.innerHTML = '<option value="">All Cities</option>'   + cities.map(v  => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
+  if (co) co.innerHTML = '<option value="">All Courses</option>'  + courses.map(v => `<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
+}
+
+function renderTable(list) {
+  const tbody = $id("collegeTableBody");
+  if (!tbody) return;
+  if (!list || list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4">No results found.</td></tr>`;
+    setText("collegeCount", 0);
+    return;
   }
-  tbody.innerHTML=list.map(c=>{
-    const name=escHtml(c.name||"N/A"), course=escHtml(c.course||"N/A"),
-          loc=escHtml(c.location||""), cutoff=c.cutoff??"—",
-          prob=c.probability??0, rnd=escHtml(c.round_prediction||"—"),
-          ch=c.chance_label||"Low";
-    const bc=ch==="High"?"bg-success":ch==="Medium"?"bg-warning text-dark":"bg-danger";
+  tbody.innerHTML = list.map(c => {
+    const badgeCls = c.chance_label === "High"
+      ? "bg-success"
+      : c.chance_label === "Medium"
+        ? "bg-warning text-dark"
+        : "bg-danger";
     return `<tr>
-      <td><div class="fw-bold">${name}</div>${loc?`<small class="text-muted">${loc}</small>`:""}</td>
-      <td>${course}</td><td class="fw-semibold">${cutoff}</td>
-      <td><span class="badge ${bc}">${rnd} (${prob}%)</span></td>
-      <td><a href="#" class="btn btn-sm btn-link text-primary p-0"><i class="bi bi-info-circle"></i></a></td>
+      <td><div class="fw-bold">${escHtml(c.name)}</div><small class="text-muted">${escHtml(c.location)}</small></td>
+      <td>${escHtml(c.course)}</td>
+      <td>${c.cutoff ?? "—"}</td>
+      <td><span class="badge ${badgeCls}">${escHtml(c.round_prediction)} (${c.probability}%)</span></td>
+      <td><i class="bi bi-info-circle text-primary"></i></td>
     </tr>`;
   }).join("");
-  if(badge) badge.textContent=list.length;
+  setText("collegeCount", list.length);
 }
 
-function populateFilters(list){
-  const cities=[...new Set(list.map(c=>c.location).filter(Boolean))].sort();
-  const courses=[...new Set(list.map(c=>c.course).filter(Boolean))].sort();
-  const ce=$id("filterCity"); if(ce) ce.innerHTML='<option value="">All Cities</option>'+cities.map(v=>`<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
-  const co=$id("filterCourse"); if(co) co.innerHTML='<option value="">All Courses</option>'+courses.map(v=>`<option value="${escHtml(v)}">${escHtml(v)}</option>`).join("");
-}
-
-function applyFilters(){
-  const city=val("filterCity"), course=val("filterCourse"), sort=val("sortBy")||"probability";
-  let list=[..._colleges];
-  if(city) list=list.filter(c=>c.location===city);
-  if(course) list=list.filter(c=>c.course===course);
-  list.sort((a,b)=>sort==="probability"?(b.probability||0)-(a.probability||0):sort==="cutoff_asc"?(a.cutoff||0)-(b.cutoff||0):(a.location||"").localeCompare(b.location||""));
+function applyFilters() {
+  let list = [..._colleges];
+  const city   = val("filterCity");
+  const course = val("filterCourse");
+  const sort   = val("sortBy");
+  if (city)   list = list.filter(c => c.location === city);
+  if (course) list = list.filter(c => c.course === course);
+  list.sort((a, b) => {
+    if (sort === "cutoff_asc") return (a.cutoff || 0) - (b.cutoff || 0);
+    if (sort === "city")       return (a.location || "").localeCompare(b.location || "");
+    return (b.probability || 0) - (a.probability || 0);
+  });
   renderTable(list);
 }
 
-async function doCalculate(){
+async function doCalculate() {
   clearAlert();
-  const theoryOb=val("theoryObtained"), theoryTot=val("theoryTotal")||"300", gujcet=val("gujcetMarks"), studCat=val("studentCategory")||"OPEN", farming=$id("farmingBonus")?.checked||false;
-  if(!theoryOb || !gujcet){ showAlert("Please enter all marks correctly.","warning"); return; }
-  
+  const theoryOb = val("theoryObtained");
+  const gujcet   = val("gujcetMarks");
+  if (!theoryOb || !gujcet) { showAlert("Please fill all marks.", "warning"); return; }
+
+  _lastPayload = {
+    category:           CATEGORY,
+    theory_obtained:    parseFloat(theoryOb),
+    theory_total:       parseFloat(val("theoryTotal") || 300),
+    gujcet_marks:       parseFloat(gujcet),
+    student_category:   val("studentCategory") || "OPEN",
+    farming_background: false, // Category 2 usually doesn't have farming bonus, set to false
+    subject_group:      val("subjectGroup")
+  };
+
   setLoading(true);
-  try{
-    const resp=await fetch("/api/predict/calculate/",{method:"POST",headers:{"Content-Type":"application/json","X-CSRFToken":CSRF},body:JSON.stringify({category:CATEGORY,theory_obtained:parseFloat(theoryOb),theory_total:parseFloat(theoryTot),gujcet_marks:parseFloat(gujcet),student_category:studCat,farming_background:farming})});
-    const data=await resp.json();
-    if(!resp.ok) throw new Error(data.details||data.error||`Server error ${resp.status}`);
-    
-    setText("meritDisplay",data.merit); setText("theoryComp",data.theory_comp);
-    setText("gujcetComp",data.gujcet_comp); setText("bonusComp",data.bonus_comp);
-    
-    $id("resultsPanel")?.classList.remove("d-none"); $id("emptyState")?.classList.add("d-none");
-    _colleges=Array.isArray(data.colleges)?data.colleges:[];
-    populateFilters(_colleges); renderTable(_colleges);
-    
-    // Trigger scroll to results
-    $id("resultsPanel")?.scrollIntoView({behavior:"smooth", block: "start"});
-  }catch(err){showAlert("Error: "+err.message,"danger");}
-  finally{setLoading(false);}
+  try {
+    const resp = await fetch("/api/predict/calculate/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+      body: JSON.stringify(_lastPayload),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || "Calculation failed");
+
+    _lastMerit = data.merit;
+
+    setText("meritDisplay", typeof data.merit === "number" ? data.merit.toFixed(4) : data.merit);
+    setText("theoryComp",   data.theory_comp);
+    setText("gujcetComp",   data.gujcet_comp);
+    setText("bonusComp",    data.bonus_comp);
+
+    $id("resultsPanel").classList.remove("d-none");
+    $id("emptyState").classList.add("d-none");
+    _colleges = data.colleges || [];
+    populateFilters(_colleges);
+    renderTable(_colleges);
+
+    // Reset save button state
+    const saveBtn = $id("saveResultBtn");
+    if (saveBtn) {
+      saveBtn.disabled  = false;
+      saveBtn.className = "btn btn-outline-success btn-sm mt-3";
+      saveBtn.innerHTML = '<i class="bi bi-bookmark me-1"></i>Save Result';
+    }
+
+    window.scrollTo({ top: $id("resultsPanel").offsetTop - 100, behavior: "smooth" });
+
+  } catch (err) {
+    showAlert(err.message, "danger");
+  } finally {
+    setLoading(false);
+  }
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
-  $id("calculateBtn")?.addEventListener("click",doCalculate);
-  $id("resetBtn")?.addEventListener("click",() => {
-    location.reload(); // Simplest way to ensure everything resets including select filters
+async function doSave() {
+  if (!IS_AUTH) {
+    showAlert('Please <a href="/accounts/login/">log in</a> to save results.', "warning");
+    return;
+  }
+  if (_lastMerit === null || _lastPayload === null) {
+    showAlert("Please calculate your merit first.", "warning");
+    return;
+  }
+
+  const btn = $id("saveResultBtn");
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving...'; }
+
+  try {
+    const resp = await fetch("/api/predict/save/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+      body: JSON.stringify({
+        category:           _lastPayload.category,
+        merit:              _lastMerit,
+        theory:             _lastPayload.theory_obtained,
+        theory_total:       _lastPayload.theory_total,
+        gujcet:             _lastPayload.gujcet_marks,
+        farming:            _lastPayload.farming_background,
+        student_category:   _lastPayload.student_category,
+      }),
+    });
+    const data = await resp.json();
+    if (resp.ok && data.saved) {
+      if (btn) {
+        btn.innerHTML  = '<i class="bi bi-check-circle me-1"></i> Saved!';
+        btn.className  = "btn btn-success btn-sm mt-3";
+        btn.disabled   = true;
+      }
+      showAlert("Result saved to your profile!", "success");
+    } else {
+      throw new Error(data.error || "Save failed");
+    }
+  } catch (err) {
+    showAlert("Save failed: " + err.message, "danger");
+    if (btn) {
+      btn.disabled  = false;
+      btn.innerHTML = '<i class="bi bi-bookmark me-1"></i> Save Result';
+    }
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  $id("calculateBtn")?.addEventListener("click", doCalculate);
+  $id("resetBtn")?.addEventListener("click", () => location.reload());
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#saveResultBtn")) doSave();
   });
-  ["filterCity","filterCourse","sortBy"].forEach(id=>$id(id)?.addEventListener("change",applyFilters));
+
+  $id("filterCity")?.addEventListener("change", applyFilters);
+  $id("filterCourse")?.addEventListener("change", applyFilters);
+  $id("sortBy")?.addEventListener("change", applyFilters);
 });
 </script>
 {% endblock %}

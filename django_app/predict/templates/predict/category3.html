@@ -99,9 +99,7 @@
     </div>
 
     <div class="col-lg-7">
-
       <div id="resultsPanel" class="d-none">
-
         <div class="card border-0 shadow-sm mb-4 text-center">
           <div class="card-body py-4">
             <p class="text-muted mb-1">{% trans "Your Merit Score" %}</p>
@@ -179,7 +177,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div id="emptyState" class="text-center py-5">
@@ -196,7 +193,11 @@
 <script>
 const CATEGORY = "3";
 const CSRF     = "{{ csrf_token }}";
-let _colleges  = [];
+const IS_AUTH  = {{ user.is_authenticated|yesno:"true,false" }};
+
+let _colleges    = [];
+let _lastMerit   = null;
+let _lastPayload = null;
 
 function $id(id){return document.getElementById(id);}
 function val(id){const el=$id(id);return el?el.value.trim():"";}
@@ -257,34 +258,105 @@ async function doCalculate(){
   clearAlert();
   const theoryOb=val("theoryObtained"),theoryTot=val("theoryTotal")||"300",gujcet=val("gujcetMarks"),studCat=val("studentCategory")||"OPEN",farming=$id("farmingBonus")?.checked||false;
   if(!theoryOb || !gujcet){showAlert("Please fill in your marks first.","warning");return;}
+  
+  _lastPayload = {
+    category: CATEGORY,
+    theory_obtained: parseFloat(theoryOb),
+    theory_total: parseFloat(theoryTot),
+    gujcet_marks: parseFloat(gujcet),
+    student_category: studCat,
+    farming_background: farming
+  };
+
   setLoading(true);
   try{
-    const resp=await fetch("/api/predict/calculate/",{method:"POST",headers:{"Content-Type":"application/json","X-CSRFToken":CSRF},body:JSON.stringify({category:CATEGORY,theory_obtained:parseFloat(theoryOb),theory_total:parseFloat(theoryTot),gujcet_marks:parseFloat(gujcet),student_category:studCat,farming_background:farming})});
+    const resp=await fetch("/api/predict/calculate/",{method:"POST",headers:{"Content-Type":"application/json","X-CSRFToken":CSRF},body:JSON.stringify(_lastPayload)});
     const data=await resp.json();
     if(!resp.ok)throw new Error(data.details||data.error||`Server error ${resp.status}`);
     
-    setText("meritDisplay",data.merit);setText("theoryComp",data.theory_comp);
-    setText("gujcetComp",data.gujcet_comp);setText("bonusComp",data.bonus_comp);
+    _lastMerit = data.merit;
     
-    $id("resultsPanel")?.classList.remove("d-none");$id("emptyState")?.classList.add("d-none");
+    setText("meritDisplay", typeof data.merit === "number" ? data.merit.toFixed(4) : data.merit);
+    setText("theoryComp",data.theory_comp);
+    setText("gujcetComp",data.gujcet_comp);
+    setText("bonusComp",data.bonus_comp);
+    
+    $id("resultsPanel")?.classList.remove("d-none");
+    $id("emptyState")?.classList.add("d-none");
     _colleges=Array.isArray(data.colleges)?data.colleges:[];
-    populateFilters(_colleges);renderTable(_colleges);
+    populateFilters(_colleges);
+    renderTable(_colleges);
     
-    // Scrolled specifically to results with custom behavior
-    window.scrollTo({
-      top: $id("resultsPanel").offsetTop - 100,
-      behavior: "smooth"
-    });
+    // Reset save button state
+    const saveBtn = $id("saveResultBtn");
+    if (saveBtn) {
+      saveBtn.disabled  = false;
+      saveBtn.className = "btn btn-outline-info btn-sm mt-3";
+      saveBtn.innerHTML = '<i class="bi bi-bookmark me-1"></i>Save Result';
+    }
+
+    window.scrollTo({ top: $id("resultsPanel").offsetTop - 100, behavior: "smooth" });
   }catch(err){showAlert("Error: "+err.message,"danger");}
   finally{setLoading(false);}
+}
+
+async function doSave() {
+  if (!IS_AUTH) {
+    showAlert('Please <a href="/accounts/login/">log in</a> to save results.', "warning");
+    return;
+  }
+  if (_lastMerit === null || _lastPayload === null) {
+    showAlert("Please calculate your merit first.", "warning");
+    return;
+  }
+
+  const btn = $id("saveResultBtn");
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving...'; }
+
+  try {
+    const resp = await fetch("/api/predict/save/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": CSRF },
+      body: JSON.stringify({
+        category:           _lastPayload.category,
+        merit:              _lastMerit,
+        theory:             _lastPayload.theory_obtained,
+        theory_total:       _lastPayload.theory_total,
+        gujcet:             _lastPayload.gujcet_marks,
+        farming:            _lastPayload.farming_background,
+        student_category:   _lastPayload.student_category,
+      }),
+    });
+    const data = await resp.json();
+    if (resp.ok && data.saved) {
+      if (btn) {
+        btn.innerHTML  = '<i class="bi bi-check-circle me-1"></i> Saved!';
+        btn.className  = "btn btn-success btn-sm mt-3 text-white";
+        btn.disabled   = true;
+      }
+      showAlert("Result saved to your profile!", "success");
+    } else {
+      throw new Error(data.error || "Save failed");
+    }
+  } catch (err) {
+    showAlert("Save failed: " + err.message, "danger");
+    if (btn) {
+      btn.disabled  = false;
+      btn.innerHTML = '<i class="bi bi-bookmark me-1"></i> Save Result';
+    }
+  }
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
   $id("calculateBtn")?.addEventListener("click",doCalculate);
   $id("resetBtn")?.addEventListener("click",() => {
-    // Reloading is the safest way to reset all UI states correctly
     window.location.reload();
   });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#saveResultBtn")) doSave();
+  });
+
   ["filterCity","filterCourse","sortBy"].forEach(id=>$id(id)?.addEventListener("change",applyFilters));
 });
 </script>

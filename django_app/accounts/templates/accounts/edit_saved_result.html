@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Edit Saved Result" %} | AgriPredict{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <div class="d-flex align-items-center mb-4 gap-3">
+        <a href="{% url 'accounts:saved_results' %}" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-arrow-left me-1"></i>{% trans "Back" %}
+        </a>
+        <h4 class="mb-0 fw-bold">{% trans "Edit Saved Result" %}</h4>
+      </div>
+
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-success text-white">
+          <i class="bi bi-pencil-square me-2"></i>{% trans "Edit Prediction Details" %}
+        </div>
+        <div class="card-body p-4">
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">{% trans "Label / Name" %}</label>
+              {{ form.label }}
+              <div class="form-text">{% trans "Give this result a custom name (optional)" %}</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">{% trans "Category" %}</label>
+              {{ form.category }}
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold">{% trans "Theory Marks Obtained" %}</label>
+                {{ form.theory_marks }}
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold">{% trans "Theory Total" %}</label>
+                {{ form.theory_total }}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">{% trans "GUJCET Marks" %}</label>
+              {{ form.gujcet_marks }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">{% trans "Student Category" %}</label>
+              {{ form.student_category }}
+            </div>
+
+            <div class="mb-3 form-check">
+              {{ form.farming_bonus }}
+              <label class="form-check-label" for="{{ form.farming_bonus.id_for_label }}">
+                {% trans "Farming Background (+5% bonus)" %}
+              </label>
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold">{% trans "City" %}</label>
+                {{ form.city }}
+              </div>
+              <div class="col-sm-6">
+                <label class="form-label fw-semibold">{% trans "District" %}</label>
+                {{ form.district }}
+              </div>
+            </div>
+
+            <!-- Read-only merit score display -->
+            <div class="alert alert-info py-2 mb-4">
+              <i class="bi bi-info-circle me-2"></i>
+              {% trans "Current Merit Score" %}: <strong>{{ result.merit_score }}</strong>
+              <div class="form-text text-info-emphasis mt-1">
+                {% trans "Merit score is recalculated automatically after saving." %}
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-lg me-1"></i>{% trans "Save Changes" %}
+              </button>
+              <a href="{% url 'accounts:saved_results' %}" class="btn btn-outline-secondary">
+                {% trans "Cancel" %}
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
