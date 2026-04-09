@@ -5,7 +5,7 @@ services:
     ports:
       - "8001:8001"
     env_file:
-      - .env   # ✅ single root env file
+      - .env
     volumes:
       - ./chatbot_api/data:/app/data
 
@@ -21,6 +21,9 @@ services:
       - redis
     environment:
       - CHATBOT_API_URL=http://chatbot:8001
+    volumes:
+      - ./django_app:/app                      # ← code stays live
+      - ./db.sqlite3:/app/db.sqlite3           # ← database persists on your PC
 
   redis:
     image: redis:7-alpine
