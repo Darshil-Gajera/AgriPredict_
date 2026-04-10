@@ -2,302 +2,992 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AgriPredict\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-03 17:24+0530\n"
+"POT-Creation-Date: 2026-04-10 13:48+0530\n"
 "Language: gu\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: .\accounts\admin.py:13
+#: .\accounts\admin.py:14
 msgid "Personal info"
 msgstr ""
 
-#: .\accounts\admin.py:14
+#: .\accounts\admin.py:15
 msgid "Preferences"
 msgstr ""
 
-#: .\accounts\admin.py:15
+#: .\accounts\admin.py:16
 msgid "Permissions"
 msgstr ""
 
-#: .\accounts\admin.py:16
+#: .\accounts\admin.py:17
 msgid "Important dates"
 msgstr ""
 
-#: .\accounts\forms.py:14
-msgid "Receive email notifications"
-msgstr "સૂચનાઓ"
+#: .\accounts\admin.py:56
+#, fuzzy
+#| msgid "Details"
+msgid "User Details"
+msgstr "વિગતો"
 
-#: .\accounts\forms.py:15
-msgid "Receive SMS notifications"
-msgstr "સૂચનાઓ"
+#: .\accounts\admin.py:59
+#, fuzzy
+#| msgid "Merit Calculator"
+msgid "Merit Calculation Data"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
 
-#: .\accounts\models.py:10
+#: .\accounts\admin.py:62
+#, fuzzy
+#| msgid "Admission Round"
+msgid "Admission Context"
+msgstr "પ્રવેશ માર્ગદર્શિકા"
+
+#: .\accounts\admin.py:65
+msgid "Metadata"
+msgstr ""
+
+#: .\accounts\models.py:27
 msgid "email address"
 msgstr ""
 
-#: .\accounts\models.py:11
+#: .\accounts\models.py:32
 msgid "phone number"
 msgstr ""
 
-#: .\accounts\models.py:25
-msgid "user"
-msgstr ""
-
-#: .\accounts\models.py:26
-msgid "users"
-msgstr ""
-
-#: .\accounts\models.py:53
-msgid "saved result"
+#: .\accounts\templates\accounts\edit_saved_result.html:4
+#: .\accounts\templates\accounts\edit_saved_result.html:15
+#, fuzzy
+#| msgid "Saved Results"
+msgid "Edit Saved Result"
 msgstr "સેવ કરેલા પરિણામો"
 
-#: .\accounts\views.py:16
-msgid "Profile updated successfully."
+#: .\accounts\templates\accounts\edit_saved_result.html:13
+msgid "Back"
 msgstr ""
 
-#: .\accounts\views.py:34
+#: .\accounts\templates\accounts\edit_saved_result.html:20
+#, fuzzy
+#| msgid "Get Prediction"
+msgid "Edit Prediction Details"
+msgstr "પરિણામ મેળવો"
+
+#: .\accounts\templates\accounts\edit_saved_result.html:28
+msgid "Label / Name"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:30
+msgid "Give this result a custom name (optional)"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:34
+#: .\accounts\templates\accounts\saved_results.html:51 .\colleges\models.py:69
+#: .\colleges\templates\colleges\detail.html:83
+#: .\colleges\templates\colleges\list.html:47
+#: .\predict\templates\predict\category1.html:66
+#: .\predict\templates\predict\category2.html:72
+#: .\predict\templates\predict\category3.html:73
+msgid "Category"
+msgstr "શ્રેણી"
+
+#: .\accounts\templates\accounts\edit_saved_result.html:40
+#: .\predict\templates\predict\category1.html:56
+#: .\predict\templates\predict\category2.html:62
+#: .\predict\templates\predict\category3.html:63
+msgid "Theory Marks Obtained"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:44
+msgid "Theory Total"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:50
+msgid "GUJCET Marks"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:55
+#: .\accounts\templates\accounts\saved_results.html:68 .\colleges\models.py:130
+#, fuzzy
+#| msgid "Select category"
+msgid "Student Category"
+msgstr "શ્રેણી"
+
+#: .\accounts\templates\accounts\edit_saved_result.html:62
+#: .\predict\templates\predict\category1.html:81
+#: .\predict\templates\predict\category3.html:88
+#, python-format
+msgid "Farming Background (+5%% bonus)"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:68
+#: .\colleges\models.py:63 .\predict\templates\predict\category1.html:155
+#: .\predict\templates\predict\category2.html:149
+#: .\predict\templates\predict\category3.html:154
+msgid "City"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:72
+#: .\colleges\models.py:65
+msgid "District"
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:80
+#, fuzzy
+#| msgid "Your Merit Score"
+msgid "Current Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\accounts\templates\accounts\edit_saved_result.html:82
+msgid "Merit score is recalculated automatically after saving."
+msgstr ""
+
+#: .\accounts\templates\accounts\edit_saved_result.html:88
+#: .\accounts\templates\accounts\profile.html:52
+#, fuzzy
+#| msgid "Save Result"
+msgid "Save Changes"
+msgstr "સેવ કરેલા પરિણામો"
+
+#: .\accounts\templates\accounts\edit_saved_result.html:91
+msgid "Cancel"
+msgstr ""
+
+#: .\accounts\templates\accounts\login.html:5
+#: .\accounts\templates\accounts\signup.html:6
+#: .\accounts\templates\accounts\signup.html:116
+#: .\agripredict\templates\account\login.html:6
+#: .\agripredict\templates\account\login.html:57
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Sign In"
+msgstr "સાઇન અપ"
+
+#: .\accounts\templates\accounts\profile.html:5
+#, fuzzy
+#| msgid "Profile"
+msgid "My Profile"
+msgstr "પ્રોફાઇલ"
+
+# ── ACCOUNT SETTINGS ──
+#: .\accounts\templates\accounts\profile.html:11
+msgid "Account Settings"
+msgstr "એકાઉન્ટ સેટિંગ્સ"
+
+#: .\accounts\templates\accounts\profile.html:20
+#: .\agripredict\templates\base.html:470
+msgid "Profile"
+msgstr "પ્રોફાઇલ"
+
+# ── SAVED PREDICTIONS ──
+#: .\accounts\templates\accounts\profile.html:23
+#: .\accounts\templates\accounts\saved_results.html:4
+#, fuzzy
+#| msgid "Your Saved Predictions"
+msgid "Saved Predictions"
+msgstr "તમારા સાચવેલા અનુમાનો"
+
+# ── PASSWORD CHANGE ──
+#: .\accounts\templates\accounts\profile.html:26
+#: .\agripredict\templates\account\password_change.html:6
+#: .\agripredict\templates\account\password_change.html:26
+msgid "Change Password"
+msgstr "પાસવર્ડ બદલો"
+
+#: .\accounts\templates\accounts\profile.html:29
+#: .\agripredict\templates\account\logout.html:21
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Sign Out"
+msgstr "સાઇન અપ"
+
+#: .\accounts\templates\accounts\profile.html:46
+msgid "Update Information"
+msgstr "માહિતી અપડેટ કરો"
+
+# ── SAVED PREDICTIONS ──
+#: .\accounts\templates\accounts\saved_results.html:13
+msgid "Your Saved Predictions"
+msgstr "તમારા સાચવેલા અનુમાનો"
+
+#: .\accounts\templates\accounts\saved_results.html:17
+msgid "Review your previous merit calculations and college recommendations."
+msgstr "તમારી અગાઉની મેરિટ ગણતરીઓ અને કોલેજ ભલામણો તપાસો."
+
+#: .\accounts\templates\accounts\saved_results.html:40
+#, fuzzy
+#| msgid "Your Merit Score"
+msgid "Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\accounts\templates\accounts\saved_results.html:57
+#: .\predict\templates\predict\category1.html:110
+#: .\predict\templates\predict\category2.html:108
+#: .\predict\templates\predict\category3.html:113
+msgid "Theory"
+msgstr ""
+
+#: .\accounts\templates\accounts\saved_results.html:63
+msgid "GUJCET"
+msgstr ""
+
+#: .\accounts\templates\accounts\saved_results.html:74
+msgid "Farming Bonus"
+msgstr ""
+
+#: .\accounts\templates\accounts\saved_results.html:80
+#, fuzzy
+#| msgid "Group A & B"
+msgid "Group"
+msgstr "ગ્રુપ A અને B"
+
+#: .\accounts\templates\accounts\saved_results.html:103
+msgid "Edit"
+msgstr "ફેરફાર કરો"
+
+#: .\accounts\templates\accounts\saved_results.html:108
+msgid "Are you sure?"
+msgstr ""
+
+#: .\accounts\templates\accounts\saved_results.html:112
+msgid "Delete"
+msgstr "કાઢી નાખો"
+
+#: .\accounts\templates\accounts\saved_results.html:131
+#, fuzzy
+#| msgid "saved result"
+msgid "No saved results found."
+msgstr "સેવ કરેલા પરિણામો"
+
+#: .\accounts\templates\accounts\saved_results.html:134
+#, fuzzy
+#| msgid "Calculate Merit"
+msgid "Calculate Merit Now"
+msgstr "મેરિટ ગણો"
+
+#: .\accounts\templates\accounts\signup.html:23
+#: .\agripredict\templates\account\login.html:26
+msgid "Welcome Back"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:27
+msgid "Your agri"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:28
+msgid "journey continues"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:29
+msgid "here."
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:33
+msgid "Access your saved merit scores, college predictions and AI guidance."
+msgstr ""
+
+# ── COMMON ──
+#: .\accounts\templates\accounts\signup.html:39
+#: .\colleges\templates\colleges\detail.html:14
+#: .\core\templates\core\home.html:378
+msgid "Colleges"
+msgstr "કોલેજો"
+
+#: .\accounts\templates\accounts\signup.html:43
+#: .\agripredict\templates\base.html:526 .\core\templates\core\home.html:382
+msgid "Universities"
+msgstr "યુનિવર્સિટીઓ"
+
+#: .\accounts\templates\accounts\signup.html:47
+msgid "Always"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:64
+msgid "Welcome back"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:66
+#: .\agripredict\templates\account\login.html:28
+msgid "Don't have an account?"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:67
+#, fuzzy
+#| msgid "Sign Up"
+msgid "Sign up free"
+msgstr "સાઇન અપ"
+
+#: .\accounts\templates\accounts\signup.html:78
+#: .\agripredict\templates\account\login.html:65
+#: .\agripredict\templates\account\signup.html:87
+msgid "Continue with Google"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:81
+msgid "or sign in with email"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:88
+#: .\agripredict\templates\account\login.html:37
+#: .\agripredict\templates\account\password_reset.html:39
+#: .\agripredict\templates\account\signup.html:37
+#: .\core\templates\core\contact.html:16
+msgid "Email Address"
+msgstr ""
+
+#: .\accounts\templates\accounts\signup.html:96
+#: .\agripredict\templates\account\login.html:42
+#: .\agripredict\templates\account\signup.html:48
+#, fuzzy
+#| msgid "New Password*"
+msgid "Password"
+msgstr "નવો પાસવર્ડ*"
+
+#: .\accounts\templates\accounts\signup.html:106
+#: .\agripredict\templates\account\login.html:49
+msgid "Remember me"
+msgstr ""
+
+# ── FORGOT PASSWORD ──
+#: .\accounts\templates\accounts\signup.html:109
+#, fuzzy
+#| msgid "Forgot Password?"
+msgid "Forgot?"
+msgstr "પાસવર્ડ ભૂલી ગયા છો?"
+
+#: .\accounts\views.py:24
 msgid "Result deleted."
 msgstr ""
 
+#: .\accounts\views.py:103
+msgid "Result updated successfully. Merit score recalculated."
+msgstr ""
+
+#: .\accounts\views.py:118
+msgid "Profile updated successfully."
+msgstr ""
+
+#: .\agripredict\templates\account\login.html:29
+#: .\agripredict\templates\account\signup.html:6
+#: .\agripredict\templates\base.html:478
+msgid "Sign Up"
+msgstr "સાઇન અપ"
+
+# ── FORGOT PASSWORD ──
+#: .\agripredict\templates\account\login.html:52
+#, fuzzy
+#| msgid "Forgot Password?"
+msgid "Forgot password?"
+msgstr "પાસવર્ડ ભૂલી ગયા છો?"
+
+#: .\agripredict\templates\account\login.html:61
+#: .\agripredict\templates\account\logout.html:42
+#: .\agripredict\templates\account\password_reset.html:55
+#: .\agripredict\templates\account\signup.html:83
+#: .\agripredict\templates\socialaccount\login.html:35
+msgid "OR"
+msgstr ""
+
+# ── SIGN OUT ──
+#: .\agripredict\templates\account\logout.html:23
+msgid "Active Session"
+msgstr "સક્રિય સત્ર"
+
+#: .\agripredict\templates\account\logout.html:25
+msgid "Exit"
+msgstr "બહાર નીકળો"
+
+#: .\agripredict\templates\account\logout.html:28
+msgid "Are you sure you want to sign out of your AgriPredict account?"
+msgstr "શું તમે ખરેખર તમારા AgriPredict એકાઉન્ટમાંથી લોગ-આઉટ કરવા માંગો છો?"
+
+#: .\agripredict\templates\account\logout.html:39
+msgid "Yes, Sign Me Out"
+msgstr ""
+
+#: .\agripredict\templates\account\logout.html:46
+msgid "No, take me back"
+msgstr "ના, મને પાછા લઈ જાઓ"
+
+#: .\agripredict\templates\account\password_change.html:28
+msgid "Update your account password to keep your agricultural data secure."
+msgstr "તમારા કૃષિ ડેટાને સુરક્ષિત રાખવા માટે તમારા એકાઉન્ટનો પાસવર્ડ અપડેટ કરો."
+
+# ── PASSWORD CHANGE ──
+#: .\agripredict\templates\account\password_change.html:40
+#, fuzzy
+#| msgid "Change Password"
+msgid "Update Password"
+msgstr "પાસવર્ડ બદલો"
+
+# ── FORGOT PASSWORD ──
+#: .\agripredict\templates\account\password_change.html:46
+#, fuzzy
+#| msgid "Forgot Password?"
+msgid "Forgot your current password?"
+msgstr "પાસવર્ડ ભૂલી ગયા છો?"
+
+#: .\agripredict\templates\account\password_change.html:52
+msgid "Back to Dashboard"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset.html:6
+msgid "Password Reset"
+msgstr ""
+
+# ── FORGOT PASSWORD ──
+#: .\agripredict\templates\account\password_reset.html:25
+msgid "Forgot Password?"
+msgstr "પાસવર્ડ ભૂલી ગયા છો?"
+
+#: .\agripredict\templates\account\password_reset.html:27
+msgid ""
+"Enter your email address below, and we'll send you a link to reset your "
+"password."
+msgstr ""
+"નીચે તમારું ઈમેલ એડ્રેસ દાખલ કરો, અને અમે તમને પાસવર્ડ રીસેટ કરવા માટેની લિંક મોકલીશું."
+
+#: .\agripredict\templates\account\password_reset.html:51
+msgid "Send Reset Link"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset.html:59
+msgid "Back to Login"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset_done.html:6
+#, fuzzy
+#| msgid "Choose Your Path"
+msgid "Check Your Email"
+msgstr "તમારો માર્ગ પસંદ કરો"
+
+#: .\agripredict\templates\account\password_reset_done.html:25
+msgid "Email Sent!"
+msgstr "ઈમેલ મોકલવામાં આવ્યો!"
+
+#: .\agripredict\templates\account\password_reset_done.html:27
+msgid "Request Received"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset_done.html:33
+msgid "In-box"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset_done.html:39
+msgid ""
+"We have sent you an e-mail. Please check your inbox and click the link "
+"provided to reset your password."
+msgstr ""
+"અમે તમને ઈમેલ મોકલ્યો છે. કૃપા કરીને તમારું ઇનબોક્સ તપાસો અને પાસવર્ડ રીસેટ કરવા માટે આપેલી "
+"લિંક પર ક્લિક કરો."
+
+#: .\agripredict\templates\account\password_reset_done.html:43
+msgid ""
+"If you don't see it within a few minutes, please check your spam folder."
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset_done.html:49
+msgid "Return to Login"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset_done.html:55
+msgid "Mistyped your email?"
+msgstr ""
+
+#: .\agripredict\templates\account\password_reset_done.html:56
+msgid "Try again"
+msgstr ""
+
+#: .\agripredict\templates\account\signup.html:26
+#: .\agripredict\templates\account\signup.html:79
+#: .\core\templates\core\home.html:626
+msgid "Create Account"
+msgstr "એકાઉન્ટ બનાવો"
+
+#: .\agripredict\templates\account\signup.html:28
+msgid "Already have an account?"
+msgstr ""
+
+#: .\agripredict\templates\account\signup.html:29
+msgid "Log In"
+msgstr ""
+
+# ── PASSWORD CHANGE ──
+#: .\agripredict\templates\account\signup.html:59
+#, fuzzy
+#| msgid "Change Password"
+msgid "Confirm Password"
+msgstr "પાસવર્ડ બદલો"
+
+#: .\agripredict\templates\account\signup.html:71
+msgid "By signing up, you agree to our"
+msgstr ""
+
+#: .\agripredict\templates\account\signup.html:72
+msgid "Terms"
+msgstr ""
+
+#: .\agripredict\templates\account\signup.html:73
+msgid "and"
+msgstr ""
+
+#: .\agripredict\templates\account\signup.html:74
+msgid "Privacy Policy"
+msgstr ""
+
 # ── HERO ──
-#: .\agripredict\templates\base.html:8 .\core\templates\core\home.html:4
+#: .\agripredict\templates\base.html:8 .\core\templates\core\home.html:5
 msgid "AgriPredict — Find Your Agriculture Future"
 msgstr "AgriPredict — તમારું કૃષિ ભવિષ્ય શોધો"
 
 # ── NAVBAR ──
-#: .\agripredict\templates\base.html:31
+#: .\agripredict\templates\base.html:426
+#: .\colleges\templates\colleges\detail.html:13
 msgid "Home"
 msgstr "હોમ"
 
-#: .\agripredict\templates\base.html:34 .\agripredict\templates\base.html:129
+#: .\agripredict\templates\base.html:428 .\agripredict\templates\base.html:518
 msgid "Merit Calculator"
 msgstr "મેરિટ કેલ્ક્યુલેટર"
 
-#: .\agripredict\templates\base.html:36
+#: .\agripredict\templates\base.html:430
 msgid "Core Agriculture Programs"
 msgstr "મૂળ કૃષિ"
 
-#: .\agripredict\templates\base.html:37
+#: .\agripredict\templates\base.html:431
 msgid "Technical Agriculture Programs"
 msgstr ""
 
-#: .\agripredict\templates\base.html:38 .\colleges\models.py:64
+#: .\agripredict\templates\base.html:432 .\colleges\models.py:58
 msgid "Home & Community Science"
 msgstr "સમુદાય વિજ્ઞાન"
 
-#: .\agripredict\templates\base.html:42
+#: .\agripredict\templates\base.html:435
 #: .\colleges\templates\colleges\list.html:4
 msgid "College List"
 msgstr "કોલેજ યાદી"
 
-#: .\agripredict\templates\base.html:43
-#: .\core\templates\core\admission_guide.html:3
+#: .\agripredict\templates\base.html:436
+#: .\core\templates\core\admission_guide.html:4
 msgid "Admission Guide"
 msgstr "પ્રવેશ માર્ગદર્શિકા"
 
-#: .\agripredict\templates\base.html:44
+#: .\agripredict\templates\base.html:437
 #: .\notifications\templates\notifications\list.html:4
 msgid "Notifications"
 msgstr "સૂચનાઓ"
 
-#: .\agripredict\templates\base.html:45 .\agripredict\templates\base.html:124
-#: .\core\templates\core\home.html:313
-#: .\scholarships\templates\scholarships\list.html:3
+#: .\agripredict\templates\base.html:438 .\agripredict\templates\base.html:513
+#: .\core\templates\core\home.html:386
+#: .\scholarships\templates\scholarships\list.html:4
 msgid "Scholarships"
 msgstr "સ્કોલરશિપ"
 
-#: .\agripredict\templates\base.html:46 .\agripredict\templates\base.html:123
+#: .\agripredict\templates\base.html:439 .\agripredict\templates\base.html:512
 msgid "FAQ"
 msgstr "પ્રશ્નોતરી"
 
-#: .\agripredict\templates\base.html:81
-msgid "Profile"
-msgstr "પ્રોફાઇલ"
-
-#: .\agripredict\templates\base.html:82
+#: .\agripredict\templates\base.html:471
 msgid "Saved Results"
 msgstr "સેવ કરેલા પરિણામો"
 
-#: .\agripredict\templates\base.html:84
+#: .\agripredict\templates\base.html:473
 msgid "Logout"
 msgstr "લૉગઆઉટ"
 
 # ── AUTH ──
-#: .\agripredict\templates\base.html:88
+#: .\agripredict\templates\base.html:477
 msgid "Login"
 msgstr "લોગિન"
 
-#: .\agripredict\templates\base.html:89
-msgid "Sign Up"
-msgstr "સાઇન અપ"
-
-#: .\agripredict\templates\base.html:117
+#: .\agripredict\templates\base.html:506
 msgid ""
 "Empowering Gujarat's agriculture students with data-driven admission "
 "insights."
 msgstr ""
 
-#: .\agripredict\templates\base.html:121
+#: .\agripredict\templates\base.html:510
 msgid "Quick Links"
 msgstr "ઝડપી લિંક્સ"
 
-#: .\agripredict\templates\base.html:125 .\core\templates\core\contact.html:3
+#: .\agripredict\templates\base.html:514 .\core\templates\core\contact.html:3
 msgid "Contact"
 msgstr "સંપર્ક"
 
-#: .\agripredict\templates\base.html:131 .\colleges\models.py:62
-#: .\core\templates\core\home.html:424
+#: .\agripredict\templates\base.html:520 .\colleges\models.py:56
+#: .\core\templates\core\home.html:497
 msgid "Core Agriculture"
 msgstr "મૂળ કૃષિ"
 
-#: .\agripredict\templates\base.html:132
+#: .\agripredict\templates\base.html:521
 msgid "Technical Programs"
 msgstr ""
 
-#: .\agripredict\templates\base.html:133
+#: .\agripredict\templates\base.html:522
 msgid "Home & Community"
 msgstr ""
 
-#: .\agripredict\templates\base.html:137 .\core\templates\core\home.html:309
-msgid "Universities"
-msgstr "યુનિવર્સિટીઓ"
-
-#: .\agripredict\templates\base.html:148
+#: .\agripredict\templates\base.html:537
 msgid "All rights reserved."
 msgstr "બધા અધિકારો સુરક્ષિત છે"
 
-#: .\agripredict\templates\base.html:149
-msgid "Developed by Gajera Darshil N."
+# ── FOOTER & CREDITS ──
+#: .\agripredict\templates\base.html:538
+#, fuzzy
+#| msgid "Developed by Gajera Darshil N., Gohil Mayur K., Dabhi Vishal S."
+msgid "Developed by Gajera Darshil N. ,Gohil Mayur K. ,Dabhi Vishal S."
+msgstr "ગજેરા દર્શિલ એન., ગોહિલ મયુર કે., ડાભી વિશાલ એસ. દ્વારા વિકસિત"
+
+#: .\agripredict\templates\socialaccount\login.html:17
+msgid "Confirm Identity"
 msgstr ""
 
-#: .\agripredict\templates\base.html:155 .\core\templates\core\home.html:393
-msgid "Ask AgriBot"
-msgstr "AgriBot ને પૂછો"
-
-#: .\agripredict\templates\base.html:169
+#: .\agripredict\templates\socialaccount\login.html:24
+#, python-format
 msgid ""
-"Hi! I'm AgriBot. Ask me about admissions, merit, colleges, or scholarships."
+"\n"
+"                Sign in with <strong>%(provider_name)s</strong> to continue "
+"to your dashboard.\n"
+"                "
 msgstr ""
 
-#: .\agripredict\templates\base.html:176
-msgid "Type your question…"
+#: .\agripredict\templates\socialaccount\login.html:32
+msgid "Continue to Google"
 msgstr ""
 
-#: .\colleges\models.py:47
+#: .\agripredict\templates\socialaccount\login.html:39
+msgid "Back to regular login"
+msgstr ""
+
+#: .\colleges\admin.py:12
+#, fuzzy
+#| msgid "First name"
+msgid "Short name"
+msgstr "પ્રથમ નામ"
+
+#: .\colleges\admin.py:24
+msgid "New"
+msgstr ""
+
+#: .\colleges\admin.py:25
+msgid "ID"
+msgstr ""
+
+#: .\colleges\admin.py:38 .\scholarships\models.py:9
+msgid "Name"
+msgstr ""
+
+#: .\colleges\admin.py:52 .\colleges\models.py:89
+msgid "Course Name"
+msgstr ""
+
+#: .\colleges\models.py:36
+#, fuzzy
+#| msgid "Universities"
+msgid "University Name"
+msgstr "યુનિવર્સિટીઓ"
+
+#: .\colleges\models.py:37
+msgid "Short Name"
+msgstr ""
+
+#: .\colleges\models.py:39
+msgid "Website"
+msgstr ""
+
+#: .\colleges\models.py:40
+#, fuzzy
+#| msgid "Logout"
+msgid "Logo"
+msgstr "લૉગઆઉટ"
+
+#: .\colleges\models.py:43
 msgid "university"
 msgstr "યુનિવર્સિટીઓ"
 
-#: .\colleges\models.py:48
+#: .\colleges\models.py:44
 msgid "universities"
 msgstr "યુનિવર્સિટીઓ"
 
-#: .\colleges\models.py:63
+#: .\colleges\models.py:57
 msgid "Technical Agriculture"
 msgstr "મૂળ કૃષિ"
 
 # ── COMMON ──
-#: .\colleges\models.py:79
+#: .\colleges\models.py:62
+#, fuzzy
+#| msgid "College"
+msgid "College Name"
+msgstr "કોલેજો"
+
+# ── COMMON ──
+#: .\colleges\models.py:67 .\colleges\templates\colleges\detail.html:123
+#, fuzzy
+#| msgid "College"
+msgid "College Code"
+msgstr "કોલેજો"
+
+#: .\colleges\models.py:70
+#, fuzzy
+#| msgid "Brochure"
+msgid "Brochure PDF"
+msgstr "પુસ્તિકા"
+
+#: .\colleges\models.py:71
+msgid "Is Active"
+msgstr ""
+
+# ── COMMON ──
+#: .\colleges\models.py:74
 msgid "college"
 msgstr "કોલેજો"
 
 # ── COMMON ──
-#: .\colleges\models.py:80
+#: .\colleges\models.py:75
 msgid "colleges"
 msgstr "કોલેજો"
 
-#: .\colleges\models.py:105
+#: .\colleges\models.py:91 .\colleges\templates\colleges\detail.html:73
+msgid "Course Code"
+msgstr ""
+
+#: .\colleges\models.py:95
+msgid "General Seats"
+msgstr ""
+
+#: .\colleges\models.py:96
+msgid "SEBC Seats"
+msgstr ""
+
+#: .\colleges\models.py:97
+msgid "SC Seats"
+msgstr ""
+
+#: .\colleges\models.py:98
+msgid "ST Seats"
+msgstr ""
+
+#: .\colleges\models.py:99
+msgid "EWS Seats"
+msgstr ""
+
+#: .\colleges\models.py:102
 msgid "course"
 msgstr ""
 
-#: .\colleges\models.py:138
+#: .\colleges\models.py:103
+msgid "courses"
+msgstr ""
+
+#: .\colleges\models.py:128
+msgid "Year"
+msgstr ""
+
+#: .\colleges\models.py:129
+msgid "Round"
+msgstr ""
+
+#: .\colleges\models.py:131
+#, fuzzy
+#| msgid "Your Merit Score"
+msgid "Closing Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\colleges\models.py:132
+#, fuzzy
+#| msgid "Your Merit Score"
+msgid "Opening Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\colleges\models.py:133
+msgid "Total Admitted"
+msgstr ""
+
+#: .\colleges\models.py:137
 msgid "cutoff merit"
 msgstr ""
 
-#: .\colleges\templates\colleges\list.html:10
+#: .\colleges\models.py:138
+msgid "cutoff merits"
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:39
+#, fuzzy
+#| msgid "Brochure"
+msgid "Download Brochure"
+msgstr "પુસ્તિકા"
+
+#: .\colleges\templates\colleges\detail.html:43
+msgid "Send Inquiry"
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:55
+#, fuzzy
+#| msgid "Explore Colleges"
+msgid "About the College"
+msgstr "કોલેજ શોધો"
+
+#: .\colleges\templates\colleges\detail.html:60
+msgid ""
+"Detailed information about this college is being updated. Please check the "
+"official brochure for curriculum and campus details."
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:66
+msgid "Offered Courses & Cutoffs"
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:82
+msgid "Year / Round"
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:84
+#, fuzzy
+#| msgid "Calculate Merit Score"
+msgid "Last Merit Score"
+msgstr "મેરિટ સ્કોર ગણો"
+
+#: .\colleges\templates\colleges\detail.html:97
+msgid "No historical cutoff data available yet for this course."
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:109
+msgid "No specific courses listed for this college yet."
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:119
+#, fuzzy
+#| msgid "Update Information"
+msgid "Quick Information"
+msgstr "માહિતી અપડેટ કરો"
+
+#: .\colleges\templates\colleges\detail.html:127
+#, fuzzy
+#| msgid "university"
+msgid "University"
+msgstr "યુનિવર્સિટીઓ"
+
+#: .\colleges\templates\colleges\detail.html:131
+msgid "Stream Type"
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:142
+msgid "AgriBot Advisor"
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:144
+msgid ""
+"Have your merit marks ready? Ask me to predict your admission probability "
+"for this specific college."
+msgstr ""
+
+#: .\colleges\templates\colleges\detail.html:146
+#, fuzzy
+#| msgid "Ask AgriBot"
+msgid "Consult AgriBot"
+msgstr "AgriBot ને પૂછો"
+
+#: .\colleges\templates\colleges\list.html:12
 msgid "Agricultural Colleges in Gujarat"
 msgstr "ગુજરાતની કૃષિ કોલેજો"
 
-#: .\colleges\templates\colleges\list.html:11
+#: .\colleges\templates\colleges\list.html:20
 msgid "Explore colleges across 4 universities offering agriculture programmes."
 msgstr "કૃષિ કાર્યક્રમો ઓફર કરતી 4 યુનિવર્સિટીઓની કોલેજો શોધો."
 
-#: .\colleges\templates\colleges\list.html:34
-#: .\predict\templates\predict\category1.html:35
-msgid "Category"
-msgstr "શ્રેણી"
+#: .\colleges\templates\colleges\list.html:75
+msgid "View details for"
+msgstr ""
 
-#: .\colleges\templates\colleges\list.html:48
+#: .\colleges\templates\colleges\list.html:76
 #: .\notifications\templates\notifications\list.html:54
 msgid "Details"
 msgstr "વિગતો"
 
-#: .\colleges\templates\colleges\list.html:55
+#: .\colleges\templates\colleges\list.html:83
+msgid "Download brochure for"
+msgstr ""
+
+#: .\colleges\templates\colleges\list.html:84
 msgid "Brochure"
 msgstr "પુસ્તિકા"
 
-#: .\colleges\templates\colleges\list.html:64
+#: .\colleges\templates\colleges\list.html:94
 msgid "No colleges listed for this university yet."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:6
+#: .\core\templates\core\admission_guide.html:10
 msgid "Admission Guide 2025–26"
 msgstr "પ્રવેશ માર્ગદર્શિકા"
 
-#: .\core\templates\core\admission_guide.html:7
+#: .\core\templates\core\admission_guide.html:12
 msgid ""
 "Complete step-by-step process for Gujarat agriculture university admissions."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:22
-msgid "Fill Online Form"
+#: .\core\templates\core\admission_guide.html:28
+#: .\core\templates\core\admission_guide.html:47
+#: .\core\templates\core\admission_guide.html:66
+#: .\core\templates\core\admission_guide.html:85
+#: .\core\templates\core\admission_guide.html:104
+#: .\core\templates\core\admission_guide.html:123
+msgid "Step"
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:22
+#: .\core\templates\core\admission_guide.html:50
+msgid "Online Registration"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:51
 msgid ""
-"Register on the official Gujarat agriculture admission portal and fill the "
-"application form."
+"Create an account on the official portal and fill in your personal and "
+"academic details carefully."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:26
-msgid "Upload Documents"
+#: .\core\templates\core\admission_guide.html:69
+msgid "Document Upload"
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:26
+#: .\core\templates\core\admission_guide.html:70
 msgid ""
-"Upload mark sheets, category certificate, domicile certificate, passport "
-"photo, and signature."
+"Scan and upload your 10th/12th marksheet, GUJCET result, and category "
+"certificates in the required format."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:30
-msgid "Merit List Publication"
+#: .\core\templates\core\admission_guide.html:88
+msgid "Choice Filling"
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:30
+#: .\core\templates\core\admission_guide.html:89
 msgid ""
-"Merit lists are published based on your Class 12 theory marks and GUJCET "
-"score."
+"Select your preferred colleges and courses. Prioritize them based on your "
+"merit and interests."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:34
-msgid "College Allotment & Rounds"
+#: .\core\templates\core\admission_guide.html:107
+msgid "Seat Allotment"
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:34
+#: .\core\templates\core\admission_guide.html:108
 msgid ""
-"Colleges are allotted over 3 rounds. Accept your allotment and report to the "
-"college."
+"Check the allotment result. If satisfied, confirm your seat by paying the "
+"partial admission fee."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:38 .\notifications\models.py:44
-msgid "Fee Payment"
+#: .\core\templates\core\admission_guide.html:126
+msgid "Physical Reporting"
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:38
+#: .\core\templates\core\admission_guide.html:127
 msgid ""
-"Pay the required tuition and hostel fees online to confirm your admission."
+"Visit the allotted college with original documents for verification to "
+"finalize your admission."
 msgstr ""
 
-#: .\core\templates\core\admission_guide.html:46
+#: .\core\templates\core\admission_guide.html:141
 msgid "Key Dates"
+msgstr ""
+
+#: .\core\templates\core\admission_guide.html:160
+msgid "Dates will be announced soon."
 msgstr ""
 
 #: .\core\templates\core\contact.html:6
@@ -306,10 +996,6 @@ msgstr "સંપર્ક"
 
 #: .\core\templates\core\contact.html:12
 msgid "Your Name"
-msgstr ""
-
-#: .\core\templates\core\contact.html:16
-msgid "Email Address"
 msgstr ""
 
 #: .\core\templates\core\contact.html:20
@@ -324,27 +1010,40 @@ msgstr ""
 msgid "Gujarat, India"
 msgstr ""
 
-#: .\core\templates\core\faq.html:6
+#: .\core\templates\core\faq.html:4 .\core\templates\core\faq.html:19
 msgid "Frequently Asked Questions"
 msgstr ""
 
-#: .\core\templates\core\faq.html:21
-msgid "FAQ content coming soon."
+#: .\core\templates\core\faq.html:20
+msgid ""
+"Find quick answers to common queries about Gujarat agricultural admissions."
 msgstr ""
 
-#: .\core\templates\core\home.html:281
+#: .\core\templates\core\faq.html:49
+msgid "Our experts are preparing the FAQ content. Check back soon!"
+msgstr ""
+
+#: .\core\templates\core\faq.html:56
+msgid "Still have questions?"
+msgstr ""
+
+#: .\core\templates\core\faq.html:57
+msgid "Contact our support team"
+msgstr ""
+
+#: .\core\templates\core\home.html:354
 msgid "Gujarat Agriculture Admissions 2025–26"
 msgstr "ગુજરાત કૃષિ પ્રવેશ 2025–26"
 
-#: .\core\templates\core\home.html:285
+#: .\core\templates\core\home.html:358
 msgid "Secure Your Future in"
 msgstr "તમારું ભવિષ્ય સુરક્ષિત બનાવો"
 
-#: .\core\templates\core\home.html:286
+#: .\core\templates\core\home.html:359
 msgid "Agriculture Science"
 msgstr "કૃષિ વિજ્ઞાન"
 
-#: .\core\templates\core\home.html:290
+#: .\core\templates\core\home.html:363
 msgid ""
 "Calculate your official merit score, discover eligible colleges across JAU, "
 "AAU, NAU & SDAU, and get AI-powered guidance in Gujarati or English."
@@ -352,67 +1051,64 @@ msgstr ""
 "તમારો સત્તાવાર મેરિટ સ્કોર ગણો, JAU, AAU, NAU અને SDAUમાં યોગ્ય કોલેજ શોધો અને "
 "ગુજરાતી અથવા અંગ્રેજીમાં AI માર્ગદર્શન મેળવો"
 
-#: .\core\templates\core\home.html:295
+#: .\core\templates\core\home.html:368
 msgid "Calculate Merit Score"
 msgstr "મેરિટ સ્કોર ગણો"
 
-#: .\core\templates\core\home.html:298
+#: .\core\templates\core\home.html:371
 msgid "Explore Colleges"
 msgstr "કોલેજ શોધો"
 
-# ── COMMON ──
-#: .\core\templates\core\home.html:305
-msgid "Colleges"
-msgstr "કોલેજો"
-
-#: .\core\templates\core\home.html:321
+#: .\core\templates\core\home.html:394
 msgid "Agriculture Education"
 msgstr "કૃષિ વિજ્ઞાન"
 
-#: .\core\templates\core\home.html:330
+#: .\core\templates\core\home.html:403
 msgid "Merit Calculated"
 msgstr "મેરિટ ગણાઈ"
 
-#: .\core\templates\core\home.html:331
+#: .\core\templates\core\home.html:404
 msgid "Top Pick: JAU Junagadh"
 msgstr "ટોપ પસંદગી: JAU જુનાગઢ"
 
-#: .\core\templates\core\home.html:335
-#: .\predict\templates\predict\category1.html:117
+#: .\core\templates\core\home.html:408
+#: .\predict\templates\predict\category1.html:153
+#: .\predict\templates\predict\category2.html:147
+#: .\predict\templates\predict\category3.html:152
 msgid "Probability"
 msgstr ""
 
-#: .\core\templates\core\home.html:336
+#: .\core\templates\core\home.html:409
 msgid "High Match"
 msgstr ""
 
-#: .\core\templates\core\home.html:355
+#: .\core\templates\core\home.html:428
 msgid "Digital Farming"
 msgstr ""
 
-#: .\core\templates\core\home.html:361
+#: .\core\templates\core\home.html:434
 msgid "AI Powered"
 msgstr ""
 
-#: .\core\templates\core\home.html:362
+#: .\core\templates\core\home.html:435
 msgid "Fast & Accurate"
 msgstr ""
 
 # ── HOW IT WORKS ──
-#: .\core\templates\core\home.html:370
+#: .\core\templates\core\home.html:443
 msgid "How It Works"
 msgstr "કેવી રીતે કાર્ય કરે છે"
 
-#: .\core\templates\core\home.html:371
+#: .\core\templates\core\home.html:444
 msgid "Your Admission Journey Simplified"
 msgstr "તમારો પ્રવેશ માર્ગ"
 
-#: .\core\templates\core\home.html:377
-#: .\predict\templates\predict\category1.html:58
+#: .\core\templates\core\home.html:450
+#: .\predict\templates\predict\category1.html:90
 msgid "Calculate Merit"
 msgstr "મેરિટ ગણો"
 
-#: .\core\templates\core\home.html:378
+#: .\core\templates\core\home.html:451
 msgid ""
 "Enter your 12th standard theory marks and GUJCET score. Our algorithm "
 "instantly calculates your official Gujarat board merit score."
@@ -420,11 +1116,11 @@ msgstr ""
 "તમારા 12મા ધોરણના થિયરી માર્ક્સ અને GUJCET સ્કોર દાખલ કરો. અમારો એલ્ગોરિધમ તરત જ "
 "તમારો મેરિટ સ્કોર ગણશે"
 
-#: .\core\templates\core\home.html:385
+#: .\core\templates\core\home.html:458
 msgid "Discover Colleges"
 msgstr "કોલેજ શોધો"
 
-#: .\core\templates\core\home.html:386
+#: .\core\templates\core\home.html:459
 msgid ""
 "Compare your score against previous years' cutoffs to see exactly which "
 "programs and universities you have the highest probability of joining."
@@ -432,7 +1128,11 @@ msgstr ""
 "તમારા સ્કોરની અગાઉના વર્ષના કટઓફ સાથે તુલના કરો અને જાણો કે કયા કાર્યક્રમમાં પ્રવેશની "
 "વધુ શક્યતા છે"
 
-#: .\core\templates\core\home.html:394
+#: .\core\templates\core\home.html:466
+msgid "Ask AgriBot"
+msgstr "AgriBot ને પૂછો"
+
+#: .\core\templates\core\home.html:467
 msgid ""
 "Have questions about documents or scholarships? Our AI assistant answers "
 "instantly in both English and Gujarati."
@@ -441,123 +1141,119 @@ msgstr ""
 "જવાબ આપે છે"
 
 # ── PROGRAMMES ──
-#: .\core\templates\core\home.html:407
+#: .\core\templates\core\home.html:480
 msgid "Programmes"
 msgstr "કાર્યક્રમો"
 
-#: .\core\templates\core\home.html:408
+#: .\core\templates\core\home.html:481
 msgid "Choose Your Path"
 msgstr "તમારો માર્ગ પસંદ કરો"
 
-#: .\core\templates\core\home.html:418
+#: .\core\templates\core\home.html:491
 msgid "B.Sc. Horticulture & Forestry"
 msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
 
-#: .\core\templates\core\home.html:423
+#: .\core\templates\core\home.html:496
 msgid "Group B Only"
 msgstr "માત્ર ગ્રુપ B"
 
-#: .\core\templates\core\home.html:425
+#: .\core\templates\core\home.html:498
 msgid "B.Sc. Agriculture, Horticulture, Forestry & Biotechnology."
 msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
 
-#: .\core\templates\core\home.html:438
+#: .\core\templates\core\home.html:511
 msgid "Agricultural Engineering & Technology"
 msgstr ""
 
-#: .\core\templates\core\home.html:442 .\core\templates\core\home.html:466
+#: .\core\templates\core\home.html:515 .\core\templates\core\home.html:539
 msgid "Group A & B"
 msgstr "ગ્રુપ A અને B"
 
-#: .\core\templates\core\home.html:443
+#: .\core\templates\core\home.html:516
 msgid "Tech & Engineering"
 msgstr "ટેક અને એન્જિનિયરિંગ"
 
-#: .\core\templates\core\home.html:444
+#: .\core\templates\core\home.html:517
 msgid "B.Tech Agri Engineering, Food Tech & IT."
 msgstr "બી.ટેક કૃષિ એન્જિનિયરિંગ, ફૂડ ટેક અને આઈટી"
 
-#: .\core\templates\core\home.html:446
+#: .\core\templates\core\home.html:519
 msgid "High Demand"
 msgstr "ઉચ્ચ માંગ"
 
-#: .\core\templates\core\home.html:457
+#: .\core\templates\core\home.html:530
 msgid "Community Science & Nutrition"
 msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
 
-#: .\core\templates\core\home.html:462
+#: .\core\templates\core\home.html:535
 msgid "B.Sc. Community Science, Dietetics & Nutrition"
 msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
 
-#: .\core\templates\core\home.html:467
+#: .\core\templates\core\home.html:540
 msgid "Community Science"
 msgstr "સમુદાય વિજ્ઞાન"
 
-#: .\core\templates\core\home.html:468
+#: .\core\templates\core\home.html:541
 msgid "B.Sc. Community Science, Dietetics & Nutrition."
 msgstr "બી.એસસી કોમ્યુનિટી સાયન્સ, ડાયટેટિક્સ અને પોષણ"
 
-#: .\core\templates\core\home.html:470
+#: .\core\templates\core\home.html:543
 msgid "Healthcare"
 msgstr "આરોગ્ય ક્ષેત્ર"
 
 # ── UNIVERSITIES ──
-#: .\core\templates\core\home.html:482
+#: .\core\templates\core\home.html:555
 msgid "Institutions"
 msgstr "સંસ્થાઓ"
 
-#: .\core\templates\core\home.html:483
+#: .\core\templates\core\home.html:556
 msgid "Partner Universities"
 msgstr "ભાગીદાર યુનિવર્સિટીઓ"
 
-#: .\core\templates\core\home.html:492
+#: .\core\templates\core\home.html:565
 msgid "Junagadh"
 msgstr ""
 
-#: .\core\templates\core\home.html:502
+#: .\core\templates\core\home.html:575
 msgid "Anand"
 msgstr ""
 
-#: .\core\templates\core\home.html:511
+#: .\core\templates\core\home.html:584
 msgid "B.Sc. Agriculture, Horticulture, Forestry & Biotechnology"
 msgstr "બી.એસસી કૃષિ, હોર્ટિકલ્ચર, ફોરેસ્ટ્રી અને બાયોટેકનોલોજી"
 
-#: .\core\templates\core\home.html:516
+#: .\core\templates\core\home.html:589
 msgid "Navsari"
 msgstr ""
 
-#: .\core\templates\core\home.html:526
+#: .\core\templates\core\home.html:599
 msgid "Dantiwada"
 msgstr ""
 
-#: .\core\templates\core\home.html:540
+#: .\core\templates\core\home.html:613
 msgid "Modern Agriculture Field"
 msgstr "મૂળ કૃષિ"
 
 # ── CTA ──
-#: .\core\templates\core\home.html:544
+#: .\core\templates\core\home.html:617
 msgid "Ready to Find Your Perfect College?"
 msgstr "તમારી યોગ્ય કોલેજ શોધવા તૈયાર છો?"
 
-#: .\core\templates\core\home.html:545
+#: .\core\templates\core\home.html:618
 msgid ""
 "Join thousands of Gujarat students planning their education with confidence "
 "and AI-backed accuracy."
 msgstr "હજારો ગુજરાતના વિદ્યાર્થીઓ સાથે આત્મવિશ્વાસથી તમારું શિક્ષણ આયોજન કરો"
 
-#: .\core\templates\core\home.html:549
+#: .\core\templates\core\home.html:622
 msgid "Start Calculating Free"
 msgstr "મફતમાં ગણતરી શરૂ કરો"
 
-#: .\core\templates\core\home.html:553
-msgid "Create Account"
-msgstr "એકાઉન્ટ બનાવો"
-
-#: .\core\views.py:66
+#: .\core\views.py:64
 msgid "Your message has been sent. We'll get back to you soon."
 msgstr ""
 
-#: .\core\views.py:68
+#: .\core\views.py:66
 msgid "Please fill in all fields."
 msgstr ""
 
@@ -584,6 +1280,10 @@ msgstr ""
 #: .\notifications\models.py:43
 msgid "Admission Round"
 msgstr "પ્રવેશ માર્ગદર્શિકા"
+
+#: .\notifications\models.py:44
+msgid "Fee Payment"
+msgstr ""
 
 #: .\notifications\models.py:45
 msgid "Other"
@@ -618,176 +1318,330 @@ msgstr "સૂચનાઓ"
 msgid "Merit Calculator — Category 1"
 msgstr "મેરિટ કેલ્ક્યુલેટર"
 
-#: .\predict\templates\predict\category1.html:13
+#: .\predict\templates\predict\category1.html:41
 msgid "Category 1 Merit Calculator"
 msgstr "મેરિટ કેલ્ક્યુલેટર"
 
-#: .\predict\templates\predict\category1.html:14
+#: .\predict\templates\predict\category1.html:42
 msgid "Core Agriculture Programs (B-Group only)"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:18
-msgid "Theory Marks Total Type"
+#: .\predict\templates\predict\category1.html:47
+#: .\predict\templates\predict\category2.html:53
+#: .\predict\templates\predict\category3.html:54
+msgid "Theory Marks Total"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:20
-msgid "Select total marks"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:21
+#: .\predict\templates\predict\category1.html:49
+#: .\predict\templates\predict\category2.html:55
+#: .\predict\templates\predict\category3.html:56
 msgid "Out of 300"
-msgstr ""
+msgstr "300 માંથી"
 
-#: .\predict\templates\predict\category1.html:22
-msgid "Out of 210"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:23
+#: .\predict\templates\predict\category1.html:50
+#: .\predict\templates\predict\category2.html:56
+#: .\predict\templates\predict\category3.html:57
 msgid "Out of 240"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:27
-msgid "Theory Marks Obtained"
+#: .\predict\templates\predict\category1.html:51
+#: .\predict\templates\predict\category2.html:57
+#: .\predict\templates\predict\category3.html:58
+msgid "Out of 210"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:31
+#: .\predict\templates\predict\category1.html:61
+#: .\predict\templates\predict\category2.html:67
+#: .\predict\templates\predict\category3.html:68
 msgid "GUJCET Marks (Out of 120)"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:37
-msgid "Select category"
-msgstr "શ્રેણી"
-
-#: .\predict\templates\predict\category1.html:38
+#: .\predict\templates\predict\category1.html:68
+#: .\predict\templates\predict\category2.html:74
+#: .\predict\templates\predict\category3.html:75
 msgid "General / Open"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:43
+#: .\predict\templates\predict\category1.html:73
+#: .\predict\templates\predict\category2.html:79
+#: .\predict\templates\predict\category3.html:80
 msgid "Other Board"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:45
+#: .\predict\templates\predict\category1.html:75
+#: .\predict\templates\predict\category2.html:81
+#: .\predict\templates\predict\category3.html:82
 msgid "Ex-Serviceman"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:50
-#, python-format
-msgid "Farming Background (+5%% bonus)"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:53
-msgid "Your City"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:54
-msgid "e.g. Ahmedabad"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:60
+#: .\predict\templates\predict\category1.html:92
+#: .\predict\templates\predict\category2.html:91
+#: .\predict\templates\predict\category3.html:97
 msgid "Reset"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:72
+#: .\predict\templates\predict\category1.html:105
+#: .\predict\templates\predict\category2.html:103
+#: .\predict\templates\predict\category3.html:108
 msgid "Your Merit Score"
 msgstr "મેરિટ સ્કોર ગણો"
 
-#: .\predict\templates\predict\category1.html:77
-msgid "Theory"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:89
+#: .\predict\templates\predict\category1.html:122
+#: .\predict\templates\predict\category2.html:120
+#: .\predict\templates\predict\category3.html:125
 msgid "Bonus"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:96
+#: .\predict\templates\predict\category1.html:129
+#: .\predict\templates\predict\category2.html:127
+#: .\predict\templates\predict\category3.html:132
 msgid "Save Result"
 msgstr "સેવ કરેલા પરિણામો"
 
-#: .\predict\templates\predict\category1.html:107
+#: .\predict\templates\predict\category1.html:139
+#: .\predict\templates\predict\category2.html:137
+#: .\predict\templates\predict\category3.html:142
 msgid "Filter by City"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:108
-msgid "All cities"
+#: .\predict\templates\predict\category1.html:141
+#: .\predict\templates\predict\category2.html:138
+#: .\predict\templates\predict\category3.html:143
+msgid "All Cities"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:111
+#: .\predict\templates\predict\category1.html:145
+#: .\predict\templates\predict\category2.html:141
+#: .\predict\templates\predict\category3.html:146
 msgid "Filter by Course"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:112
-msgid "All courses"
+#: .\predict\templates\predict\category1.html:147
+#: .\predict\templates\predict\category2.html:142
+#: .\predict\templates\predict\category3.html:147
+msgid "All Courses"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:115
+#: .\predict\templates\predict\category1.html:151
+#: .\predict\templates\predict\category2.html:145
+#: .\predict\templates\predict\category3.html:150
 msgid "Sort by"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:118
-msgid "Merit"
+#: .\predict\templates\predict\category1.html:154
+#: .\predict\templates\predict\category2.html:148
+#: .\predict\templates\predict\category3.html:153
+msgid "Cutoff Low→High"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:119
-msgid "City"
-msgstr ""
-
-#: .\predict\templates\predict\category1.html:129
+#: .\predict\templates\predict\category1.html:164
+#: .\predict\templates\predict\category2.html:158
+#: .\predict\templates\predict\category3.html:163
 msgid "College Recommendations"
 msgstr ""
 
 # ── COMMON ──
-#: .\predict\templates\predict\category1.html:137
+#: .\predict\templates\predict\category1.html:172
+#: .\predict\templates\predict\category2.html:166
+#: .\predict\templates\predict\category3.html:171
 msgid "College"
 msgstr "કોલેજો"
 
-#: .\predict\templates\predict\category1.html:138
+#: .\predict\templates\predict\category1.html:173
+#: .\predict\templates\predict\category2.html:167
+#: .\predict\templates\predict\category3.html:172
 msgid "Course"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:139
+#: .\predict\templates\predict\category1.html:174
+#: .\predict\templates\predict\category2.html:168
+#: .\predict\templates\predict\category3.html:173
 msgid "Last Cutoff"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:140
+#: .\predict\templates\predict\category1.html:175
+#: .\predict\templates\predict\category2.html:169
+#: .\predict\templates\predict\category3.html:174
 msgid "Chance"
 msgstr ""
 
-#: .\predict\templates\predict\category1.html:154
+#: .\predict\templates\predict\category1.html:187
+#: .\predict\templates\predict\category2.html:182
+#: .\predict\templates\predict\category3.html:187
 msgid "Enter your marks above to see college recommendations."
 msgstr ""
 
-#: .\scholarships\models.py:27
-msgid "scholarship"
-msgstr "સ્કોલરશિપ"
+#: .\predict\templates\predict\category2.html:4
+#, fuzzy
+#| msgid "Merit Calculator — Category 1"
+msgid "Merit Calculator — Category 2"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
 
-#: .\scholarships\templates\scholarships\list.html:6
-msgid "Available Agriculture Scholarships"
-msgstr ""
+# ── CALCULATOR CATEGORIES ──
+#: .\predict\templates\predict\category2.html:39
+msgid "Category 2: Technical Agriculture"
+msgstr "કેટેગરી 2: તકનીકી કૃષિ"
 
-#: .\scholarships\templates\scholarships\list.html:7
-msgid "10 scholarships available for Gujarat agriculture students."
-msgstr ""
+#: .\predict\templates\predict\category2.html:40
+msgid "Engineering / Technology Programs"
+msgstr "એન્જિનિયરિંગ / ટેકનોલોજી કાર્યક્રમો"
 
-#: .\scholarships\templates\scholarships\list.html:17
+# ── FORM CONTROLS ──
+#: .\predict\templates\predict\category2.html:45
+#: .\predict\templates\predict\category3.html:46
+msgid "Subject Group"
+msgstr "વિષય ગ્રુપ"
+
+#: .\predict\templates\predict\category2.html:89
+msgid "Predict Admission"
+msgstr "પ્રવેશ અનુમાન મેળવો"
+
+#: .\predict\templates\predict\category3.html:4
+#, fuzzy
+#| msgid "Merit Calculator — Category 1"
+msgid "Merit Calculator — Category 3"
+msgstr "મેરિટ કેલ્ક્યુલેટર"
+
+#: .\predict\templates\predict\category3.html:40
+msgid "Category 3: Community Science"
+msgstr "કેટેગરી 3: કોમ્યુનિટી સાયન્સ"
+
+#: .\predict\templates\predict\category3.html:41
+msgid "Home Science / Community Science Programs"
+msgstr "હોમ સાયન્સ / કોમ્યુનિટી સાયન્સ કાર્યક્રમો"
+
+#: .\predict\templates\predict\category3.html:95
+msgid "Get Prediction"
+msgstr "પરિણામ મેળવો"
+
+#: .\scholarships\models.py:10
+#: .\scholarships\templates\scholarships\list.html:79
 msgid "Eligible Courses"
 msgstr ""
 
-#: .\scholarships\templates\scholarships\list.html:18
+#: .\scholarships\models.py:11
+msgid "Eligibility Criteria"
+msgstr ""
+
+#: .\scholarships\models.py:12
+#: .\scholarships\templates\scholarships\list.html:43
+msgid "Benefits"
+msgstr "લાભો"
+
+#: .\scholarships\models.py:13
+msgid "How to Apply"
+msgstr ""
+
+#: .\scholarships\models.py:14
+msgid "Notes"
+msgstr ""
+
+#: .\scholarships\models.py:22
+msgid "Comma-separated: OPEN, SC, ST, SEBC, EWS, GIRL, MINORITY"
+msgstr ""
+
+#: .\scholarships\models.py:24
+msgid "Min 12th percentage"
+msgstr ""
+
+#: .\scholarships\models.py:25
+msgid "Max family income in lakhs"
+msgstr ""
+
+#: .\scholarships\models.py:31
+msgid "scholarship"
+msgstr "સ્કોલરશિપ"
+
+#: .\scholarships\models.py:32
+#, fuzzy
+#| msgid "scholarship"
+msgid "scholarships"
+msgstr "સ્કોલરશિપ"
+
+# ── SCHOLARSHIPS ──
+#: .\scholarships\templates\scholarships\list.html:10
+msgid "Available Scholarships"
+msgstr "ઉપલબ્ધ સ્કોલરશિપ"
+
+#: .\scholarships\templates\scholarships\list.html:13
+#, python-format
+msgid "%(count)s scholarships available for Gujarat agriculture students."
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:30
+#, fuzzy
+#| msgid "Scholarships"
+msgid "Scholarship"
+msgstr "સ્કોલરશિપ"
+
+#: .\scholarships\templates\scholarships\list.html:49
 msgid "Eligibility"
 msgstr ""
 
-#: .\scholarships\templates\scholarships\list.html:19
-msgid "Benefits"
-msgstr ""
+#: .\scholarships\templates\scholarships\list.html:54
+msgid "Income Limit"
+msgstr "આવક મર્યાદા"
 
-#: .\scholarships\templates\scholarships\list.html:20
-msgid "Max family income"
-msgstr ""
-
-#: .\scholarships\templates\scholarships\list.html:20
+#: .\scholarships\templates\scholarships\list.html:55
 msgid "lakh/year"
 msgstr ""
 
-#: .\scholarships\templates\scholarships\list.html:24
+#: .\scholarships\templates\scholarships\list.html:65
 msgid "Apply Now"
 msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:70
+msgid "Courses"
+msgstr ""
+
+#: .\scholarships\templates\scholarships\list.html:91
+msgid "No scholarships found at this time."
+msgstr ""
+
+#~ msgid "Receive email notifications"
+#~ msgstr "સૂચનાઓ"
+
+#~ msgid "Receive SMS notifications"
+#~ msgstr "સૂચનાઓ"
+
+#~ msgid "Last name"
+#~ msgstr "અટક (છેલ્લું નામ)"
+
+#~ msgid "Phone number"
+#~ msgstr "ફોન નંબર"
+
+#~ msgid "Preferred language*"
+#~ msgstr "પસંદગીની ભાષા*"
+
+#~ msgid "Notify email"
+#~ msgstr "ઈમેલ દ્વારા જાણ કરો"
+
+#~ msgid "Notify sms"
+#~ msgstr "SMS દ્વારા જાણ કરો"
+
+#~ msgid "Current Password*"
+#~ msgstr "વર્તમાન પાસવર્ડ*"
+
+#~ msgid ""
+#~ "Your password can’t be too similar to your other personal information."
+#~ msgstr "તમારો પાસવર્ડ તમારી અન્ય વ્યક્તિગત માહિતી સાથે બહુ મળતો ન હોવો જોઈએ."
+
+#~ msgid "Your password must contain at least 8 characters."
+#~ msgstr "તમારા પાસવર્ડમાં ઓછામાં ઓછા 8 અક્ષરો હોવા જોઈએ."
+
+#~ msgid "Your password can’t be a commonly used password."
+#~ msgstr "તમારો પાસવર્ડ સામાન્ય રીતે વપરાતો પાસવર્ડ ન હોવો જોઈએ."
+
+#~ msgid "Your password can’t be entirely numeric."
+#~ msgstr "તમારો પાસવર્ડ માત્ર આંકડાકીય ન હોવો જોઈએ."
+
+# ── CHATBOT ──
+#~ msgid ""
+#~ "Welcome back! 👋 I can help you with admission predictions or find the "
+#~ "best Agri-colleges in Gujarat."
+#~ msgstr ""
+#~ "સ્વાગત છે! 👋 હું તમને પ્રવેશ અનુમાન અથવા ગુજરાતની શ્રેષ્ઠ કૃષિ કોલેજો શોધવામાં મદદ કરી "
+#~ "શકું છું."
+
+#~ msgid "Merit, college cutoffs, scholarships"
+#~ msgstr "મેરિટ, કોલેજ કટઓફ, સ્કોલરશિપ"

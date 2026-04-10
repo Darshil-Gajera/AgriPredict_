@@ -28,6 +28,9 @@
 {% endblock %}
 
 {% block content %}
+<audio id="successSound" preload="auto">
+  <source src="{% static 'sounds/success.mp3' %}" type="audio/mpeg">
+</audio>
 <div class="container py-5">
   <div class="row g-4">
 
@@ -280,8 +283,15 @@ async function doCalculate(){
     setText("theoryComp",data.theory_comp);
     setText("gujcetComp",data.gujcet_comp);
     setText("bonusComp",data.bonus_comp);
-    
-    $id("resultsPanel")?.classList.remove("d-none");
+    $id("resultsPanel").classList.remove("d-none");
+
+// ── Play success sound ──
+const sound = $id("successSound");
+if (sound) {
+  sound.currentTime = 0;
+  sound.volume = 0.5;
+  sound.play().catch(() => {});
+}
     $id("emptyState")?.classList.add("d-none");
     _colleges=Array.isArray(data.colleges)?data.colleges:[];
     populateFilters(_colleges);
