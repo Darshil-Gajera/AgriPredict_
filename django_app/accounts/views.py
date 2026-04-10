@@ -7,20 +7,8 @@ from django.http import JsonResponse
 from .forms import ProfileForm, SavedResultForm
 from .models import SavedResult
 import json
-
-
-@login_required
-def profile(request):
-    if request.method == "POST":
-        form = ProfileForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, _("Profile updated successfully."))
-            return redirect("accounts:profile")
-    else:
-        form = ProfileForm(instance=request.user)
-    return render(request, "accounts/profile.html", {"form": form})
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 @login_required
 def saved_results(request):
@@ -121,3 +109,27 @@ def edit_saved_result(request, pk):
         "form":   form,
         "result": result,
     })
+@login_required
+def profile(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("Profile updated successfully."))
+
+            # ── Email notification ────────────────────────────────
+            try:
+                send_mail(
+                    subject="[AgriPredict] Profile Updated",
+                    message=f"Hi {request.user.email},\n\nYour profile was updated successfully.\n\nIf this wasn't you, please contact us immediately.\n\nAgriPredict Team",
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[request.user.email],
+                    fail_silently=True,
+                )
+            except Exception as e:
+                print("Email error:", e)
+
+            return redirect("accounts:profile")
+    else:
+        form = ProfileForm(instance=request.user)
+    return render(request, "accounts/profile.html", {"form": form})

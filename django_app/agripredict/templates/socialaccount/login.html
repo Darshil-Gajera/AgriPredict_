@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load socialaccount %}
+{% load static %}
+
+{% block content %}
+<div class="login-page">
+    <div class="bg-blur-circle"></div>
+    
+    <div class="login-box auth-card-wide reveal active mx-auto">
+        <div class="auth-header-visual">
+            <div class="icon-stack">
+                <div class="brand-blob"></div>
+                <img src="{% static 'images/google-logo.png' %}" alt="Google" class="google-logo-styled" style="position: relative; z-index: 2;">
+            </div>
+        </div> <div class="text-center">
+            <h2 class="login-title">{% trans "Confirm Identity" %}</h2>
+            <div class="connection-path">
+                <span>AgriPredict</span>
+                <div class="dots"><span></span><span></span><span></span></div>
+                <span class="text-agri">Google</span>
+            </div>
+            <p class="login-sub px-3">
+                {% blocktrans with provider.name as provider_name %}
+                Sign in with <strong>{{ provider_name }}</strong> to continue to your dashboard.
+                {% endblocktrans %}
+            </p>
+        </div>
+
+        <form method="post" class="mt-4">
+            {% csrf_token %} <button type="submit" class="btn-agri-modern">
+                <span>{% trans "Continue to Google" %} <i class="fas fa-chevron-right ms-1"></i></span>
+            </button>
+            
+            <div class="divider"><span>{% trans "OR" %}</span></div>
+
+            <div class="text-center">
+                <a href="{% url 'account_login' %}" class="back-link">
+                    <i class="fas fa-arrow-left me-1"></i> {% trans "Back to regular login" %}
+                </a>
+            </div>
+        </form>
+    </div> </div> {% endblock %}

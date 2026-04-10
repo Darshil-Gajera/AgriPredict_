@@ -1,64 +1,92 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load crispy_forms_tags %}
+{% load socialaccount %}
+{% load static %}
 
 {% block title %}{% trans "Sign Up" %} | AgriPredict{% endblock %}
 
 {% block content %}
-<div class="container py-5 min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="row w-100">
-        <div class="col-lg-5 mx-auto">
-            <div class="text-center mb-4">
-                <div class="bg-success-subtle d-inline-block p-3 rounded-circle mb-3">
-                    <i class="bi bi-person-plus text-success fs-1"></i>
-                </div>
-                <h2 class="fw-bold">Create Your Account</h2>
-                <p class="text-muted">Join the AgriPredict community to save your merit history.</p>
-            </div>
+<div class="login-page">
+    <div class="bg-blur-circle"></div>
+    
+    <div class="login-box auth-card-wide reveal active mx-auto">
 
-            <div class="card border-0 shadow-lg rounded-4">
-                <div class="card-body p-4 p-md-5">
-                    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                        {% csrf_token %}
-                        
-                        {{ form|crispy }}
-
-                        <div class="alert alert-light border-0 small text-muted mb-4">
-                            By signing up, you agree to our 
-                            <a href="#" class="text-success text-decoration-none">Terms</a> and 
-                            <a href="#" class="text-success text-decoration-none">Privacy Policy</a>.
-                        </div>
-
-                        <button class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm" type="submit">
-                            {% trans "Create Account" %}
-                        </button>
-                    </form>
-
-                    <div class="text-center mt-4">
-                        <p class="mb-0 text-muted">Already have an account? 
-                            <a href="{% url 'account_login' %}" class="text-success fw-bold text-decoration-none">Log In</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-4 text-center">
-                <a href="/" class="text-muted text-decoration-none small">
-                    <i class="bi bi-house-door me-1"></i> Back to Homepage
-                </a>
+        <div class="auth-header-visual">
+            <div class="icon-stack">
+                <div class="brand-blob"></div>
+                <i class="fas fa-leaf fa-2x text-agri" style="z-index: 2; position: relative;">
+                   {% load static %}
+                  <img src="{% static 'images/logo.png' %}" alt="Google" class="google-logo-styled">
+               
+                </i>
             </div>
         </div>
+
+        <div class="text-center mb-4">
+             <h2 class="login-title">{% trans "Create Account" %}</h2>
+             <p class="login-sub">
+                {% trans "Already have an account?" %}
+                <a href="{% url 'account_login' %}" class="text-agri">{% trans "Log In" %}</a>
+            </p>
+        </div>
+
+        <form method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+                <label for="id_email" class="form-label small fw-bold">{% trans "Email Address" %}</label>
+                <input type="email" name="email" id="id_email" class="form-control" placeholder="example@mail.com" required>
+
+                {% if form.email.errors %}
+                    <div class="text-danger x-small mt-1">
+                        <i class="fas fa-exclamation-circle"></i> {{ form.email.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="id_password1" class="form-label small fw-bold">{% trans "Password" %}</label>
+                <input type="password" name="password1" id="id_password1" class="form-control" placeholder="••••••••" required>
+
+                {% if form.password1.errors %}
+                    <div class="text-danger x-small mt-1">
+                        <i class="fas fa-exclamation-circle"></i> {{ form.password1.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="id_password2" class="form-label small fw-bold">{% trans "Confirm Password" %}</label>
+                <input type="password" name="password2" id="id_password2" class="form-control" placeholder="••••••••" required>
+
+                {% if form.password2.errors %}
+                    <div class="text-danger x-small mt-1">
+                        <i class="fas fa-exclamation-circle"></i> {{ form.password2.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <p class="x-small text-muted mb-0">
+                    {% trans "By signing up, you agree to our" %}
+                    <a href="#" class="back-link underline">{% trans "Terms" %}</a> 
+                    {% trans "and" %} 
+                    <a href="#" class="back-link underline">{% trans "Privacy Policy" %}</a>.
+                </p>
+            </div>
+
+            <button type="submit" class="btn-agri-modern w-100">
+                <span>{% trans "Create Account" %}</span>
+            </button>
+        </form>
+
+        <div class="divider"><span>{% trans "OR" %}</span></div>
+
+        <a href="{% provider_login_url 'google' %}" class="btn-google d-flex align-items-center justify-content-center gap-2">
+            <img src="{% static 'images/google-logo.png' %}" alt="Google" style="width: 18px;">
+            <span>{% trans "Continue with Google" %}</span>
+        </a>
+
     </div>
 </div>
-
-<style>
-    body { background-color: #f8f9fa; }
-    .card { transition: transform 0.3s ease; }
-    .card:hover { transform: translateY(-5px); }
-    /* Style crispy forms to match modern inputs */
-    input[type="text"], input[type="email"], input[type="password"] {
-        padding: 0.75rem 1rem;
-        border-radius: 0.5rem;
-    }
-</style>
 {% endblock %}

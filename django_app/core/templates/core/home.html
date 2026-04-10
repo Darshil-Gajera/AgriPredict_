@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% load i18n static %}
 
@@ -51,11 +52,10 @@ body::before {
   --section-5: linear-gradient(180deg, #0f172a 0%, #020617 100%); /* Onyx Black */
 }
 html {
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 section {
-  scroll-snap-align: start;
+  scroll-snap-align: none;
 }
 
   /* ── THEME VARIABLES ── */
@@ -102,8 +102,10 @@ section {
     background-color: var(--bg-main);
     color: var(--text-main);
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
   }
+  .hero-wrap, section {
+  overflow-x: clip; /* 'clip' doesn't create a stacking context unlike 'hidden' */
+}
 
   h1, h2, h3, h4, h5, .font-display {
     font-family: 'Space Grotesk', sans-serif;
@@ -132,7 +134,7 @@ section {
   /* ── HERO SECTION ── */
   .hero-wrap {
     
-    min-height: 100vh; display: flex; align-items: center; position: relative; padding: 100px 0 60px;
+    min-height: auto; display: flex; align-items: center; position: relative; padding: 80px 0 40px;
   }
   .hero-bg-glow {
     position: absolute; width: 600px; height: 600px; 
@@ -191,7 +193,8 @@ section {
   .section-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 800; color: var(--text-main); margin-bottom: 1.5rem; }
 
   .how-it-works-img {
-    width: 100%; height: 500px; object-fit: cover; border-radius: 2rem; box-shadow: var(--shadow-xl);
+    width: 100%; height: auto;
+  max-height: 500px;; object-fit: cover; border-radius: 2rem; box-shadow: var(--shadow-xl);
     border: 1px solid var(--border-color);
   }
   @media (min-width: 992px) {
@@ -252,6 +255,54 @@ section {
     .eyebrow { justify-content: center; }
     .step-row:hover { transform: none; }
   }
+  /* ───────── MOBILE RESPONSIVE FIX ───────── */
+@media (max-width: 768px) {
+
+  .hero-wrap {
+    padding: 60px 15px !important;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-h1 {
+    font-size: 2rem !important;
+  }
+
+  .btn-modern {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-img-container {
+    transform: none !important;
+  }
+
+  .step-row {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .cat-card {
+    height: 280px !important;
+  }
+
+  .uni-card {
+    height: 160px !important;
+  }
+
+  .how-it-works-img {
+    height: 250px !important;
+  }
+
+  section {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
+  .row.align-items-center {
+    flex-direction: column-reverse;
+  }
+}
 </style>
 {% endblock %}
 
@@ -275,7 +326,7 @@ section {
   <div class="container position-relative">
     <div class="row align-items-center g-5">
       
-      <div class="col-lg-6 reveal active">
+      <div class="col-12 col-lg-6 reveal active">
         <div class="eyebrow">
           <span class="pulse-dot"></span>
           {% trans "Gujarat Agriculture Admissions 2025–26" %}
@@ -291,7 +342,7 @@ section {
         </p>
         
         <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
-          <a href="{% url 'predict:category' 1 %}" class="btn-modern btn-primary-modern">
+          <a href="#programsSection" class="btn-modern btn-primary-modern">
             <i class="bi bi-calculator-fill"></i> {% trans "Calculate Merit Score" %}
           </a>
           <a href="{% url 'colleges:list' %}" class="btn-modern btn-outline-modern">
@@ -315,7 +366,7 @@ section {
         </div>
       </div>
 
-      <div class="col-lg-6 d-none d-lg-block reveal active delay-2">
+      <div class="col-12 col-lg-6 d-none d-lg-block reveal active delay-2">
         <div class="hero-visual">
           <div class="hero-img-container">
             <img src="{% static 'images/hero.png' %}" alt="{% trans 'Agriculture Education' %}" class="hero-img" loading="eager">
@@ -400,17 +451,17 @@ section {
   </div>
 </section>
 
-<section class="py-5 bg-surface-alt border-top border-bottom section-3">
+<section id="programsSection" class="py-5 bg-surface-alt border-top border-bottom section-3">
   <div class="container py-lg-5">
     <div class="row mb-5 reveal">
-      <div class="col-lg-8">
+      <div class="text-center class="col-lg-8">
         <span class="section-tag">{% trans "Programmes" %}</span>
         <h2 class="section-title">{% trans "Choose Your Path" %}</h2>
       </div>
     </div>
 
     <div class="row g-4">
-      <div class="col-lg-4 reveal delay-1">
+      <div class="col-12 col-md-6 col-lg-4 reveal delay-1">
         <a href="{% url 'predict:category' 1 %}" class="cat-card text-decoration-none">
           <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=1200&auto=format&fit=crop" 
      class="h-100 w-100 object-fit-cover position-absolute top-0 start-0" 
@@ -430,7 +481,7 @@ section {
         </a>
       </div>
 
-      <div class="col-lg-4 reveal delay-2">
+      <div class="col-12 col-md-6 col-lg-4 reveal delay-2">
         <a href="{% url 'predict:category' 2 %}" class="cat-card text-decoration-none">
           <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop" 
      class="cat-img position-absolute h-100 w-100 top-0 start-0" 
@@ -449,7 +500,7 @@ section {
         </a>
       </div>
 
-      <div class="col-lg-4 reveal delay-3">
+      <div class="col-12 col-md-6 col-lg-4 reveal delay-3">
         <a href="{% url 'predict:category' 3 %}" class="cat-card text-decoration-none">
           <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800&auto=format&fit=crop" 
      class="cat-img position-absolute h-100 w-100 top-0 start-0" 
@@ -545,7 +596,7 @@ section {
         <p class="mb-5 text-white-50 mx-auto" style="max-width: 600px;">{% trans "Join thousands of Gujarat students planning their education with confidence and AI-backed accuracy." %}</p>
         
         <div class="d-flex justify-content-center gap-3 flex-wrap">
-          <a href="{% url 'predict:category' 1 %}" class="btn-modern bg-white text-dark shadow-lg">
+          <a a href="#programsSection" class="btn-modern bg-white text-dark shadow-lg">
             <i class="bi bi-calculator-fill text-success"></i> {% trans "Start Calculating Free" %}
           </a>
           {% if not user.is_authenticated %}

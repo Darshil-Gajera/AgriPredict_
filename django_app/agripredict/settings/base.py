@@ -85,8 +85,6 @@ TEMPLATES = [
         },
     },
 ]
-
-
 WSGI_APPLICATION = "agripredict.wsgi.application"
 
 
@@ -129,12 +127,22 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX      = "[AgriPredict] "
 ACCOUNT_DEFAULT_HTTP_PROTOCOL     = "http"
 
 
-# ── Password Validation ────────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 
@@ -201,20 +209,15 @@ CELERY_TIMEZONE        = "Asia/Kolkata"
 
 
 # ── Email ──────────────────────────────────────────────────────
-EMAIL_BACKEND = env(
-    "EMAIL_BACKEND",
-    default="django.core.mail.backends.console.EmailBackend",
-)
-EMAIL_HOST          = env("EMAIL_HOST", default="smtp.gmail.com")
-EMAIL_PORT          = env.int("EMAIL_PORT", default=587)
-EMAIL_USE_TLS       = True
+# This prints the email to your console so you can copy the reset link
+# ── Email ──────────────────────────────────────────────────────
+EMAIL_BACKEND     = env("EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST        = env("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT        = env.int("EMAIL_PORT", default=587)
+EMAIL_USE_TLS     = True
 EMAIL_HOST_USER     = env("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-DEFAULT_FROM_EMAIL  = env(
-    "DEFAULT_FROM_EMAIL",
-    default="AgriPredict <noreply@agripredict.in>"
-)
-
+DEFAULT_FROM_EMAIL  = env("DEFAULT_FROM_EMAIL", default="AgriPredict <noreply@agripredict.in>")
 
 # ── Twilio SMS ─────────────────────────────────────────────────
 TWILIO_ACCOUNT_SID  = env("TWILIO_ACCOUNT_SID", default="")

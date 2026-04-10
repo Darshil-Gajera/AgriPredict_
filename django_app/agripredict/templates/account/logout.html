@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="login-page">
+    <div class="bg-blur-circle" style="background: var(--agri-gold); opacity: 0.12;"></div>
+    
+    <div class="login-box auth-card-wide reveal active mx-auto">
+        <div class="auth-header-visual">
+            <div class="icon-stack">
+                <div class="brand-blob" style="background: rgba(220, 53, 69, 0.1);"></div>
+                <i class="fas fa-sign-out-alt fa-2x text-danger" style="z-index: 2; position: relative;">
+                  {% load static %}
+                  <img src="{% static 'images/logo.png' %}" alt="Google" class="google-logo-styled">
+               </i>
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <h2 class="login-title">{% trans "Sign Out" %}</h2>
+            <div class="connection-path">
+                <span>{% trans "Active Session" %}</span>
+                <div class="dots"><span style="background: #dc3545;"></span><span style="background: #dc3545;"></span><span style="background: #dc3545;"></span></div>
+                <span class="text-danger">{% trans "Exit" %}</span>
+            </div>
+            <p class="login-sub px-3">
+                {% trans "Are you sure you want to sign out of your AgriPredict account?" %}
+            </p>
+        </div>
+
+        <form method="post" action="{% url 'account_logout' %}" class="mt-4">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            
+            <button type="submit" class="btn-agri-modern" style="background: linear-gradient(135deg, #dc3545, #b02a37); box-shadow: 0 8px 24px rgba(220, 53, 69, 0.2);">
+                <span>{% trans "Yes, Sign Me Out" %}</span>
+            </button>
+            
+            <div class="divider"><span>{% trans "OR" %}</span></div>
+
+            <div class="text-center">
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left me-1"></i> {% trans "No, take me back" %}
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,83 +1,70 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load account socialaccount %}
+{% load static %}
 
 {% block title %}{% trans "Sign In" %} | AgriPredict{% endblock %}
 
 {% block content %}
-<div class="container-fluid p-0">
-    <div class="row g-0 min-vh-100">
-        <div class="col-lg-6 d-none d-lg-flex bg-success position-relative align-items-center justify-content-center text-white">
-            <div class="position-absolute top-0 start-0 w-100 h-100 opacity-25" 
-                 style="background-image: url('https://www.transparenttextures.com/patterns/leaf.png');"></div>
-            
-            <div class="position-relative z-1 p-5 text-center" style="max-width: 500px;">
-                <div class="mb-4">
-                    <i class="bi bi-patch-check-fill display-1"></i>
-                </div>
-                <h1 class="fw-bold mb-3">Welcome Back</h1>
-                <p class="fs-5 opacity-75">
-                    Log in to access your saved merit calculations and personalized college recommendations.
-                </p>
+<div class="login-page">
+    <div class="bg-blur-circle"></div>
+    
+    <div class="login-box auth-card-wide reveal active mx-auto">
+        
+        <div class="auth-header-visual">
+            <div class="icon-stack">
+                <div class="brand-blob"></div>
+                <i class="fas fa-leaf fa-2x text-agri" style="z-index: 2; position: relative;">
+                  {% load static %}
+                  <img src="{% static 'images/logo.png' %}" alt="Google" class="google-logo-styled">
+               
+                </i>
             </div>
         </div>
 
-        <div class="col-lg-6 d-flex align-items-center justify-content-center bg-light py-5">
-            <div class="w-100 px-4" style="max-width: 450px;">
-                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
-                    <div class="card-body p-5">
-                        <div class="text-center mb-4">
-                            <h2 class="fw-bold">Sign In</h2>
-                            <p class="text-muted">Don't have an account? <a href="{{ signup_url }}" class="text-success text-decoration-none fw-bold">Sign Up</a></p>
-                        </div>
-
-                        <form class="login" method="POST" action="{% url 'account_login' %}">
-                            {% csrf_token %}
-                            
-                            <div class="form-floating mb-3">
-                                <input type="email" name="login" class="form-control" id="id_login" placeholder="name@example.com" required>
-                                <label for="id_login">Email Address</label>
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                <input type="password" name="password" class="form-control" id="id_password" placeholder="Password" required>
-                                <label for="id_password">Password</label>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div class="form-check">
-                                    <input type="checkbox" name="remember" class="form-check-input" id="id_remember">
-                                    <label class="form-check-label small text-muted" for="id_remember">Remember me</label>
-                                </div>
-                                <a class="small text-success text-decoration-none" href="{% url 'account_reset_password' %}">Forgot?</a>
-                            </div>
-
-                            <button class="btn btn-success btn-lg w-100 fw-bold shadow-sm py-3" type="submit">
-                                Sign In <i class="bi bi-arrow-right ms-2"></i>
-                            </button>
-                        </form>
-
-                        <div class="position-relative my-5">
-                            <hr>
-                            <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">OR</span>
-                        </div>
-
-                        <a href="{% provider_login_url 'google' %}" class="btn btn-outline-dark w-100 py-2 d-flex align-items-center justify-content-center gap-2">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo.svg" width="18" alt="Google">
-                            Continue with Google
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="text-center mb-4">
+             <h2 class="login-title">{% trans "Welcome Back" %}</h2>
+             <p class="login-sub">
+                {% trans "Don't have an account?" %}
+                <a href="{{ signup_url }}" class="text-agri">{% trans "Sign Up" %}</a>
+            </p>
         </div>
+
+        <form method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+                <label for="id_login" class="form-label small fw-bold">{% trans "Email Address" %}</label>
+                <input type="email" name="login" id="id_login" class="form-control" placeholder="name@example.com" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="id_password" class="form-label small fw-bold">{% trans "Password" %}</label>
+                <input type="password" name="password" id="id_password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <div class="form-row d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input type="checkbox" name="remember" id="id_remember" class="form-check-input">
+                    <label class="form-check-label small" for="id_remember">{% trans "Remember me" %}</label>
+                </div>
+                <a href="{% url 'account_reset_password' %}" class="back-link small">
+                    {% trans "Forgot password?" %}
+                </a>
+            </div>
+
+            <button type="submit" class="btn-agri-modern w-100">
+                <span>{% trans "Sign In" %}</span>
+            </button>
+        </form>
+
+        <div class="divider"><span>{% trans "OR" %}</span></div>
+
+        <a href="{% provider_login_url 'google' %}" class="btn-google d-flex align-items-center justify-content-center gap-2">
+            <img src="{% static 'images/google-logo.png' %}" alt="Google" style="width: 18px;">
+            <span>{% trans "Continue with Google" %}</span>
+        </a>
+
     </div>
 </div>
-
-<style>
-    .form-control:focus {
-        border-color: #198754;
-        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.1);
-    }
-    .rounded-4 { border-radius: 1rem !important; }
-</style>
 {% endblock %}

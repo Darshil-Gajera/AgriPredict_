@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
   
   <style>
-    /* ── MODERN SaaS THEME ── */
     :root {
       --agb-primary: #065f46;
       --agb-primary-dark: #064e3b;
@@ -38,8 +37,8 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      z-index: 2000;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      z-index: 99999;
+      font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -56,17 +55,18 @@
       border-radius: 50px;
       padding: 12px 24px;
       cursor: pointer;
-      box-shadow: 0 10px 25px #065f46;
-      ;
+      box-shadow: 0 10px 25px rgba(6, 95, 70, 0.4);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-size: 1rem;
+      font-weight: 600;
     }
 
     #chatToggle:hover {
-      transform: translateY(-5px);
+      transform: translateY(-3px);
       background: var(--agb-primary-dark);
     }
 
-    /* ── CHAT PANEL ── */
+    /* ── CHAT PANEL — DESKTOP ── */
     #chatPanel {
       display: none;
       flex-direction: column;
@@ -89,6 +89,7 @@
       transform: translateY(0) scale(1);
     }
 
+    /* ── HEADER ── */
     .agb-header {
       background: var(--agb-primary);
       padding: 20px;
@@ -96,48 +97,104 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-shrink: 0;
     }
 
-    .agb-header-brand { display: flex; align-items: center; gap: 12px; }
+    .agb-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
     .bot-icon {
-      width: 44px; height: 44px;
+      width: 44px;
+      height: 44px;
       background: rgba(255, 255, 255, 0.15);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.4rem;
+      flex-shrink: 0;
     }
 
-    .agb-header-info b { font-size: 1.1rem; display: block; line-height: 1.2; }
-    .agb-header-info span { font-size: 0.75rem; opacity: 0.8; display: flex; align-items: center; gap: 5px; }
+    .agb-header-info b {
+      font-size: 1.1rem;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .agb-header-info span {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
     .agb-status-dot {
-      width: 8px; height: 8px;
+      width: 8px;
+      height: 8px;
       background: var(--agb-accent);
       border-radius: 50%;
       animation: agbPulse 2s infinite;
+      flex-shrink: 0;
     }
 
     @keyframes agbPulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
+      0%   { opacity: 1; transform: scale(1); }
+      50%  { opacity: 0.5; transform: scale(0.8); }
       100% { opacity: 1; transform: scale(1); }
     }
 
-    #chatLang, #chatClose { background: none; border: none; color: white; cursor: pointer; }
-    #chatLang { border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 2px 8px; font-weight: 600; font-size: 0.8rem; }
-    #chatClose { font-size: 1.3rem; margin-left: 10px; }
+    .agb-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
+    #chatLang, #chatClose {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    #chatLang {
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    #chatClose {
+      font-size: 1.3rem;
+      padding: 4px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    #chatClose:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ── CHIPS ── */
     #chatChips {
-      padding: 12px;
+      padding: 10px 12px;
       display: flex;
       gap: 8px;
       overflow-x: auto;
       background: var(--agb-bg-panel);
       border-bottom: 1px solid var(--agb-border);
+      flex-shrink: 0;
+      -webkit-overflow-scrolling: touch;
     }
+
     #chatChips::-webkit-scrollbar { display: none; }
 
     .agb-chip {
@@ -150,61 +207,203 @@
       white-space: nowrap;
       cursor: pointer;
       transition: 0.2s;
+      flex-shrink: 0;
     }
 
-    .agb-chip:hover { border-color: var(--agb-primary); background: var(--agb-primary); color: white; }
+    .agb-chip:hover {
+      border-color: var(--agb-primary);
+      background: var(--agb-primary);
+      color: white;
+    }
 
+    /* ── MESSAGES ── */
     #chatMessages {
       flex: 1;
-      padding: 20px;
+      padding: 16px;
       overflow-y: auto;
       background: var(--agb-bg-chat);
       display: flex;
       flex-direction: column;
       gap: 12px;
+      -webkit-overflow-scrolling: touch;
+      min-height: 0;
     }
 
-    .agb-msg .agb-bubble { padding: 10px 16px; border-radius: 18px; font-size: 0.9rem; max-width: 85%; line-height: 1.5; }
+    .agb-msg .agb-bubble {
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 0.9rem;
+      max-width: 85%;
+      line-height: 1.6;
+    }
 
     .agb-msg--assistant .agb-bubble {
       background: var(--agb-msg-bot);
       color: var(--agb-text-main);
       border: 1px solid var(--agb-border);
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       border-bottom-left-radius: 4px;
     }
 
-    .agb-msg--user { align-self: flex-end; }
+    .agb-msg--user {
+      align-self: flex-end;
+    }
+
     .agb-msg--user .agb-bubble {
       background: linear-gradient(135deg, var(--agb-primary), #0d9488);
       color: white;
       border-bottom-right-radius: 4px;
-      box-shadow: 0 10px 15px -3px rgba(6, 95, 70, 0.2);
     }
 
-    .agb-footer { padding: 15px; background: var(--agb-bg-panel); border-top: 1px solid var(--agb-border); display: flex; gap: 10px; }
+    /* ── FOOTER / INPUT ── */
+    .agb-footer {
+      padding: 14px 16px;
+      background: var(--agb-bg-panel);
+      border-top: 1px solid var(--agb-border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+    }
 
     #chatInput {
       flex: 1;
       background: var(--agb-bg-chat);
       border: 1px solid var(--agb-border);
       color: var(--agb-text-main);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 10px 15px;
       outline: none;
+      font-size: 0.95rem;
+      resize: none;
+      line-height: 1.4;
+      transition: border-color 0.2s;
+    }
+
+    #chatInput:focus {
+      border-color: var(--agb-primary);
     }
 
     #chatSend {
       background: var(--agb-primary);
       color: white;
       border: none;
-      width: 45px; height: 45px;
+      width: 44px;
+      height: 44px;
       border-radius: 12px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s;
     }
 
-    @media (max-width: 480px) {
-      #chatPanel { width: calc(100vw - 40px); height: 75vh; }
+    #chatSend:hover {
+      background: var(--agb-primary-dark);
+      transform: scale(1.05);
+    }
+
+    /* ── TYPING DOTS ── */
+    .agb-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--agb-border);
+      border-radius: 50%;
+      margin: 0 2px;
+      animation: agbDot 1.2s infinite;
+    }
+
+    .agb-dot:nth-child(2) { animation-delay: 0.2s; }
+    .agb-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes agbDot {
+      0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+      40%            { transform: scale(1);   opacity: 1; }
+    }
+
+    /* ── MOBILE FULLSCREEN ── */
+    @media (max-width: 768px) {
+      #chatWidget {
+        right: 16px;
+        bottom: 16px;
+        z-index: 99999;
+      }
+
+      #chatToggle {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+
+      #chatPanel {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        border-radius: 0 !important;
+        z-index: 99998;
+        transform: translateY(100%) !important;
+        opacity: 1 !important;
+        transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1) !important;
+        transform-origin: bottom center !important;
+      }
+
+      #chatPanel.agb-open {
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+      }
+
+      .agb-header {
+        padding: 16px 20px;
+        padding-top: calc(16px + env(safe-area-inset-top));
+      }
+
+      .agb-header-info b {
+        font-size: 1rem;
+      }
+
+      #chatMessages {
+        padding: 14px 12px;
+        gap: 10px;
+      }
+
+      .agb-msg .agb-bubble {
+        max-width: 88%;
+        font-size: 0.92rem;
+      }
+
+      #chatChips {
+        padding: 10px 12px;
+      }
+
+      .agb-chip {
+        font-size: 0.78rem;
+        padding: 7px 13px;
+      }
+
+      .agb-footer {
+        padding: 12px 14px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+        gap: 8px;
+      }
+
+      #chatInput {
+        font-size: 16px !important;
+        padding: 11px 14px;
+        border-radius: 14px;
+      }
+
+      #chatSend {
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+      }
     }
   </style>
   {% block extra_css %}{% endblock %}
@@ -214,7 +413,7 @@
 
 <nav class="navbar navbar-expand-lg sticky-top shadow-sm bg-body-tertiary" id="mainNav">
   <div class="container">
-    <Theory Marks Total class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:home' %}">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'core:home' %}">
       <img src="{% static 'images/logo.png' %}" alt="AgriPredict" height="36" />
       <span class="fw-bold text-success">AgriPredict</span>
     </a>
@@ -257,6 +456,7 @@
             </li>
           </ul>
         </div>
+
         <button class="btn btn-sm btn-outline-secondary" id="themeToggle">
           <i class="bi bi-moon-stars-fill"></i>
         </button>
@@ -264,7 +464,7 @@
         {% if user.is_authenticated %}
           <div class="dropdown">
             <button class="btn btn-sm btn-success dropdown-toggle" data-bs-toggle="dropdown">
-               {{ user.first_name|default:user.email }}
+              {{ user.first_name|default:user.email }}
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2"></i>{% trans "Profile" %}</a></li>
@@ -309,17 +509,17 @@
       <div class="col-md-2">
         <h6 class="fw-bold mb-3">{% trans "Quick Links" %}</h6>
         <ul class="list-unstyled small">
-          <li class="mb-2"><a href="{% url 'core:faq' %}" class="text-muted text-decoration-none hover-link">{% trans "FAQ" %}</a></li>
-          <li class="mb-2"><a href="{% url 'scholarships:list' %}" class="text-muted text-decoration-none hover-link">{% trans "Scholarships" %}</a></li>
-          <li><a href="{% url 'core:contact' %}" class="text-muted text-decoration-none hover-link">{% trans "Contact" %}</a></li>
+          <li class="mb-2"><a href="{% url 'core:faq' %}" class="text-muted text-decoration-none">{% trans "FAQ" %}</a></li>
+          <li class="mb-2"><a href="{% url 'scholarships:list' %}" class="text-muted text-decoration-none">{% trans "Scholarships" %}</a></li>
+          <li><a href="{% url 'core:contact' %}" class="text-muted text-decoration-none">{% trans "Contact" %}</a></li>
         </ul>
       </div>
       <div class="col-md-3">
         <h6 class="fw-bold mb-3">{% trans "Merit Calculator" %}</h6>
         <ul class="list-unstyled small">
-          <li class="mb-2"><a href="{% url 'predict:category' 1 %}" class="text-muted text-decoration-none hover-link">{% trans "Core Agriculture" %}</a></li>
-          <li class="mb-2"><a href="{% url 'predict:category' 2 %}" class="text-muted text-decoration-none hover-link">{% trans "Technical Programs" %}</a></li>
-          <li><a href="{% url 'predict:category' 3 %}" class="text-muted text-decoration-none hover-link">{% trans "Home & Community" %}</a></li>
+          <li class="mb-2"><a href="{% url 'predict:category' 1 %}" class="text-muted text-decoration-none">{% trans "Core Agriculture" %}</a></li>
+          <li class="mb-2"><a href="{% url 'predict:category' 2 %}" class="text-muted text-decoration-none">{% trans "Technical Programs" %}</a></li>
+          <li><a href="{% url 'predict:category' 3 %}" class="text-muted text-decoration-none">{% trans "Home & Community" %}</a></li>
         </ul>
       </div>
       <div class="col-md-3">
@@ -334,58 +534,59 @@
     </div>
     <hr class="my-4" />
     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-        <p class="text-muted small mb-0">© {% now "Y" %} AgriPredict. {% trans "All rights reserved." %}</p>
-        <p class="text-muted small mb-0">{% trans "Developed by Gajera Darshil N." %}</p>
+      <p class="text-muted small mb-0">© {% now "Y" %} AgriPredict. {% trans "All rights reserved." %}</p>
+      <p class="text-muted small mb-0">{% trans "Developed by Gajera Darshil N." %}</p>
     </div>
   </div>
 </footer>
 
-<div id="chatWidget" 
+<div id="chatWidget"
      {% if request.session.last_merit %}data-merit="{{ request.session.last_merit }}"{% endif %}
      {% if request.session.last_category %}data-category="{{ request.session.last_category }}"{% endif %}>
-    
-    <div id="chatPanel">
-        <div class="agb-header">
-            <div class="agb-header-brand">
-                <div class="bot-icon">🌿</div>
-                <div class="agb-header-info">
-                    <b>AgriBot Pro</b>
-                    <span><div class="agb-status-dot"></div> AI Assistant Online</span>
-                </div>
-            </div>
-            <div class="agb-header-actions">
-                <button id="chatLang" title="Change Language">GU</button>
-                <button id="chatClose"><i class="bi bi-x-lg"></i></button>
-            </div>
-        </div>
 
-        <div id="chatChips">
-            <button class="agb-chip" data-q="How to calculate merit?">📐 Merit Calc</button>
-            <button class="agb-chip" data-q="Top colleges">🏆 Top Colleges</button>
-            <button class="agb-chip" data-q="Scholarships">💰 Scholarships</button>
+  <div id="chatPanel">
+    <div class="agb-header">
+      <div class="agb-header-brand">
+        <div class="bot-icon">🌿</div>
+        <div class="agb-header-info">
+          <b>AgriBot Pro</b>
+          <span><div class="agb-status-dot"></div> AI Assistant Online</span>
         </div>
-
-        <div id="chatMessages">
-            <div class="agb-msg agb-msg--assistant">
-                <div class="agb-bubble shadow-sm">
-                    Welcome back! 👋 I can help you with <b>admission predictions</b> or find the best <b>Agri-colleges</b> in Gujarat.
-                </div>
-            </div>
-        </div>
-
-        <div class="agb-footer">
-            <div class="input-group">
-                <input type="text" id="chatInput" class="form-control shadow-none" placeholder="Ask me anything...">
-                <button id="chatSend" class="btn btn-success ms-2">
-                    <i class="bi bi-send-fill"></i>
-                </button>
-            </div>
-        </div>
+      </div>
+      <div class="agb-header-actions">
+        <button id="chatLang" title="Change Language">GU</button>
+        <button id="chatClose"><i class="bi bi-x-lg"></i></button>
+      </div>
     </div>
 
-    <button id="chatToggle" class="shadow">
-        <i class="bi bi-robot fs-4"></i>
-    </button>
+    <div id="chatChips">
+      <button class="agb-chip" data-q="How to calculate merit?">📐 Merit Calc</button>
+      <button class="agb-chip" data-q="Courses in agriculture field">📚 Courses</button>
+      <button class="agb-chip" data-q="How to apply for agriculture admission">📝 How to Apply</button>
+      <button class="agb-chip" data-q="Best college for my category">📌 My Category</button>
+      <button class="agb-chip" data-q="Documents required for admission">📄 Documents</button>
+      <button class="agb-chip" data-q="Scholarships available">💰 Scholarships</button>
+    </div>
+
+    <div id="chatMessages">
+      <div class="agb-msg agb-msg--assistant">
+        <div class="agb-bubble">
+          Welcome back! 👋 I can help you with <b>admission predictions</b> or find the best <b>Agri-colleges</b> in Gujarat.
+        </div>
+      </div>
+    </div>
+
+    <div class="agb-footer">
+      <input type="text" id="chatInput" placeholder="Ask me anything…" autocomplete="off" />
+      <button id="chatSend">
+        <i class="bi bi-send-fill"></i>
+      </button>
+    </div>
+  </div>
+
+  <button id="chatToggle">
+    <i class="bi bi-robot fs-5"></i>
+  </button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -393,5 +594,27 @@
 <script>const USER_LANG = "{{ LANGUAGE_CODE }}";</script>
 <script src="{% static 'js/chat.js' %}"></script>
 {% block extra_js %}{% endblock %}
+
+<!-- ✅ Mobile navbar auto-close fix -->
+<script>
+  (function () {
+    const navMenu = document.getElementById('navMenu');
+
+    navMenu.addEventListener('click', function (e) {
+      // Only fire on actual destination links (not toggles)
+      const link = e.target.closest('a.dropdown-item, a.nav-link:not(.dropdown-toggle)');
+      if (!link) return;
+
+      // Only on mobile (navbar is collapsed/collapsible) — lg breakpoint is 992px
+      if (window.innerWidth >= 992) return;
+
+      setTimeout(function () {
+        const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navMenu);
+        bsCollapse.hide();
+      }, 150);
+    });
+  })();
+</script>
+
 </body>
-</html>
+</html> 

@@ -1,133 +1,661 @@
-/* AgriPredict — main.css */
+/* ═══════════════════════════════════════════════
+   AgriPredict — main.css  (v3.0)
+   Premium agricultural green theme
+   Full dark/light mode support
+═══════════════════════════════════════════════ */
 
+/* ── Variables ─────────────────────────────── */
 :root {
-  --agri-green: #2e7d32;
-  --agri-green-light: #4caf50;
-  --agri-gold: #f9a825;
+  --agri-green:        #059669;
+  --agri-green-dark:   #047857;
+  --agri-green-deeper: #065f46;
+  --agri-green-light:  #10b981;
+  --agri-green-pale:   #d1fae5;
+  --agri-gold:         #f59e0b;
+  --agri-gold-light:   #fef3c7;
+  --agri-blue:         #0284c7;
+
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:  0 10px 32px rgba(0,0,0,0.1);
+  --shadow-green: 0 8px 24px rgba(5,150,105,0.2);
 }
 
-/* ── Navbar ──────────────────────────────────────────────── */
+/* ── Navbar ─────────────────────────────────── */
 #mainNav {
   background: var(--bs-body-bg);
   border-bottom: 1px solid var(--bs-border-color);
-  transition: background 0.2s;
+  transition: background 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-/* ── Hero section ─────────────────────────────────────────── */
+#mainNav.scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+#mainNav .navbar-brand {
+  transition: opacity 0.2s;
+}
+#mainNav .navbar-brand:hover { opacity: 0.85; }
+
+#mainNav .nav-link {
+  font-weight: 500;
+  transition: color 0.2s;
+  position: relative;
+}
+
+#mainNav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 2px;
+  background: var(--agri-green);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+#mainNav .nav-link:hover::after,
+#mainNav .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+#mainNav .nav-link:hover { color: var(--agri-green) !important; }
+
+/* ── Hero section ───────────────────────────── */
 .hero-section {
   background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
   padding: 4rem 0 3rem;
-}
-
-[data-bs-theme="dark"] .hero-section {
-  background: linear-gradient(135deg, #1b2e1c 0%, #1a2e10 100%);
-}
-
-/* ── Category cards ───────────────────────────────────────── */
-.category-card {
-  border: 2px solid transparent;
-  transition: border-color 0.2s, transform 0.15s, box-shadow 0.15s;
-  cursor: pointer;
-}
-.category-card:hover {
-  border-color: var(--agri-green-light);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(46,125,50,0.15);
-}
-
-/* ── Merit result ─────────────────────────────────────────── */
-.merit-score-display {
-  font-size: 3.5rem;
-  font-weight: 700;
-  color: var(--agri-green);
-  line-height: 1;
-}
-
-.probability-badge {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 3px 8px;
-  border-radius: 12px;
-}
-.prob-high     { background: #c8e6c9; color: #1b5e20; }
-.prob-medium   { background: #fff9c4; color: #f57f17; }
-.prob-low      { background: #ffe0b2; color: #e65100; }
-.prob-unlikely { background: #ffcdd2; color: #b71c1c; }
-.prob-unknown  { background: #e0e0e0; color: #424242; }
-
-/* ── College result cards ─────────────────────────────────── */
-.college-card {
-  border-left: 4px solid var(--agri-green-light);
-  transition: box-shadow 0.15s;
-}
-.college-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-
-/* ── Chat widget ──────────────────────────────────────────── */
-#chatWidget {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1050;
-}
-
-#chatToggle {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s;
-}
-#chatToggle:hover { transform: scale(1.08); }
-
-#chatBox {
-  position: absolute;
-  bottom: 68px;
-  right: 0;
-  width: 340px;
-  border-radius: 16px;
+  position: relative;
   overflow: hidden;
 }
 
-/* Chat bubbles */
-.chat-msg { display: flex; margin-bottom: 10px; }
-.chat-msg.user { justify-content: flex-end; }
-.chat-msg .bubble {
-  max-width: 80%;
-  padding: 8px 12px;
-  border-radius: 14px;
-  font-size: 0.875rem;
-  line-height: 1.45;
-}
-.chat-msg.bot  .bubble { background: var(--bs-secondary-bg); }
-.chat-msg.user .bubble { background: var(--agri-green); color: #fff; }
-
-.chat-typing span {
-  display: inline-block;
-  width: 6px; height: 6px;
-  background: #888;
+.hero-section::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%);
+  top: -100px; right: -100px;
   border-radius: 50%;
-  margin: 0 2px;
-  animation: blink 1s infinite;
+  pointer-events: none;
 }
-.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
-.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
 
-/* ── Notification timeline ────────────────────────────────── */
-.notif-date { font-size: 0.8rem; color: var(--bs-secondary-color); }
-.notif-card.important { border-left: 4px solid var(--agri-gold); }
+[data-bs-theme="dark"] .hero-section {
+  background: linear-gradient(135deg, #052e16 0%, #0a1f0b 100%);
+}
 
-/* ── Scholarship cards ────────────────────────────────────── */
+[data-bs-theme="dark"] .hero-section::before {
+  background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%);
+}
+
+/* ── Category cards ─────────────────────────── */
+.category-card {
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(16,185,129,0.04), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.category-card:hover {
+  border-color: var(--agri-green-light);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-green);
+}
+
+.category-card:hover::before { opacity: 1; }
+
+/* ── Merit result ───────────────────────────── */
+.merit-score-display {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--agri-green), var(--agri-green-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ── Probability badges ─────────────────────── */
+.probability-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.prob-high {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.prob-medium {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.prob-low {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 1px solid #fed7aa;
+}
+
+.prob-unlikely {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.prob-unknown {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+[data-bs-theme="dark"] .prob-high     { background: rgba(6,95,70,0.3);   color: #6ee7b7; border-color: rgba(110,231,183,0.2); }
+[data-bs-theme="dark"] .prob-medium   { background: rgba(120,53,15,0.3);  color: #fcd34d; border-color: rgba(252,211,77,0.2); }
+[data-bs-theme="dark"] .prob-low      { background: rgba(124,45,18,0.3);  color: #fb923c; border-color: rgba(251,146,60,0.2); }
+[data-bs-theme="dark"] .prob-unlikely { background: rgba(127,29,29,0.3);  color: #f87171; border-color: rgba(248,113,113,0.2); }
+[data-bs-theme="dark"] .prob-unknown  { background: rgba(30,41,59,0.8);   color: #94a3b8; border-color: rgba(148,163,184,0.2); }
+
+/* ── College result cards ───────────────────── */
+.college-card {
+  border-left: 4px solid var(--agri-green-light);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  transition: box-shadow 0.2s, transform 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+
+.college-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -4px; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--agri-green), var(--agri-green-light));
+  border-radius: 4px 0 0 4px;
+}
+
+.college-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+/* ── Notification timeline ──────────────────── */
+.notif-date {
+  font-size: 0.78rem;
+  color: var(--bs-secondary-color);
+  font-weight: 500;
+}
+
+.notif-card {
+  border-radius: var(--radius-md);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.notif-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.notif-card.important {
+  border-left: 4px solid var(--agri-gold);
+  background: var(--notif-imp-bg, #fffbeb);
+}
+
+[data-bs-theme="dark"] .notif-card.important {
+  --notif-imp-bg: rgba(120,53,15,0.15);
+}
+
+/* ── Scholarship cards ──────────────────────── */
+.scholarship-card {
+  border-radius: var(--radius-lg);
+  transition: all 0.25s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.scholarship-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-green);
+}
+
 .scholarship-card .badge-amount {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--agri-green), var(--agri-green-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Buttons ────────────────────────────────── */
+.btn-agri {
+  background: linear-gradient(135deg, var(--agri-green), var(--agri-green-dark));
+  color: #ffffff !important;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  padding: 0.65rem 1.4rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-agri::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--agri-green-light), var(--agri-green));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-agri:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-green);
+}
+.btn-agri:hover::before { opacity: 1; }
+.btn-agri span { position: relative; z-index: 1; }
+
+/* ── Form controls ──────────────────────────── */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--agri-green-light);
+  box-shadow: 0 0 0 4px rgba(16,185,129,0.12);
+}
+
+/* ── Tables ─────────────────────────────────── */
+.table > thead {
+  background: var(--agri-green-pale);
+}
+[data-bs-theme="dark"] .table > thead {
+  background: rgba(6,95,70,0.25);
+}
+
+/* ── Step cards ─────────────────────────────── */
+.step-card {
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--agri-green), var(--agri-green-light));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: left;
+}
+
+.step-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-green); }
+.step-card:hover::before { transform: scaleX(1); }
+
+/* ── Section reveal animation ───────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.5,0,0,1), transform 0.65s cubic-bezier(0.5,0,0,1);
+}
+.reveal.active { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* ── Page loader shimmer ────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bs-secondary-bg) 25%, var(--bs-tertiary-bg) 50%, var(--bs-secondary-bg) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Toast ──────────────────────────────────── */
+.toast {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: none !important;
+}
+
+/* ── Footer ─────────────────────────────────── */
+.footer {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--agri-green-deeper), var(--agri-green), var(--agri-green-light), var(--agri-gold));
+}
+
+.footer a {
+  transition: color 0.2s;
+}
+.footer a:hover { color: var(--agri-green) !important; }
+
+/* ── Utilities ──────────────────────────────── */
+.text-agri   { color: var(--agri-green) !important; }
+.text-agri-light { color: var(--agri-green-light) !important; }
+.bg-agri     { background: var(--agri-green) !important; color: #fff !important; }
+.bg-agri-pale { background: var(--agri-green-pale) !important; }
+.border-agri { border-color: var(--agri-green) !important; }
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+/* ── Scrollbar ──────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(5,150,105,0.3); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--agri-green); }
+
+/* ── Selection ──────────────────────────────── */
+::selection { background: rgba(16,185,129,0.2); color: inherit; }
+
+/* ── Smooth scroll ──────────────────────────── */
+html { scroll-behavior: smooth; }
+
+/* ── Navbar scrolled shadow (JS adds class) ─── */
+@media (max-width: 768px) {
+  .merit-score-display { font-size: 2.5rem; }
+  .category-card:hover { transform: none; }
+  .college-card:hover  { transform: none; }
+}
+
+/* ═════════ LOGIN PAGE FIX ═════════ */
+
+/* Center full page */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bs-body-bg);
+  padding: 20px;
+}
+
+/* Login box */
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bs-body-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 30px;
+  border: 1px solid var(--bs-border-color);
+}
+
+/* Title */
+.login-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+/* Subtext */
+.login-sub {
+  font-size: 0.9rem;
+  color: var(--bs-secondary-color);
+  margin-bottom: 20px;
+}
+
+.login-sub a {
+  color: var(--agri-green);
   font-weight: 600;
+  text-decoration: none;
+}
+
+/* Inputs */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+/* Row */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  margin-bottom: 18px;
+}
+
+.form-row a {
+  color: var(--agri-green);
+  text-decoration: none;
+}
+
+/* Button */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--agri-green), var(--agri-green-dark));
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-green);
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 0.75rem;
+  color: var(--bs-secondary-color);
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: var(--bs-border-color);
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+/* Google button */
+.btn-google {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--bs-border-color);
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--bs-body-color);
+  transition: 0.3s;
+}
+
+.btn-google:hover {
+  border-color: var(--agri-green);
   color: var(--agri-green);
 }
 
-/* ── Footer ───────────────────────────────────────────────── */
-.footer a:hover { color: var(--agri-green) !important; }
+/* Mobile */
+@media (max-width: 576px) {
+  .login-box {
+    padding: 20px;
+  }
+}
+/* ═════════ AUTH ENHANCEMENTS (v3.1) ═════════ */
 
-/* ── Utilities ────────────────────────────────────────────── */
-.text-agri { color: var(--agri-green); }
-.bg-agri   { background: var(--agri-green); color: #fff; }
+/* Background & Layout */
+.login-page {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--bs-body-bg) 0%, var(--agri-green-pale) 100%);
+    z-index: 1;
+}
+
+.bg-blur-circle {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 400px;
+    height: 400px;
+    background: var(--agri-green-light);
+    filter: blur(120px);
+    opacity: 0.15;
+    z-index: -1;
+}
+
+/* Auth Card Glassmorphism */
+.auth-card-wide {
+    max-width: 460px !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(var(--bs-body-bg-rgb), 0.9) !important;
+    border: 1px solid var(--bs-border-color);
+}
+
+/* Visual Handshake */
+.auth-header-visual {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.icon-stack {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+}
+
+.brand-blob {
+    position: absolute;
+    inset: 0;
+    background: var(--agri-green-pale);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 70%;
+    animation: morph 8s ease-in-out infinite;
+}
+
+.google-logo-styled {
+    width: 42px;
+    z-index: 2;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+@keyframes morph {
+    0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 60%; }
+    50% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
+}
+
+/* Connection Path UI */
+.connection-path {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--bs-secondary-color);
+    margin-bottom: 1rem;
+}
+
+.dots span {
+    width: 5px;
+    height: 5px;
+    background: var(--agri-green-light);
+    display: inline-block;
+    border-radius: 50%;
+    animation: dotPulse 1.5s infinite;
+}
+
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+    .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Modernized Button Override */
+.btn-agri-modern {
+    background: linear-gradient(135deg, var(--agri-green), var(--agri-green-dark));
+    color: white !important;
+    border: none;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--shadow-green);
+}
+
+.btn-agri-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(5, 150, 105, 0.3);
+}
+
+.back-link {
+    color: var(--bs-secondary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+.back-link:hover { color: var(--agri-green); }
