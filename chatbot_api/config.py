@@ -3,7 +3,7 @@ config.py — AgriPredict Chatbot Configuration
 Uses environment variables with prefix CHATBOT_
 
 Example (.env):
-CHATBOT_GOOGLE_API_KEY=your_keyAIzaSyCxojZjGu7sZ2vhTTrwHVDltMw3vimHH_s
+CHATBOT_GOOGLE_API_KEY=your_key
 """
 
 import os
