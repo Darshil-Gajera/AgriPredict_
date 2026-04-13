@@ -19,7 +19,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # ── Gemini / Google ─────────────────────────────────────
-    google_api_key: str ="AIzaSyAh-LNNcNNQONn7_x8hxbFc67YLKl_89Ro"  # will read from CHATBOT_GOOGLE_API_KEY
+    google_api_key: str =""  # will read from CHATBOT_GOOGLE_API_KEY
     llm_model: str = "gemini-2.5-flash"
     embedding_model: str = "models/gemini-embedding-001"
     llm_temperature: float = 0.2
